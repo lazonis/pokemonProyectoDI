@@ -1,0 +1,80 @@
+/* src/components/BattleScreen.css */
+
+.battle-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 15px;
+    border: 4px solid #fff;
+    color: white;
+}
+
+/* --- ANIMACIÓN DE DAÑO (SHAKE) --- */
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.shake-animation {
+    animation: shake 0.5s; /* Dura medio segundo */
+    filter: sepia(100%) hue-rotate(-50deg) saturate(600%); /* Se pone rojo momentáneamente */
+}
+
+/* --- BARRA DE VIDA --- */
+.hp-bar-bg {
+    background: #333;
+    height: 15px;
+    border-radius: 10px;
+    border: 2px solid #fff;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.hp-bar-fill {
+    height: 100%;
+    background-color: #48c060; /* Verde por defecto */
+    transition: width 0.5s ease, background-color 0.3s;
+}
+
+/* Cuando tiene poca vida (se aplicará con JS) */
+.hp-bar-fill.low-health {
+    background-color: #ff3333; /* Rojo peligro */
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* --- LOG DE BATALLA --- */
+.battle-log {
+    background: black;
+    border: 2px solid white;
+    height: 100px;
+    overflow-y: auto; /* Scroll automático */
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 10px;
+    text-align: left;
+    font-family: 'Press Start 2P', monospace;
+    display: flex;
+    flex-direction: column-reverse; /* Mensajes nuevos arriba o usar scroll */
+}
+
+.log-entry {
+    margin-bottom: 5px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 2px;
+}

@@ -1,0 +1,5 @@
+FILE TEXT WHERE I WILL WRITE THE TO DO'S I WANT TO IMPLEMENTATE
+    1.-Pokemon List interface
+    2.-Navigate Bar with different filters (name, type)
+    3.-Select one only generation
+    4.-Implementate controls component and logic component

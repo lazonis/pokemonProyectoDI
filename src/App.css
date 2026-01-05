@@ -1,19 +1,136 @@
+/* Importamos la fuente de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* El selector asterisco (*) significa: "Aplica esto a TODO" */
+* {
+  font-family: 'Press Start 2P', cursive;
+  box-sizing: border-box; /* Ayuda a que los tamaños no se rompan con el padding */
+}
+
 .App {
   text-align: center;
-
-  background-image: url('resources/background.jpg');
+  min-height: 100vh; /* Ocupa al menos toda la altura de la pantalla */
+  
+  /* Fondo de pantalla */
+  background-color: #2c3e50; /* Color de respaldo por si falla la imagen */
+  /* Si tienes la imagen en public/resources, úsala, si no, se verá gris oscuro */
+  /* background-image: url('/resources/background.jpg'); */ 
   background-size: cover;
+  color: white; /* Texto blanco por defecto */
+  padding-bottom: 50px;
 }
 
+h1 {
+  text-shadow: 4px 4px 0px #000; /* Sombra negra dura para efecto retro */
+  margin: 0;
+  padding: 40px 0;
+  font-size: 24px; /* Ajusta según necesites */
+  color: #ffcc00; /* Amarillo Pokémon */
+}
 
-.App-header {
- 
-  min-height: 100vh;
+/* Clases para centrar cosas fácilmente en cualquier parte de la app */
+.center-content {
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
+/* Añadir al final de App.css */
+.battle-arena {
+    background-color: rgba(0,0,0,0.8);
+    padding: 30px;
+    border-radius: 20px;
+    border: 4px solid white;
+    max-width: 800px;
+    margin: 20px auto;
+    
+}
 
+.fighters-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.battle-img {
+    width: 150px;
+    filter: drop-shadow(5px 5px 0 rgba(0,0,0,0.5));
+}
+
+.vs-sign {
+    font-size: 40px;
+    color: #ff3333;
+    text-shadow: 3px 3px 0 #000;
+}
+
+.restart-btn {
+    padding: 15px 30px;
+    font-family: 'Press Start 2P';
+    background: #ffcc00;
+    border: 4px solid #333;
+    cursor: pointer;
+}
+
+/* Panel de controles abajo */
+.controls-panel {
+    background-color: #333; /* Gris oscuro tipo Game Boy */
+    padding: 20px;
+    border-radius: 10px;
+    border: 4px solid #555;
+    margin-top: 20px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Cuadrícula de 2 columnas para los botones */
+.moves-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
+    gap: 15px;
+}
+
+/* Estilo de cada botón de ataque */
+.move-btn {
+    padding: 15px 5px;
+    background-color: #f8f8f8;
+    border: 2px solid #222;
+    border-radius: 8px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #999; /* Efecto 3D */
+    transition: transform 0.1s;
+}
+
+.move-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0;
+}
+
+.move-btn:hover {
+    background-color: #ffcc00; /* Se ilumina al pasar el ratón */
+}
+
+/* CONTROL DE VOLUMEN */
+.volume-control {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    color: white;
+}
+
+.volume-control input[type=range] {
+    cursor: pointer;
+    accent-color: #ffcc00; /* Color amarillo Pokémon para la barra */
+}

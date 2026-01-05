@@ -1,0 +1,23 @@
+.type-badge {
+    /* Tipografía Retro */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px; /* Las fuentes pixel suelen ser grandes, ajústalo */
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    /* Forma de la etiqueta */
+    padding: 6px 12px;
+    border-radius: 4px; /* Bordes ligeramente redondeados */
+    display: inline-block;
+    margin-top: 5px;
+
+    /* Efecto 3D y Bordes (Estilo Sticker) */
+    border: 2px solid white; /* Borde blanco interno opcional */
+    box-shadow: 
+        0 4px 0 rgba(0, 0, 0, 0.2), /* Sombra dura abajo (efecto volumen) */
+        0 0 0 1px rgba(0,0,0,0.5); /* Borde sutil exterior */
+    
+    /* Sombra del texto para legibilidad máxima */
+    text-shadow: 2px 2px 0 #000; 
+}

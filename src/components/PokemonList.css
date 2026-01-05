@@ -1,0 +1,75 @@
+.list-wrapper {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto; /* Centrar en pantalla */
+}
+
+/* REJILLA RESPONSIVA (Magia CSS) */
+.grid-layout {
+    display: grid;
+    /* Crea columnas automáticas de mínimo 200px */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* ESTILOS DE BOTONES (Reutilizables) */
+.toolbar, .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-size: 12px;
+}
+
+/* Diseño base del botón */
+.btn {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #f0f0f0;
+    border: 2px solid #333;
+    padding: 10px 15px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #000; /* Sombra sólida retro */
+    transition: all 0.1s;
+    color: #333;
+    font-size: 10px;
+}
+
+/* Cuando pulsas el botón */
+.btn:active {
+    transform: translate(2px, 2px); /* Se mueve abajo-derecha */
+    box-shadow: 2px 2px 0 #000;
+}
+
+/* Botón activo (seleccionado) */
+.btn.active {
+    background-color: #3b4cca;
+    color: white;
+}
+
+/* Botón deshabilitado */
+.btn:disabled {
+    background-color: #ccc;
+    box-shadow: none;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.page-number {
+    color: #ffcc00;
+    text-shadow: 2px 2px 0 #000;
+    font-size: 14px;
+}
+
+.loading-msg {
+    margin-top: 50px;
+    font-size: 18px;
+    animation: parpadeo 1s infinite;
+}
+
+@keyframes parpadeo {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
