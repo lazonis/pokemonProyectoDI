@@ -39,7 +39,7 @@ function PokemonList({ onSelectPokemon }) {
                         maxHp: data.stats[0].base_stat,
 
                         attack: data.stats[1].base_stat,  // ¡El stat de ataque es vital!
-    defense: data.stats[2].base_stat, // Y defensa para cuando te peguen
+                        defense: data.stats[2].base_stat, // Y defensa para cuando te peguen
                         // AQUÍ ESTÁ LA CLAVE: Usamos 'data' para sacar los movimientos
                         moves: data.moves.slice(0, 4).map(m => ({ 
                             name: m.move.name,
