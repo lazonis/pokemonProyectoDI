@@ -30,10 +30,46 @@
     filter: sepia(100%) hue-rotate(-50deg) saturate(600%); /* Se pone rojo momentáneamente */
 }
 
+.sprite {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    filter: drop-shadow(5px 5px 0 rgba(0,0,0,0.5)); /* Sombra para dar relieve */
+}
+.fighter-zone {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* 1. ENEMIGO (Arriba a la Derecha) */
+.fighter-zone.enemy {
+    align-self: flex-end; /* Se pega a la DERECHA */
+    flex-direction: row; /* Texto a la izq, Imagen a la der */
+}
+
+/* 2. JUGADOR (Abajo a la Izquierda) */
+.fighter-zone.player {
+    align-self: flex-start; /* Se pega a la IZQUIERDA */
+    flex-direction: row; /* Imagen a la izq, Texto a la der */
+    margin-top: auto; /* Empuja hacia abajo si sobra espacio */
+}
+
+/* --- TEXTOS Y NOMBRES --- */
+.stats-box p {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    
+    /* SOLUCIÓN MAYÚSCULAS: */
+    text-transform: capitalize; /* Convierte la primera letra en mayúscula siempre */
+}
+
 /* --- BARRA DE VIDA --- */
 .hp-bar-bg {
-    background: #333;
-    height: 15px;
+    background: #555;
+    height: 12px;
+    width: 150px; /* Ancho fijo para las barras */
     border-radius: 10px;
     border: 2px solid #fff;
     overflow: hidden;

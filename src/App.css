@@ -1,11 +1,14 @@
 /* Importamos la fuente de Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 /* El selector asterisco (*) significa: "Aplica esto a TODO" */
 * {
   font-family: 'Press Start 2P', cursive;
   box-sizing: border-box; /* Ayuda a que los tamaños no se rompan con el padding */
+ 
 }
+
 
 .App {
   text-align: center;
@@ -18,6 +21,7 @@
   background-size: cover;
   color: white; /* Texto blanco por defecto */
   padding-bottom: 50px;
+  
 }
 
 h1 {
@@ -114,23 +118,81 @@ h1 {
     background-color: #ffcc00; /* Se ilumina al pasar el ratón */
 }
 
-/* CONTROL DE VOLUMEN */
+/* IMPORTANTE: Asegúrate de que la fuente sigue importada al principio de tu CSS:
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+*/
+
+/* --- CONTENEDOR PRINCIPAL (Transparente) --- */
 .volume-control {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 10px 15px;
-    border-radius: 25px;
-    border: 2px solid white;
+    z-index: 1000;
+
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+
     display: flex;
     align-items: center;
-    gap: 10px;
-    z-index: 1000;
-    color: white;
+    gap: 15px;
 }
 
-.volume-control input[type=range] {
-    cursor: pointer;
-    accent-color: #ffcc00; /* Color amarillo Pokémon para la barra */
+/* --- NUEVO: ESTILO PARA LA IMAGEN DEL ICONO --- */
+.volume-icon {
+    width: 32px; /* Tamaño del icono */
+    height: 32px;
+    /* VITAL PARA PIXEL ART: hace que no se vea borroso al escalar */
+    image-rendering: pixelated;
+    /* Sombra dura (Drop Shadow) para que coincida con el estilo 3D */
+    filter: drop-shadow(4px 4px 0px #000);
+    border-radius: 50%;
 }
+
+
+/* --- RESETEO DEL INPUT RANGE --- */
+.volume-control input[type=range] {
+    -webkit-appearance: none;
+    width: 180px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.volume-control input[type=range]:focus {
+    outline: none;
+}
+
+/* --- ESTILO DEL "TRACK" (La barra de fondo 3D) --- */
+/* Chrome / Safari / Edge */
+.volume-control input[type=range]::-webkit-slider-runnable-track {
+    height: 10px;
+    border-radius: 0px;
+    background-color: #a0a0a0; /* Cara superior gris */
+    border: 3px solid #000; /* Borde negro grueso */
+    box-shadow: 5px 5px 0px #000; /* Sombra profunda */
+}
+
+
+
+/* --- ESTILO DEL "THUMB" (El botón deslizante 3D Chunky) --- */
+/* Chrome / Safari / Edge */
+.volume-control input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 25px;
+    width: 10px;
+    margin-top: -10px;
+    border-radius: 0px;
+    cursor: grab;
+
+    /* Efecto Biselado 3D (Bevel) */
+    background-color: #fff;       /* Cara frontal */
+    border-top: 4px solid #fff;   /* Luz */
+    border-left: 4px solid #fff;  /* Luz */
+    border-right: 4px solid #555; /* Sombra */
+    border-bottom: 4px solid #555;/* Sombra */
+    outline: 3px solid #000;      /* Contorno negro */
+
+    box-shadow: 7px 7px 0px #000; /* Sombra muy profunda */
+}
+
+

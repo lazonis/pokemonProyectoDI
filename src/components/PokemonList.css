@@ -56,10 +56,71 @@
     cursor: not-allowed;
 }
 
-.page-number {
-    color: #ffcc00;
-    text-shadow: 2px 2px 0 #000;
+/* src/components/PokemonList.css */
+
+/* Contenedor de la barra de números */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Espacio entre botones */
+    margin: 20px 0;
+    flex-wrap: wrap; /* Para que baje de línea en móvil */
+}
+
+/* Estilo base de los botones numéricos */
+.page-btn {
+    background-color: white;
+    color: black;
+    border: 2px solid #555;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    font-family: 'Press Start 2P', monospace; /* Tu fuente retro */
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: #555;
+    transform: translateY(-2px);
+}
+
+/* La página actual activa */
+.page-btn.active {
+    background-color: #3b4cca; /* Amarillo Pokémon */
+    color: white;
+    border-color: #656eb1;
+    font-weight: bold;
+    pointer-events: none; /* No clickable si ya estás ahí */
+}
+
+/* Las flechas laterales (< >) */
+.page-btn.arrow {
+    background-color: #444;
+    font-weight: bold;
     font-size: 14px;
+}
+
+/* Los puntos suspensivos (...) */
+.page-btn.dots {
+    background: none;
+    color: white;
+    width: auto;
+}
+.page-btn.dots:hover {
+    background: transparent;
+    transform: none;
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .loading-msg {

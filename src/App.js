@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PokemonList from './components/PokemonList'
-import Battle from './utils/Battle'; // IMPORTANTE
+import Battle from './utils/Battle';
 import './App.css';
 import { useRef } from 'react';
 
@@ -80,9 +80,11 @@ function App() {
 
             {/* --- NUEVO: CONTROL DE VOLUMEN FLOTANTE --- */}
             <div className="volume-control">
-                <span style={{ fontSize: '20px' }}>
-                    {volume === 0 ? '🔇' : '🔊'}
-                </span>
+                <img
+                    src="/pixel-sound.png" // Asegúrate de que la imagen está en la carpeta 'public'
+                    alt="Volumen"
+                    className="volume-icon"
+                />
                 <input
                     type="range"
                     min="0"
@@ -109,8 +111,8 @@ function App() {
                         stopMusic();          // 1. Paramos la música
                         setGameState('select'); // 2. Volvemos al menú} // Función para volver
                     }}
-                        
-                    />
+
+                />
             )}
         </div>
     );
