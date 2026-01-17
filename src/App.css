@@ -1,19 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+  font-family: 'Press Start 2P', cursive;
+  box-sizing: border-box; /* Ayuda a que los tamaños no se rompan con el padding */
+ 
+}
+
+
+
 .App {
   text-align: center;
-
-  background-image: url('resources/background.jpg');
-  background-size: cover;
+  min-height: 100vh; /* Ocupa al menos toda la altura de la pantalla */
+  
+  /* Fondo de pantalla */
+  
+  color: white; /* Texto blanco por defecto */
+  padding-bottom: 50px;
+  
 }
-
-
-.App-header {
- 
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-
