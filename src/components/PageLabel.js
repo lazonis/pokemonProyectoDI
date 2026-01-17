@@ -1,7 +1,7 @@
 import React from 'react';
 import './PageLabel.css';
 
-function PageLabel({ title, subtitle }) {
+function PageLabel({ title, subtitle,className }) {
     return (
         <div className="page-label-container">
             <h1 className="page-label-text">{title}</h1>
