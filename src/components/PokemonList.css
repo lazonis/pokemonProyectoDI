@@ -1,197 +1,374 @@
-/* ESTRUCTURA DE 3 COLUMNAS */
+/* --- LAYOUT PRINCIPAL --- */
 .team-builder-layout {
     display: grid;
-    grid-template-columns: 250px 1fr 250px; /* Lateral | Centro Flexible | Lateral */
+    /* Columnas: Sidebar Izq | Centro Flexible | Sidebar Der */
+    grid-template-columns: 240px 1fr 240px; 
     gap: 20px;
     padding: 20px;
-    height: 90vh;
-    font-family: 'Courier New', monospace;
-    align-items: start;
+    height: 85vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #222; /* Fondo general oscuro */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-/* --- BARRA LATERAL (EQUIPOS) --- */
+/* --- COLUMNAS LATERALES (EQUIPOS) --- */
 .sidebar-team {
-    background: #e0e0e0;
-    border: 4px solid #555;
-    border-radius: 8px;
-    padding: 10px;
-    height: 100%;
-    overflow-y: auto;
+    background: #333; /* Fondo oscuro para contraste */
+    border: 2px solid #555;
+    border-radius: 10px;
+    padding: 15px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.6; /* Un poco apagado cuando no es su turno */
+}
+
+/* ESTILO CAJA DE SELECCIÓN (JUGADOR ACTIVO) */
+/* El usuario pidió "estilo rojo" para la selección */
+.sidebar-team.active-turn {
+    border: 3px solid #ff3333; /* ROJO INTENSO */
+    box-shadow: 0 0 15px rgba(255, 51, 51, 0.4);
+    opacity: 1;
+    transform: scale(1.02); /* Crece un poco */
+    background: #2a2a2a;
 }
 
 .sidebar-team h3 {
     text-align: center;
-    border-bottom: 2px solid #999;
+    border-bottom: 1px solid #777;
     padding-bottom: 10px;
     margin-top: 0;
+    font-size: 1.1rem;
 }
 
-.team-slots-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
+/* Slots de los pokemon en la barra lateral */
 .sidebar-slot {
-    height: 50px;
+    height: 45px;
     display: flex;
     align-items: center;
-    border: 2px solid #777;
     border-radius: 5px;
-    background: white;
+    margin-bottom: 8px;
     padding: 0 10px;
     font-size: 0.9rem;
-    font-weight: bold;
+}
+
+.sidebar-slot.filled {
+    background: #444;
+    border: 1px solid #666;
 }
 
 .sidebar-slot.empty {
     justify-content: center;
-    color: #aaa;
-    background: #f0f0f0;
+    color: #777;
+    background: #222;
     font-style: italic;
-    border-style: dashed;
+    border: 1px dashed #555;
 }
 
 .sidebar-slot img {
-    width: 40px;
-    height: 40px;
-    image-rendering: pixelated;
+    width: 35px; height: 35px;
     margin-right: 10px;
+    image-rendering: pixelated;
 }
 
-/* --- CAJA CENTRAL ROJA --- */
-.main-pc-box {
-    background-color: #c0392b; /* Rojo Pokédex/Caja */
-    border: 8px solid #922b21;
+/* --- CAJA CENTRAL (PC) --- */
+.main-pc-box-container {
+    background-color: #d32f2f; /* Rojo Pokédex clásico */
+    border: 8px solid #8e0000;
     border-radius: 15px;
     padding: 20px;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
 }
 
 .box-header-red {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #a93226;
-    padding: 10px;
+    background: #b71c1c;
+    padding: 10px 15px;
     border-radius: 8px;
     margin-bottom: 15px;
     color: white;
-    border: 2px solid #7c261e;
+    border: 2px solid #7f0000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
+.box-header-red h2 { margin: 0; font-size: 1.2rem; }
+.box-header-red small { font-weight: normal; font-size: 0.rem; margin-left: 10px; color: #ffcccc;}
+
 .box-header-red button {
-    background: #f1c40f;
+    background: #ffeb3b; /* Amarillo botón */
     border: none;
     padding: 5px 15px;
     font-weight: bold;
-    cursor: pointer;
     border-radius: 4px;
-    box-shadow: 0 3px 0 #b7950b;
+    cursor: pointer;
+    color: #333;
+    box-shadow: 0 2px 0 #fbc02d;
 }
 
-.box-header-red button:active {
-    transform: translateY(3px);
-    box-shadow: none;
-}
+.box-header-red button:active { transform: translateY(2px); box-shadow: none; }
 
-/* GRID DE POKEMONS (Caja) */
-.pokemon-grid-wide {
+/* GRID DE TARJETAS */
+.pc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
-    overflow-y: auto; /* Scroll si hay muchos */
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* Auto ajuste */
+    gap: 12px;
+    overflow-y: auto;
     padding-right: 5px;
 }
 
-/* TARJETA INDIVIDUAL (Slot) */
+/* --- TARJETA INDIVIDUAL (POKEMON BOX) --- */
+/* Arreglo de contraste y márgenes */
 .pokemon-slot-card {
-    background: #f8f8f8;
+    background: #f5f5f5; /* Fondo claro para la tarjeta */
     border: 3px solid #444;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 8px;
+    padding: 5px;
     transition: transform 0.1s;
+    
 }
 
+/* Hover: Borde Rojo */
 .pokemon-slot-card:hover {
-    background: #ffeaa7;
-    transform: scale(1.05);
+    border-color: #ff3333; 
+    transform: scale(1.00);
+    background: #fff;
 }
 
+/* Ya seleccionado: Gris */
 .pokemon-slot-card.selected {
     opacity: 0.5;
     filter: grayscale(1);
+    background: #ccc;
     cursor: not-allowed;
 }
 
-.sprite-container {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
+.pokemon-name-label {
+    color: #333; /* Texto oscuro sobre fondo claro */
+    font-size: 0.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 5px;
+    padding: auto;
 }
 
 .pixel-sprite-large {
-    width: 80px;
-    height: 80px;
+    width: 110px; height: 100px;
     image-rendering: pixelated;
-    object-fit: contain;
+    padding: 6%;
+
 }
 
-.pokemon-name-label {
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-transform: capitalize;
-}
-
-/* --- MODAL FLOTANTE (OVERLAY) --- */
-.detail-modal-overlay {
-    position: fixed; /* FLOTANTE */
+/* --- CORRECCIÓN MODAL FLOTANTE (CONTRASTE) --- */
+/* Esto arregla el problema de "blanco sobre blanco" si existía en el modal */
+.detail-card {
+   position: fixed; /* Esto lo desvincula de la lista y lo pega a la pantalla */
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    z-index: 1000;   /* Esto asegura que esté ENCIMA de todo lo demás (que suele tener z-index menor) */
+    background: rgba(0, 0, 0, 0.7);
+    padding: 6%;
+    
+    
+}
+/* =========================================
+   ESTILO GAMEBOY MODAL (Ventana Flotante)
+========================================= */
+
+/* El fondo oscuro que cubre toda la pantalla */
+.detail-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85); /* Más oscuro para resaltar la pantalla */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Siempre encima */
+    z-index: 2000; /* Muy alto para estar encima de todo */
     backdrop-filter: blur(3px);
 }
 
-.detail-card {
-    background: white;
-    width: 300px;
+/* --- LA CARCASA (El cuerpo gris) --- */
+.gameboy-body {
+    background-color: #c4cfa1; /* Un gris verdoso retro */
+    width: 380px;
+    border-radius: 15px 15px 40px 15px; /* Esquina inferior derecha más redondeada */
     padding: 20px;
-    border-radius: 12px;
-    border: 4px solid #333;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: 
+        inset 4px 4px 10px rgba(255,255,255,0.4), /* Brillo superior izq */
+        inset -4px -4px 10px rgba(0,0,0,0.3),    /* Sombra inferior der */
+        0 15px 30px rgba(0,0,0,0.5);             /* Sombra externa */
+    border: 4px solid #9aa67b;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Separación entre partes de la carcasa */
+    font-family: 'Courier New', Courier, monospace; /* Fuente retro */
+}
+
+/* Decoración superior */
+.gameboy-top-ridge {
+    display: flex;
+    justify-content: space-between;
+    color: #7b8563;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+
+/* --- EL BISEL DE LA PANTALLA (El marco negro) --- */
+.gameboy-screen-bezel {
+    background-color: #333;
+    padding: 15px 15px 25px 15px; /* Más espacio abajo */
+    border-radius: 8px 8px 25px 8px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+}
+
+/* --- LA PANTALLA ILUMINADA (Contenido) --- */
+.gameboy-screen-content {
+    background-color: #e0f0c0; /* Color de pantalla LCD retro */
+    border: 3px solid #777;
+    border-radius: 4px;
+    padding: 20px; /* ESPACIO INTERNO EXTRA */
+    box-shadow: inset 2px 2px 8px rgba(0,0,0,0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* SEPARACIÓN ENTRE ELEMENTOS DE LA PANTALLA */
+    color: #2b331f; /* Color de texto "tinta digital" */
+}
+
+/* Título en pantalla */
+.gb-title {
+    margin: 0;
+    font-size: 1.3rem;
     text-align: center;
-    animation: popIn 0.2s ease-out;
+    border-bottom: 2px dashed #2b331f;
+    width: 100%;
+    padding-bottom: 10px;
 }
 
-@keyframes popIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+/* Botón cerrar (estilo Start/Select pequeño) */
+.gb-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #2b331f;
+    cursor: pointer;
+    opacity: 0.6;
 }
+.gb-close-btn:hover { opacity: 1; }
 
-.big-sprite {
-    width: 120px;
-    height: 120px;
+/* Imagen del Pokemon */
+.gb-image-container {
+    background: rgba(43, 51, 31, 0.1);
+    border-radius: 50%;
+    padding: 15px;
+    border: 2px dotted #2b331f;
+}
+.gb-sprite {
+    width: 100px; height: 100px;
     image-rendering: pixelated;
 }
 
-/* Estilos de barra de vida y botones del modal... */
-.hp-bar-bg {
-    width: 100%; height: 15px; background: #ddd;
-    border: 2px solid #333; border-radius: 10px; margin: 5px 0 15px 0; overflow: hidden;
+/* Sección de info */
+.gb-info-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Separación entre tipo y stats */
 }
-.hp-fill { height: 100%; transition: width 0.3s; }
-.modal-actions { display: flex; gap: 10px; }
-.btn-cancel { flex: 1; background: #e74c3c; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
-.btn-confirm { flex: 1; background: #3498db; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+
+.gb-type-tag {
+    background: #2b331f;
+    color: #e0f0c0;
+    text-align: center;
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+/* --- ESTADÍSTICAS RETRO --- */
+.gb-stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.stat-bar-track {
+    flex-grow: 1;
+    height: 10px;
+    background: rgba(43, 51, 31, 0.2);
+    margin: 0 10px;
+    border: 1px solid #2b331f;
+    border-radius: 2px;
+    overflow: hidden;
+}
+/* Barras de stat monocromáticas para efecto retro */
+.stat-bar-fill { height: 100%; background: #2b331f; }
+
+/* --- ZONA INFERIOR (BOTONES) --- */
+.gameboy-controls-area {
+    display: flex;
+    justify-content: flex-end; /* Botón A a la derecha */
+    align-items: center;
+    padding-right: 10px;
+}
+
+/* Decoración D-Pad (Cruz) */
+.d-pad-decoration {
+    width: 60px; height: 60px;
+    background: #444;
+    position: absolute;
+    bottom: 30px; left: 30px;
+    border-radius: 5px;
+    /* Truco CSS para hacer una cruz rápida */
+    background: 
+        linear-gradient(to bottom, transparent 33%, #333 33%, #333 66%, transparent 66%),
+        linear-gradient(to right, transparent 33%, #333 33%, #333 66%, transparent 66%);
+    background-color: #444;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+}
+
+/* BOTÓN 'A' (ELEGIR) */
+.gb-action-btn-a {
+    width: 70px; height: 70px;
+    background: linear-gradient(145deg, #a83279, #85205d); /* Color púrpura/rojo botón A */
+    border-radius: 50%;
+    border: 4px solid #6e1a4d;
+    color: #e0f0c0;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+    transition: all 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 1.1;
+    padding: 5px;
+}
+
+.gb-action-btn-a:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    background: linear-gradient(145deg, #85205d, #a83279);
+}

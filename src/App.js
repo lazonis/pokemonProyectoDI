@@ -2,60 +2,94 @@ import { useState } from 'react';
 import './App.css';
 import PokemonList from './components/PokemonList';
 
-// import BattleArena from './components/BattleArena'; // (Para el futuro)
-
 function App() {
   const [fase, setFase] = useState('SELECCION'); // 'SELECCION' o 'BATALLA'
-  const [equipoP1, setEquipoP1] = useState([]);  // ARRAY DEL EQUIPO
+  const [equipoP1, setEquipoP1] = useState([]);  
+  const [equipoP2, setEquipoP2] = useState([]);  // [NUEVO] Estado Jugador 2
 
-  const agregarAlEquipo = (pokemon) => {
-    // 1. Validar duplicados
-    if (equipoP1.some(p => p.id === pokemon.id)) {
-        alert("¡Ya tienes a este Pokémon!");
+  // Función unificada para agregar (recibe el pokemon y el ID del jugador)
+  const agregarAlEquipo = (pokemon, jugadorId) => {
+    const equipoActual = jugadorId === 1 ? equipoP1 : equipoP2;
+    const setEquipo = jugadorId === 1 ? setEquipoP1 : setEquipoP2;
+
+    // 1. Validar duplicados (en el equipo de ese jugador)
+    if (equipoActual.some(p => p.id === pokemon.id)) {
+        alert(`¡El Jugador ${jugadorId} ya tiene a este Pokémon!`);
         return;
     }
     // 2. Validar tamaño máximo
-    if (equipoP1.length >= 6) {
-        alert("¡Equipo lleno! (Máximo 6)");
+    if (equipoActual.length >= 6) {
+        alert(`¡Equipo del Jugador ${jugadorId} lleno! (Máximo 6)`);
         return;
     }
 
-    setEquipoP1([...equipoP1, pokemon]);
+    setEquipo([...equipoActual, pokemon]);
   };
 
   return (
     <div className="App">
         {fase === 'SELECCION' && (
             <div className="selection-screen">
-                <h1 style={{textAlign: 'center', color: '#333'}}>ORGANIZADOR DE PC POKÉMON</h1>
+                <h1 style={{textAlign: 'center', color: 'white', margin: '20px 0', textShadow: '2px 2px 4px #000'}}>
+                    ORGANIZADOR DE PC POKÉMON
+                </h1>
+                
+                {/* Pasamos ambos equipos y la función de selección */}
                 <PokemonList 
                     onSelectPokemon={agregarAlEquipo} 
-                    equipoActualP1={equipoP1}
+                    equipoP1={equipoP1}
+                    equipoP2={equipoP2}
                 />
                 
-                {/* Botón para ir a batalla si tienes al menos 1 pokemon */}
-                <div style={{textAlign: 'center', margin: '10px'}}>
+                <div style={{textAlign: 'center', margin: '20px'}}>
                     <button 
-                        disabled={equipoP1.length === 0}
+                        // Solo habilitar si ambos tienen al menos 1 pokemon
+                        disabled={equipoP1.length === 0 || equipoP2.length === 0}
                         onClick={() => setFase('BATALLA')}
-                        style={{padding: '10px 30px', fontSize: '1.2rem', cursor: 'pointer'}}
+                        className="btn-battle-start"
+                        style={{
+                            padding: '15px 40px', 
+                            fontSize: '1.2rem', 
+                            cursor: 'pointer',
+                            backgroundColor: (equipoP1.length > 0 && equipoP2.length > 0) ? '#ff3333' : '#555',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontWeight: 'bold'
+                        }}
                     >
-                        IR A LA BATALLA ({equipoP1.length}/6)
+                        IR A LA BATALLA
                     </button>
+                    { (equipoP1.length === 0 || equipoP2.length === 0) &&
+                        <p style={{color: '#ff6b6b', marginTop: '10px'}}>
+                            * Ambos jugadores necesitan al menos 1 Pokémon
+                        </p>
+                    }
                 </div>
             </div>
         )}
 
         {fase === 'BATALLA' && (
-            <div className="battle-screen">
+            <div className="battle-screen" style={{color: 'white', textAlign: 'center', padding: '20px'}}>
                 <h2>¡BATALLA POKÉMON!</h2>
-                <div style={{display: 'flex', gap: '20px', justifyContent: 'center'}}>
-                    {equipoP1.map(p => (
-                        <img key={p.id} src={p.image} alt={p.name} style={{width: 100, imageRendering: 'pixelated'}} />
-                    ))}
+                <div style={{display: 'flex', gap: '50px', justifyContent: 'center', marginTop: '40px'}}>
+                    <div>
+                        <h3>JUGADOR 1</h3>
+                        <div style={{display:'flex', gap:'5px'}}>
+                           {equipoP1.map(p => <img key={p.id} src={p.image} alt={p.name} width="50"/>)}
+                        </div>
+                    </div>
+                    <div>
+                        <h3>JUGADOR 2</h3>
+                         <div style={{display:'flex', gap:'5px'}}>
+                           {equipoP2.map(p => <img key={p.id} src={p.image} alt={p.name} width="50"/>)}
+                        </div>
+                    </div>
                 </div>
                 <br/>
-                <button onClick={() => setFase('SELECCION')}>Volver al PC</button>
+                <button onClick={() => setFase('SELECCION')} style={{padding:'10px 20px', cursor:'pointer'}}>
+                    Volver al PC
+                </button>
             </div>
         )}
     </div>

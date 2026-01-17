@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react';
-import PokemonCard from './PokemonCard';
 import './PokemonList.css';
-import PokemonBox from './PokemonBox';
-import PokemonDetail from './PokemonDetail';
 
-function PokemonList({ onSelectPokemon, equipoActualP1 }) {
+import PokemonDetail from './PokemonDetail'; // [RECUPERADO] Tu ventana flotante original
+
+function PokemonList({ onSelectPokemon, equipoP1, equipoP2 }) {
     const [pokemons, setPokemons] = useState([]); 
     const [page, setPage] = useState(1);          
     const [cargando, setCargando] = useState(false); 
+    
+    // Controla qué pokemon se muestra en la ventana flotante
     const [pokemonVisto, setPokemonVisto] = useState(null); 
+    
+    // [NUEVO] Controla quién está eligiendo actualmente (1 o 2)
+    const [jugadorActivo, setJugadorActivo] = useState(1);
 
-    const LIMIT = 20; // Aumentamos el límite para llenar la caja grande
+    const LIMIT = 24; // Ajustado para grid 4x6
     const MAX_POKEMON_ID = 649; 
     const totalPages = Math.ceil(MAX_POKEMON_ID / LIMIT); 
 
-    // --- USE EFFECT (IDÉNTICO AL ANTERIOR, NO CAMBIA) ---
+    // --- Carga de datos (Igual que tu código original) ---
     useEffect(() => {
         const cargarDatos = async () => {
             setCargando(true); 
@@ -32,7 +36,6 @@ function PokemonList({ onSelectPokemon, equipoActualP1 }) {
                     const data = await resDetalle.json();
                     return {
                         id: data.id, name: data.name,
-                        // Usamos el sprite frontal por defecto. El CSS se encargará de que se vea grande.
                         image: data.sprites.front_default, 
                         type: data.types[0].type.name, hp: data.stats[0].base_stat, maxHp: data.stats[0].base_stat,
                         attack: data.stats[1].base_stat, defense: data.stats[2].base_stat
@@ -45,77 +48,83 @@ function PokemonList({ onSelectPokemon, equipoActualP1 }) {
         cargarDatos();
     }, [page]); 
 
-    // --- MANEJADORES ---
-    const handleSlotClick = (poke) => setPokemonVisto(poke);
-    
+    // Al confirmar en el modal, se agrega al jugador activo
     const handleConfirmar = (poke) => {
-        setPokemonVisto(null); // Cerramos el modal flotante
-        onSelectPokemon(poke); // Enviamos al padre
+        setPokemonVisto(null); // Cerrar modal
+        onSelectPokemon(poke, jugadorActivo); // Guardar en App.js
     };
 
-    // Helper para saber si un pokemon ya está en el equipo (para marcarlo visualmente si quieres)
-    const isInTeam = (pokeId) => equipoActualP1.some(p => p.id === pokeId);
+    // Helper para saber si el pokemon ya lo tiene el jugador actual (para marcarlo visualmente)
+    const equipoActual = jugadorActivo === 1 ? equipoP1 : equipoP2;
+    const isOwned = (pokeId) => equipoActual.some(p => p.id === pokeId);
 
     return (
-        // NUEVA ESTRUCTURA PRINCIPAL: 3 COLUMNAS
         <div className="team-builder-layout">
             
-            {/* --- COLUMNA IZQUIERDA: EQUIPO JUGADOR 1 --- */}
-            <div className="sidebar-team player-1-team">
-                <h3>EQUIPO P1 ({equipoActualP1.length}/6)</h3>
+            {/* --- JUGADOR 1 (Click para activar turno) --- */}
+            <div 
+                className={`sidebar-team player-1 ${jugadorActivo === 1 ? 'active-turn' : ''}`}
+                onClick={() => setJugadorActivo(1)}
+            >
+                <h3>JUGADOR 1 {jugadorActivo === 1 && '🔴'}</h3>
                 <div className="team-slots-container">
-                    {/* Mapeamos el equipo actual */}
-                    {equipoActualP1.map((poke) => (
-                        // Reusamos PokemonSlot pero con un estilo diferente en CSS para el sidebar
-                        <div key={'p1-'+poke.id} className="sidebar-slot">
-                            <img src={poke.image} alt={poke.name} className="pixel-sprite-small"/>
+                    {equipoP1.map((poke) => (
+                        <div key={'p1-'+poke.id} className="sidebar-slot filled">
+                            <img src={poke.image} alt={poke.name}/>
                             <span>{poke.name}</span>
                         </div>
                     ))}
-                    {/* Rellenamos con huecos vacíos hasta llegar a 6 */}
-                    {[...Array(6 - equipoActualP1.length)].map((_, i) => (
-                         <div key={'empty-'+i} className="sidebar-slot empty">Vacío</div>
+                    {[...Array(6 - equipoP1.length)].map((_, i) => (
+                         <div key={'e1-'+i} className="sidebar-slot empty">Vacío</div>
                     ))}
                 </div>
             </div>
 
+            {/* --- CAJA CENTRAL (Grid) --- */}
+           <div className="pc-grid">
+    {cargando ? <p className="loading">Cargando...</p> : pokemons.map((poke) => (
+        
+        /* CÓDIGO INTEGRADO (Ya no usamos PokemonBox) */
+        <div 
+            key={poke.id}
+            className={`pokemon-slot-card ${isOwned(poke.id) ? 'selected' : ''}`} 
+            onClick={() => setPokemonVisto(poke)}
+        >
+            <div className="sprite-container">
+                    <img 
+                    src={poke.image} 
+                    alt={poke.name} 
+                    className="pixel-sprite-large" 
+                />
+            </div>
+            <span className="pokemon-name-label">{poke.name}</span>
+        </div>
+        /* FIN DEL CAMBIO */
 
-            {/* --- COLUMNA CENTRAL: LA CAJA ROJA ANCHA --- */}
-            <div className="main-pc-box-container">
-                 <div className="box-header red-style">
-                    <button disabled={page===1} onClick={()=>setPage(page-1)}>◀ ANTERIOR</button>
-                    <h2>CAJA {page}</h2>
-                    <button disabled={page===totalPages} onClick={()=>setPage(page+1)}>SIGUIENTE ▶</button>
+    ))}
+</div>
+
+            {/* --- JUGADOR 2 (Click para activar turno) --- */}
+            <div 
+                className={`sidebar-team player-2 ${jugadorActivo === 2 ? 'active-turn' : ''}`}
+                onClick={() => setJugadorActivo(2)}
+            >
+                <h3>JUGADOR 2 {jugadorActivo === 2 && '🔴'}</h3>
+                 <div className="team-slots-container">
+                    {equipoP2.map((poke) => (
+                        <div key={'p2-'+poke.id} className="sidebar-slot filled">
+                            <img src={poke.image} alt={poke.name}/>
+                            <span>{poke.name}</span>
+                        </div>
+                    ))}
+                    {[...Array(6 - equipoP2.length)].map((_, i) => (
+                         <div key={'e2-'+i} className="sidebar-slot empty">Vacío</div>
+                    ))}
                 </div>
-
-                {cargando ? (
-                    <div className="loading-text">Cargando PC...</div>
-                ) : (
-                    <div className="pokemon-grid-wide">
-                        {pokemons.map((poke) => (
-                            <PokemonBox 
-                                key={poke.id} 
-                                pokemon={poke} 
-                                onClick={setPokemonVisto} // Abre el modal flotante
-                                isSelected={isInTeam(poke.id)}
-                            />
-                        ))}
-                    </div>
-                )}
-                <p className="hint-text">Haz click para ver detalles y añadir al equipo</p>
             </div>
 
-
-            {/* --- COLUMNA DERECHA: EQUIPO JUGADOR 2 (Placeholder por ahora) --- */}
-            <div className="sidebar-team player-2-team">
-                <h3>EQUIPO CPU</h3>
-                 <div className="team-slots-container waiting">
-                    <p>Esperando selección...</p>
-                    {/* Aquí harías lo mismo que en el P1 cuando implementes el P2 */}
-                </div>
-            </div>
-
-            {/* MODAL (Se mantiene igual, flota sobre todo) */}
+            {/* --- TU VENTANA FLOTANTE ORIGINAL --- */}
+            {/* Solo nos aseguramos de que el CSS del detalle tenga contraste */}
             <PokemonDetail
                 pokemon={pokemonVisto}
                 onClose={() => setPokemonVisto(null)}
