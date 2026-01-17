@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import './PokemonList.css';
+import TeamDisplay from './TeamDisplay';
 
 import PokemonDetail from './PokemonDetail'; // [RECUPERADO] Tu ventana flotante original
+
 
 function PokemonList({ onSelectPokemon, equipoP1, equipoP2 }) {
     const [pokemons, setPokemons] = useState([]);
@@ -17,6 +19,10 @@ function PokemonList({ onSelectPokemon, equipoP1, equipoP2 }) {
     const LIMIT = 48; // Ajustado para grid 4x6
     const MAX_POKEMON_ID = 649;
     const totalPages = Math.ceil(MAX_POKEMON_ID / LIMIT);
+
+
+const [infoP1] = useState({ name: "Ash Ketchum"});
+    const [infoP2] = useState({ name: "Gary Oak"});
 
 
     //PAGINACIÓN
@@ -89,23 +95,13 @@ function PokemonList({ onSelectPokemon, equipoP1, equipoP2 }) {
         <div className="team-builder-layout">
 
             {/* --- JUGADOR 1 (Click para activar turno) --- */}
-            <div
-                className={`sidebar-team player-1 ${jugadorActivo === 1 ? 'active-turn' : ''}`}
-                onClick={() => setJugadorActivo(1)}
-            >
-                <h3>JUGADOR 1 {jugadorActivo === 1 && '🔴'}</h3>
-                <div className="team-slots-container">
-                    {equipoP1.map((poke) => (
-                        <div key={'p1-' + poke.id} className="sidebar-slot filled">
-                            <img src={poke.image} alt={poke.name} />
-                            <span>{poke.name}</span>
-                        </div>
-                    ))}
-                    {[...Array(6 - equipoP1.length)].map((_, i) => (
-                        <div key={'e1-' + i} className="sidebar-slot empty">Vacío</div>
-                    ))}
-                </div>
-            </div>
+            <TeamDisplay 
+                playerName={infoP1.name}
+                trainerSprite={infoP1.sprite}
+                team={equipoP1}
+                isActive={jugadorActivo === 1}
+                onActivate={() => setJugadorActivo(1)}
+            />
 
             {/* --- CAJA CENTRAL (Grid) --- */}
             <div className="main-pc-container">
@@ -154,23 +150,13 @@ function PokemonList({ onSelectPokemon, equipoP1, equipoP2 }) {
             </div>
 
             {/* --- JUGADOR 2 (Click para activar turno) --- */}
-            <div
-                className={`sidebar-team player-2 ${jugadorActivo === 2 ? 'active-turn' : ''}`}
-                onClick={() => setJugadorActivo(2)}
-            >
-                <h3>JUGADOR 2 {jugadorActivo === 2 && '🔴'}</h3>
-                <div className="team-slots-container">
-                    {equipoP2.map((poke) => (
-                        <div key={'p2-' + poke.id} className="sidebar-slot filled">
-                            <img src={poke.image} alt={poke.name} />
-                            <span>{poke.name}</span>
-                        </div>
-                    ))}
-                    {[...Array(6 - equipoP2.length)].map((_, i) => (
-                        <div key={'e2-' + i} className="sidebar-slot empty">Vacío</div>
-                    ))}
-                </div>
-            </div>
+            <TeamDisplay 
+                playerName={infoP2.name}
+                trainerSprite={infoP2.sprite}
+                team={equipoP2}
+                isActive={jugadorActivo === 2}
+                onActivate={() => setJugadorActivo(2)}
+            />
 
             {/* --- TU VENTANA FLOTANTE ORIGINAL --- */}
             {/* Solo nos aseguramos de que el CSS del detalle tenga contraste */}

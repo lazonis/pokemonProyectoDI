@@ -1,81 +1,103 @@
 /* --- LAYOUT PRINCIPAL --- */
-.team-builder-layout {
-    display: grid;
-    /* Columnas: Sidebar Izq | Centro Flexible | Sidebar Der */
-    grid-template-columns: 240px 1fr 240px;
-    gap: 20px;
-    padding: 20px;
-    height: 85vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #222;
-    /* Fondo general oscuro */
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
+/* --- TeamDisplay.js Styles --- */
 
-/* --- COLUMNAS LATERALES (EQUIPOS) --- */
-.sidebar-team {
+.team-panel {
     background: #333;
-    /* Fondo oscuro para contraste */
     border: 2px solid #555;
     border-radius: 10px;
     padding: 15px;
     color: white;
     cursor: pointer;
     transition: all 0.3s ease;
-    opacity: 0.6;
-    /* Un poco apagado cuando no es su turno */
+    opacity: 0.7;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-/* ESTILO CAJA DE SELECCIÓN (JUGADOR ACTIVO) */
-/* El usuario pidió "estilo rojo" para la selección */
-.sidebar-team.active-turn {
-    border: 3px solid #ff3333;
-    /* ROJO INTENSO */
-    box-shadow: 0 0 15px rgba(255, 51, 51, 0.4);
+.team-panel.active-turn {
+    border-color: #ff3333;
+    background-color: #2a2a2a;
     opacity: 1;
+    box-shadow: 0 0 15px rgba(255, 51, 51, 0.3);
     transform: scale(1.02);
-    /* Crece un poco */
-    background: #2a2a2a;
 }
 
-.sidebar-team h3 {
-    text-align: center;
-    border-bottom: 1px solid #777;
+/* Cabecera Entrenador */
+.trainer-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #555;
     padding-bottom: 10px;
-    margin-top: 0;
-    font-size: 1.1rem;
 }
 
-/* Slots de los pokemon en la barra lateral */
-.sidebar-slot {
+.trainer-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+    background: #666;
+}
+
+.trainer-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+.trainer-info h3 {
+    margin: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.trainer-info small {
+    font-size: 0.75rem;
+    color: #aaa;
+}
+
+/* Slots del Equipo */
+.team-grid-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.team-slot {
     height: 45px;
     display: flex;
     align-items: center;
-    border-radius: 5px;
-    margin-bottom: 8px;
+    border-radius: 6px;
     padding: 0 10px;
     font-size: 0.9rem;
 }
 
-.sidebar-slot.filled {
+.team-slot.filled {
     background: #444;
     border: 1px solid #666;
 }
 
-.sidebar-slot.empty {
-    justify-content: center;
-    color: #777;
-    background: #222;
-    font-style: italic;
-    border: 1px dashed #555;
-}
-
-.sidebar-slot img {
+.team-slot.filled img {
     width: 35px;
     height: 35px;
     margin-right: 10px;
     image-rendering: pixelated;
+}
+
+.team-slot.empty {
+    background: #252525;
+    border: 1px dashed #444;
+    color: #444;
+    justify-content: center;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+.team-slot.empty::after {
+    content: "Vacío";
 }
 
 /* --- CAJA CENTRAL (PC) --- */
