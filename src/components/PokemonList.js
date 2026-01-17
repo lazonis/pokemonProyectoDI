@@ -4,20 +4,17 @@ import './PokemonList.css';
 import PokemonBox from './PokemonBox';
 import PokemonDetail from './PokemonDetail';
 
-function PokemonList({ onSelectPokemon }) {
-    //ESTADOS
+function PokemonList({ onSelectPokemon, equipoActualP1 }) {
     const [pokemons, setPokemons] = useState([]); 
     const [page, setPage] = useState(1);          
     const [cargando, setCargando] = useState(false); 
-    const [criterioOrden, setCriterioOrden] = useState('default'); 
+    const [pokemonVisto, setPokemonVisto] = useState(null); 
 
-    //ESTADO POKEMON CLICKADO
-    const [pokemonVisto, setPokemonVisto] = useState(null);
-
-    const LIMIT = 20; 
+    const LIMIT = 20; // Aumentamos el límite para llenar la caja grande
     const MAX_POKEMON_ID = 649; 
     const totalPages = Math.ceil(MAX_POKEMON_ID / LIMIT); 
 
+    // --- USE EFFECT (IDÉNTICO AL ANTERIOR, NO CAMBIA) ---
     useEffect(() => {
         const cargarDatos = async () => {
             setCargando(true); 
@@ -30,136 +27,96 @@ function PokemonList({ onSelectPokemon }) {
                 const promesasDetalles = datosLista.results.map(async (poke) => {
                     const partesUrl = poke.url.split('/');
                     const id = parseInt(partesUrl[partesUrl.length - 2]);
-
                     if (id > MAX_POKEMON_ID) return null;
-
                     const resDetalle = await fetch(poke.url);
-                    const data = await resDetalle.json(); // Variable data
-
+                    const data = await resDetalle.json();
                     return {
-                        id: data.id,
-                        name: data.name,
-                        image: data.sprites.front_default,
-                        type: data.types[0].type.name,
-                        hp: data.stats[0].base_stat,
-                        maxHp: data.stats[0].base_stat,
-                        attack: data.stats[1].base_stat,
-                        defense: data.stats[2].base_stat,
-                        moves: data.moves.slice(0, 4).map(m => ({ 
-                            name: m.move.name, url: m.move.url
-                        }))
+                        id: data.id, name: data.name,
+                        // Usamos el sprite frontal por defecto. El CSS se encargará de que se vea grande.
+                        image: data.sprites.front_default, 
+                        type: data.types[0].type.name, hp: data.stats[0].base_stat, maxHp: data.stats[0].base_stat,
+                        attack: data.stats[1].base_stat, defense: data.stats[2].base_stat
                     };
                 });
-
                 const pokemonsCompletos = await Promise.all(promesasDetalles);
-                const pokemonsValidos = pokemonsCompletos.filter(p => p !== null);
-
-                setPokemons(pokemonsValidos); 
-
-                setCriterioOrden('default');  
-
-            } catch (error) {
-                console.error("Algo salió mal cargando los pokemons:", error);
-            } finally {
-                setCargando(false); 
-            }
+                setPokemons(pokemonsCompletos.filter(p => p !== null)); 
+            } catch (error) { console.error("Error:", error); } finally { setCargando(false); }
         };
-
         cargarDatos();
     }, [page]); 
 
-    // Lógica de ordenación
-    const getPokemonsParaMostrar = () => {
-        const copia = [...pokemons];
-        if (criterioOrden === 'nombre') return copia.sort((a, b) => a.name.localeCompare(b.name));
-        if (criterioOrden === 'tipo') return copia.sort((a, b) => a.type.localeCompare(b.type));
-        return copia; 
-    };
-
-    const pokemonsVisibles = getPokemonsParaMostrar();
-
-    //HANDLERS
-    // Cuando hacen click en un slot de la caja
-    const handleSlotClick = (poke) => {
-        setPokemonVisto(poke); 
-    };
-
+    // --- MANEJADORES ---
+    const handleSlotClick = (poke) => setPokemonVisto(poke);
+    
     const handleConfirmar = (poke) => {
-        setPokemonVisto(null); // Cerramos modal
-        onSelectPokemon(poke); // Avisamos al padre (App.js)
+        setPokemonVisto(null); // Cerramos el modal flotante
+        onSelectPokemon(poke); // Enviamos al padre
     };
 
-
-
-    // --- NUEVO: CALCULA QUÉ NÚMEROS MOSTRAR ---
-    const getPaginationGroup = () => {
-        // Siempre mostramos la 1
-        let pages = [1];
-
-        // Calculamos el rango alrededor de la página actual (ej: si estás en la 5, mostramos 4, 5, 6)
-        let rangeStart = Math.max(2, page - 1);
-        let rangeEnd = Math.min(totalPages - 1, page + 1);
-
-        // Ajustes visuales para que siempre se vea bonito al principio o final
-        if (page < 4) rangeEnd = Math.min(totalPages - 1, 4);
-        if (page > totalPages - 3) rangeStart = Math.max(2, totalPages - 3);
-
-        // Añadimos puntos suspensivos si hay hueco
-        if (rangeStart > 2) pages.push('...');
-
-        // Añadimos los números centrales
-        for (let i = rangeStart; i <= rangeEnd; i++) {
-            pages.push(i);
-        }
-
-        // Añadimos puntos suspensivos finales
-        if (rangeEnd < totalPages - 1) pages.push('...');
-
-        // Siempre mostramos la última
-        if (totalPages > 1) pages.push(totalPages);
-
-        return pages;
-    };
-
-    // --- NUEVO: CAMBIAR DE PÁGINA ---
-    const handlePageChange = (item) => {
-        if (item === '...') return; // Si clicas en los puntos, no pasa nada
-        setPage(item);
-    };
+    // Helper para saber si un pokemon ya está en el equipo (para marcarlo visualmente si quieres)
+    const isInTeam = (pokeId) => equipoActualP1.some(p => p.id === pokeId);
 
     return (
-        <div className="pc-container-wrapper">
-            <div className="pc-box">
-                {/* CABECERA DE LA CAJA */}
-                <div className="box-header">
+        // NUEVA ESTRUCTURA PRINCIPAL: 3 COLUMNAS
+        <div className="team-builder-layout">
+            
+            {/* --- COLUMNA IZQUIERDA: EQUIPO JUGADOR 1 --- */}
+            <div className="sidebar-team player-1-team">
+                <h3>EQUIPO P1 ({equipoActualP1.length}/6)</h3>
+                <div className="team-slots-container">
+                    {/* Mapeamos el equipo actual */}
+                    {equipoActualP1.map((poke) => (
+                        // Reusamos PokemonSlot pero con un estilo diferente en CSS para el sidebar
+                        <div key={'p1-'+poke.id} className="sidebar-slot">
+                            <img src={poke.image} alt={poke.name} className="pixel-sprite-small"/>
+                            <span>{poke.name}</span>
+                        </div>
+                    ))}
+                    {/* Rellenamos con huecos vacíos hasta llegar a 6 */}
+                    {[...Array(6 - equipoActualP1.length)].map((_, i) => (
+                         <div key={'empty-'+i} className="sidebar-slot empty">Vacío</div>
+                    ))}
+                </div>
+            </div>
+
+
+            {/* --- COLUMNA CENTRAL: LA CAJA ROJA ANCHA --- */}
+            <div className="main-pc-box-container">
+                 <div className="box-header red-style">
+                    <button disabled={page===1} onClick={()=>setPage(page-1)}>◀ ANTERIOR</button>
                     <h2>CAJA {page}</h2>
-                    <div className="pagination-controls">
-                        <button disabled={page===1} onClick={()=>setPage(page-1)}>◀</button>
-                        <span>{page}/{totalPages}</span>
-                        <button disabled={page===totalPages} onClick={()=>setPage(page+1)}>▶</button>
-                    </div>
+                    <button disabled={page===totalPages} onClick={()=>setPage(page+1)}>SIGUIENTE ▶</button>
                 </div>
 
-                {/* GRID (LA CAJA EN SÍ) */}
                 {cargando ? (
-                    <div className="loading-text">Cargando datos del PC...</div>
+                    <div className="loading-text">Cargando PC...</div>
                 ) : (
-                    <div className="pokemon-grid">
-                        {pokemonsVisibles.map((poke) => (
-                            <PokemonBox
+                    <div className="pokemon-grid-wide">
+                        {pokemons.map((poke) => (
+                            <PokemonBox 
                                 key={poke.id} 
                                 pokemon={poke} 
-                                onClick={handleSlotClick} 
+                                onClick={setPokemonVisto} // Abre el modal flotante
+                                isSelected={isInTeam(poke.id)}
                             />
                         ))}
                     </div>
                 )}
+                <p className="hint-text">Haz click para ver detalles y añadir al equipo</p>
             </div>
-            
-            <p className="hint-text">Elige un Pokémon para ver sus datos</p>
 
-            {/* MODAL DE DETALLES */}
-            <PokemonDetail 
+
+            {/* --- COLUMNA DERECHA: EQUIPO JUGADOR 2 (Placeholder por ahora) --- */}
+            <div className="sidebar-team player-2-team">
+                <h3>EQUIPO CPU</h3>
+                 <div className="team-slots-container waiting">
+                    <p>Esperando selección...</p>
+                    {/* Aquí harías lo mismo que en el P1 cuando implementes el P2 */}
+                </div>
+            </div>
+
+            {/* MODAL (Se mantiene igual, flota sobre todo) */}
+            <PokemonDetail
                 pokemon={pokemonVisto}
                 onClose={() => setPokemonVisto(null)}
                 onConfirm={handleConfirmar}

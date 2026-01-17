@@ -1,98 +1,177 @@
-/* --- CONTENEDOR PRINCIPAL --- */
-.pc-container-wrapper {
+/* ESTRUCTURA DE 3 COLUMNAS */
+.team-builder-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr 250px; /* Lateral | Centro Flexible | Lateral */
+    gap: 20px;
+    padding: 20px;
+    height: 90vh;
+    font-family: 'Courier New', monospace;
+    align-items: start;
+}
+
+/* --- BARRA LATERAL (EQUIPOS) --- */
+.sidebar-team {
+    background: #e0e0e0;
+    border: 4px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.sidebar-team h3 {
+    text-align: center;
+    border-bottom: 2px solid #999;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.team-slots-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    font-family: 'Courier New', monospace;
-    padding: 20px;
+    gap: 8px;
 }
 
-/* --- LA CAJA ESTILO GAMEBOY --- */
-.pc-box {
-    background-color: #f8f8f8; /* Fondo blanco/gris de las cajas nuevas */
-    background-image: linear-gradient(#e8e8e8 1px, transparent 1px),
-                      linear-gradient(90deg, #e8e8e8 1px, transparent 1px);
-    background-size: 20px 20px;
-    border: 8px solid #5a4a42; /* Borde estilo madera o retro */
-    border-radius: 10px;
-    padding: 15px;
-    width: 100%;
-    max-width: 600px;
-    box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
-}
-
-.box-header {
+.sidebar-slot {
+    height: 50px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: #705848;
-    color: white;
-    padding: 5px 15px;
+    border: 2px solid #777;
     border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.pagination-controls button {
-    background: #e0e0e0;
-    border: 1px solid #333;
-    cursor: pointer;
-    margin: 0 5px;
+    background: white;
+    padding: 0 10px;
+    font-size: 0.9rem;
     font-weight: bold;
 }
 
-/* --- EL GRID --- */
-.pokemon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-    gap: 8px;
-    min-height: 300px;
+.sidebar-slot.empty {
+    justify-content: center;
+    color: #aaa;
+    background: #f0f0f0;
+    font-style: italic;
+    border-style: dashed;
 }
 
-/* --- EL SLOT INDIVIDUAL (PokemonSlot) --- */
-.pokemon-slot {
-    background-color: rgba(255,255,255,0.6);
-    border: 2px solid transparent;
+.sidebar-slot img {
+    width: 40px;
+    height: 40px;
+    image-rendering: pixelated;
+    margin-right: 10px;
+}
+
+/* --- CAJA CENTRAL ROJA --- */
+.main-pc-box {
+    background-color: #c0392b; /* Rojo Pokédex/Caja */
+    border: 8px solid #922b21;
+    border-radius: 15px;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+}
+
+.box-header-red {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #a93226;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    color: white;
+    border: 2px solid #7c261e;
+}
+
+.box-header-red button {
+    background: #f1c40f;
+    border: none;
+    padding: 5px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 3px 0 #b7950b;
+}
+
+.box-header-red button:active {
+    transform: translateY(3px);
+    box-shadow: none;
+}
+
+/* GRID DE POKEMONS (Caja) */
+.pokemon-grid-wide {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    overflow-y: auto; /* Scroll si hay muchos */
+    padding-right: 5px;
+}
+
+/* TARJETA INDIVIDUAL (Slot) */
+.pokemon-slot-card {
+    background: #f8f8f8;
+    border: 3px solid #444;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 60px;
-    transition: all 0.2s;
+    padding: 8px;
+    transition: transform 0.1s;
 }
 
-.pokemon-slot:hover {
-    background-color: #ffd700; /* Dorado al pasar el ratón */
-    border-color: #333;
-    transform: scale(1.1);
-    z-index: 10;
+.pokemon-slot-card:hover {
+    background: #ffeaa7;
+    transform: scale(1.05);
 }
 
-.pixel-sprite {
-    width: 100%; 
-    height: 100%;
+.pokemon-slot-card.selected {
+    opacity: 0.5;
+    filter: grayscale(1);
+    cursor: not-allowed;
+}
+
+.sprite-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.pixel-sprite-large {
+    width: 80px;
+    height: 80px;
+    image-rendering: pixelated;
     object-fit: contain;
-    image-rendering: pixelated; /* CRUCIAL PARA PIXEL ART */
 }
 
-/* --- ESTILOS DEL MODAL (PokemonDetailModal) --- */
+.pokemon-name-label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+/* --- MODAL FLOTANTE (OVERLAY) --- */
 .detail-modal-overlay {
-    position: fixed;
+    position: fixed; /* FLOTANTE */
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 1000; /* Siempre encima */
+    backdrop-filter: blur(3px);
 }
 
 .detail-card {
     background: white;
-    width: 320px;
-    border: 4px solid #333;
-    border-radius: 15px;
+    width: 300px;
     padding: 20px;
-    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    border-radius: 12px;
+    border: 4px solid #333;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    text-align: center;
     animation: popIn 0.2s ease-out;
 }
 
@@ -101,70 +180,18 @@
     to { transform: scale(1); opacity: 1; }
 }
 
-.modal-header {
-    text-align: center;
-    border-bottom: 2px solid #eee;
-    margin-bottom: 15px;
-}
-
 .big-sprite {
-    width: 96px; 
-    height: 96px;
+    width: 120px;
+    height: 120px;
     image-rendering: pixelated;
 }
 
-.stats-container p {
-    margin: 5px 0;
-}
-
-.combat-stats {
-    display: flex;
-    justify-content: space-around;
-    background: #eee;
-    padding: 10px;
-    border-radius: 8px;
-    margin: 10px 0;
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 0.9rem;
-}
-
-/* BARRA DE VIDA */
-.hp-section {
-    margin-top: 10px;
-}
+/* Estilos de barra de vida y botones del modal... */
 .hp-bar-bg {
-    width: 100%;
-    height: 12px;
-    background: #ccc;
-    border: 2px solid #333;
-    border-radius: 10px;
-    overflow: hidden;
+    width: 100%; height: 15px; background: #ddd;
+    border: 2px solid #333; border-radius: 10px; margin: 5px 0 15px 0; overflow: hidden;
 }
-.hp-fill {
-    height: 100%;
-    transition: width 0.3s ease;
-}
-
-/* BOTONES MODAL */
-.modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.btn-cancel, .btn-confirm {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-.btn-cancel { background: #f44336; color: white; }
-.btn-confirm { background: #2196f3; color: white; }
+.hp-fill { height: 100%; transition: width 0.3s; }
+.modal-actions { display: flex; gap: 10px; }
+.btn-cancel { flex: 1; background: #e74c3c; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+.btn-confirm { flex: 1; background: #3498db; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
