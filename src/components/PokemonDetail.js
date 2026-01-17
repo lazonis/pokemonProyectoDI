@@ -16,8 +16,6 @@ const PokemonDetail = ({ pokemon, onClose, onConfirm }) => {
             
             {/* La Carcasa de la Gameboy */}
             <div className="gameboy-body" onClick={handleCardClick}>
-                
-                
 
                 {/* El bisel oscuro de la pantalla */}
                 <div className="gameboy-screen-bezel">
@@ -32,7 +30,7 @@ const PokemonDetail = ({ pokemon, onClose, onConfirm }) => {
                         
                         <div className="gb-image-container">
                             <img 
-                                src={pokemon.image} 
+                                src={pokemon.sprite} 
                                 alt={pokemon.name} 
                                 className="gb-sprite"
                             />
