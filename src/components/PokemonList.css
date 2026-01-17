@@ -1,95 +1,170 @@
-/* src/components/PokemonList.css */
-
-/* EL CONTENEDOR PRINCIPAL: Estilo Pantalla Retro */
-.list-wrapper {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
-    /* Fondo verdoso típico de Game Boy original o Gris de Pocket */
-    background-color: #e0f8cf; 
-    border: 6px solid #333;
-    box-shadow: 10px 10px 0 #222;
-    font-family: 'Press Start 2P', monospace; /* Asegúrate de importar esta fuente en App.css */
-    color: #0f380f; /* Verde oscuro Game Boy */
-}
-
-.list-wrapper h2 {
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 20px;
-    margin-bottom: 30px;
-    border-bottom: 4px solid #0f380f;
-    padding-bottom: 10px;
-}
-
-/* --- BARRA DE HERRAMIENTAS --- */
-.toolbar {
+/* --- CONTENEDOR PRINCIPAL --- */
+.pc-container-wrapper {
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Courier New', monospace;
+    padding: 20px;
 }
 
-.btn {
-    background: #0f380f;
-    color: #e0f8cf;
-    border: 2px solid #0f380f;
-    padding: 10px 15px;
-    font-family: inherit;
-    font-size: 10px;
+/* --- LA CAJA ESTILO GAMEBOY --- */
+.pc-box {
+    background-color: #f8f8f8; /* Fondo blanco/gris de las cajas nuevas */
+    background-image: linear-gradient(#e8e8e8 1px, transparent 1px),
+                      linear-gradient(90deg, #e8e8e8 1px, transparent 1px);
+    background-size: 20px 20px;
+    border: 8px solid #5a4a42; /* Borde estilo madera o retro */
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+}
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #705848;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.pagination-controls button {
+    background: #e0e0e0;
+    border: 1px solid #333;
     cursor: pointer;
-    text-transform: uppercase;
-    /* Cero redondez */
-    border-radius: 0; 
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
-}
-
-.btn:hover {
-    background: #306230;
-    transform: translateY(2px);
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-}
-
-.btn.active {
-    background: #e0f8cf;
-    color: #0f380f;
-    border: 2px solid #0f380f;
+    margin: 0 5px;
     font-weight: bold;
 }
 
-/* --- GRID Y PAGINACIÓN --- */
-.grid-layout {
+/* --- EL GRID --- */
+.pokemon-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 8px;
+    min-height: 300px;
 }
 
-.pagination {
-    margin-top: 30px;
+/* --- EL SLOT INDIVIDUAL (PokemonSlot) --- */
+.pokemon-slot {
+    background-color: rgba(255,255,255,0.6);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
     display: flex;
     justify-content: center;
-    gap: 5px;
+    align-items: center;
+    height: 60px;
+    transition: all 0.2s;
 }
 
-.page-btn {
-    background: #e0f8cf;
-    border: 2px solid #0f380f;
-    color: #0f380f;
-    width: 40px;
-    height: 40px;
-    font-family: inherit;
-    font-size: 12px;
+.pokemon-slot:hover {
+    background-color: #ffd700; /* Dorado al pasar el ratón */
+    border-color: #333;
+    transform: scale(1.1);
+    z-index: 10;
+}
+
+.pixel-sprite {
+    width: 100%; 
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated; /* CRUCIAL PARA PIXEL ART */
+}
+
+/* --- ESTILOS DEL MODAL (PokemonDetailModal) --- */
+.detail-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.detail-card {
+    background: white;
+    width: 320px;
+    border: 4px solid #333;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    animation: popIn 0.2s ease-out;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 15px;
+}
+
+.big-sprite {
+    width: 96px; 
+    height: 96px;
+    image-rendering: pixelated;
+}
+
+.stats-container p {
+    margin: 5px 0;
+}
+
+.combat-stats {
+    display: flex;
+    justify-content: space-around;
+    background: #eee;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+/* BARRA DE VIDA */
+.hp-section {
+    margin-top: 10px;
+}
+.hp-bar-bg {
+    width: 100%;
+    height: 12px;
+    background: #ccc;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.hp-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* BOTONES MODAL */
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-cancel, .btn-confirm {
+    flex: 1;
+    padding: 10px;
+    border: none;
     cursor: pointer;
-    border-radius: 0;
+    font-weight: bold;
+    border-radius: 5px;
 }
 
-.page-btn:hover:not(:disabled) {
-    background: #0f380f;
-    color: #e0f8cf;
-}
-
-.page-btn.active {
-    background: #0f380f;
-    color: #e0f8cf;
-    box-shadow: inset 3px 3px 0 rgba(0,0,0,0.5);
-}
+.btn-cancel { background: #f44336; color: white; }
+.btn-confirm { background: #2196f3; color: white; }

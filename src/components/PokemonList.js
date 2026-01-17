@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react';
 import PokemonCard from './PokemonCard';
 import './PokemonList.css';
+import PokemonBox from './PokemonBox';
+import PokemonDetail from './PokemonDetail';
 
 function PokemonList({ onSelectPokemon }) {
+    //ESTADOS
     const [pokemons, setPokemons] = useState([]); 
     const [page, setPage] = useState(1);          
     const [cargando, setCargando] = useState(false); 
     const [criterioOrden, setCriterioOrden] = useState('default'); 
+
+    //ESTADO POKEMON CLICKADO
+    const [pokemonVisto, setPokemonVisto] = useState(null);
 
     const LIMIT = 20; 
     const MAX_POKEMON_ID = 649; 
@@ -33,17 +39,14 @@ function PokemonList({ onSelectPokemon }) {
                     return {
                         id: data.id,
                         name: data.name,
-                        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
+                        image: data.sprites.front_default,
                         type: data.types[0].type.name,
                         hp: data.stats[0].base_stat,
                         maxHp: data.stats[0].base_stat,
-
-                        attack: data.stats[1].base_stat,  // ¡El stat de ataque es vital!
-                        defense: data.stats[2].base_stat, // Y defensa para cuando te peguen
-                        // AQUÍ ESTÁ LA CLAVE: Usamos 'data' para sacar los movimientos
+                        attack: data.stats[1].base_stat,
+                        defense: data.stats[2].base_stat,
                         moves: data.moves.slice(0, 4).map(m => ({ 
-                            name: m.move.name,
-                            url: m.move.url
+                            name: m.move.name, url: m.move.url
                         }))
                     };
                 });
@@ -52,6 +55,7 @@ function PokemonList({ onSelectPokemon }) {
                 const pokemonsValidos = pokemonsCompletos.filter(p => p !== null);
 
                 setPokemons(pokemonsValidos); 
+
                 setCriterioOrden('default');  
 
             } catch (error) {
@@ -73,6 +77,19 @@ function PokemonList({ onSelectPokemon }) {
     };
 
     const pokemonsVisibles = getPokemonsParaMostrar();
+
+    //HANDLERS
+    // Cuando hacen click en un slot de la caja
+    const handleSlotClick = (poke) => {
+        setPokemonVisto(poke); 
+    };
+
+    const handleConfirmar = (poke) => {
+        setPokemonVisto(null); // Cerramos modal
+        onSelectPokemon(poke); // Avisamos al padre (App.js)
+    };
+
+
 
     // --- NUEVO: CALCULA QUÉ NÚMEROS MOSTRAR ---
     const getPaginationGroup = () => {
@@ -111,68 +128,42 @@ function PokemonList({ onSelectPokemon }) {
     };
 
     return (
-        <div className="list-wrapper">
-            <h2>Selecciona tu Pokemon</h2>
-
-            <div className="toolbar">
-                <span>Ordena por:</span>
-                <button className={criterioOrden === 'default' ? 'btn active' : 'btn'} onClick={() => setCriterioOrden('default')}>Original</button>
-                <button className={criterioOrden === 'nombre' ? 'btn active' : 'btn'} onClick={() => setCriterioOrden('nombre')}>A-Z</button>
-                <button className={criterioOrden === 'tipo' ? 'btn active' : 'btn'} onClick={() => setCriterioOrden('tipo')}>Tipo</button>
-            </div>
-
-            {/* --- BLOQUE DE PAGINACIÓN NUEVO --- */}
-            <div className="pagination">
-                {/* Botón ATRÁS */}
-                <button 
-                    className="page-btn arrow" 
-                    onClick={() => setPage(page - 1)} 
-                    disabled={page === 1 || cargando}
-                >
-                    &lt;
-                </button>
-
-                {/* NÚMEROS (Bucle mágico) */}
-                {getPaginationGroup().map((item, index) => (
-                    <button
-                        key={index}
-                        // Si es la página actual, le ponemos clase 'active' para pintarlo amarillo
-                        className={`page-btn ${page === item ? 'active' : ''} ${item === '...' ? 'dots' : ''}`}
-                        onClick={() => handlePageChange(item)}
-                        disabled={item === '...' || cargando}
-                    >
-                        {item}
-                    </button>
-                ))}
-
-                {/* Botón SIGUIENTE */}
-                <button 
-                    className="page-btn arrow" 
-                    onClick={() => setPage(page + 1)} 
-                    disabled={page === totalPages || cargando}
-                >
-                    &gt;
-                </button>
-            </div>
-
-            {cargando ? (
-                <div className="loading-msg">Buscando Pokemons...</div>
-            ) : (
-                <div className="grid-layout">
-                    {pokemonsVisibles.map((poke) => (
-                        <div key={poke.id} onClick={() => onSelectPokemon(poke)}>
-                            <PokemonCard
-                                id={poke.id}  
-                                name={poke.name}
-                                image={poke.image}
-                                type={poke.type}
-                                hp={poke.hp}
-                                maxHp={poke.maxHp}
-                            />
-                        </div>
-                    ))}
+        <div className="pc-container-wrapper">
+            <div className="pc-box">
+                {/* CABECERA DE LA CAJA */}
+                <div className="box-header">
+                    <h2>CAJA {page}</h2>
+                    <div className="pagination-controls">
+                        <button disabled={page===1} onClick={()=>setPage(page-1)}>◀</button>
+                        <span>{page}/{totalPages}</span>
+                        <button disabled={page===totalPages} onClick={()=>setPage(page+1)}>▶</button>
+                    </div>
                 </div>
-            )}
+
+                {/* GRID (LA CAJA EN SÍ) */}
+                {cargando ? (
+                    <div className="loading-text">Cargando datos del PC...</div>
+                ) : (
+                    <div className="pokemon-grid">
+                        {pokemonsVisibles.map((poke) => (
+                            <PokemonBox
+                                key={poke.id} 
+                                pokemon={poke} 
+                                onClick={handleSlotClick} 
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+            
+            <p className="hint-text">Elige un Pokémon para ver sus datos</p>
+
+            {/* MODAL DE DETALLES */}
+            <PokemonDetail 
+                pokemon={pokemonVisto}
+                onClose={() => setPokemonVisto(null)}
+                onConfirm={handleConfirmar}
+            />
         </div>
     );
 }
