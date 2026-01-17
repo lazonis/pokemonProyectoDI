@@ -1,0 +1,41 @@
+.avatar-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.avatar-option {
+    border: 2px solid #3d422f;
+    border-radius: 8px;
+    padding: 5px;
+    cursor: pointer;
+    background: #e3eec0;
+    width: 70px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.avatar-option:hover {
+    transform: scale(1.5);
+    background: #aeba89;
+}
+
+.avatar-option.selected {
+    border-color: #b5b2b5; /* Amarillo select */
+    background: #5e6745; /* Azul fondo */
+    box-shadow: 0 0 20px #411441;
+}
+
+.avatar-option img {
+    width: 100%;
+    image-rendering: pixelated;
+}
+
+.avatar-option span {
+    display: block;
+    font-size: 0.6rem;
+    color: white;
+    margin-top: 4px;
+}

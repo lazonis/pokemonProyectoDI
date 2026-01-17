@@ -1,29 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body {
-  margin: 0;
-  font-family: 'Press Start 2P', cursive; /*Fuente global*/
 
-  background-color: #e0f8cf;
-   --checker-color: #c3dcb2;
+  font-family: 'Press Start 2P', cursive;
+  /*Fuente global*/
 
-   background-image:
-      linear-gradient(45deg, var(--checker-color) 25%, transparent 25%),
-      linear-gradient(-45deg, var(--checker-color) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, var(--checker-color) 75%),
-      linear-gradient(-45deg, transparent 75%, var(--checker-color) 75%);
-
-      background-size: 20px 20px;
-      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-      image-rendering: pixelated;
-      font-size: ;
+  overflow-x: hidden;
+  /* Evita scroll horizontal innecesario */
 
 }
 
-#root {
-    padding: 20px;
-    min-height: 100vh;
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

@@ -1,0 +1,82 @@
+*{
+    font-family: 'Press Start 2P', cursive;
+    
+}
+
+
+
+
+.register-input{
+    font-size: 10px;
+    width: 20vw;
+    height: 1.5vw;
+    margin-left: 2.5vw;
+    padding: 1%;
+}
+
+.register-container {
+    width: 100%;             /* Ancho total */
+    min-height: 100vh;       /* Altura mínima: el 100% de la ventana visible */
+    
+    /* Configuración del Fondo */
+    background-size: cover;  /* Escala la imagen para cubrir todo sin deformarse */
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Opcional: background-attachment: fixed; (Para efecto parallax) */
+    
+    /* Centrado Vertical del contenido (Opcional) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Esto centra verticalmente todo el bloque */
+    padding: 20px;
+    box-sizing: border-box;  /* Para que el padding no sume al ancho */
+}
+
+/* CONTENEDOR SPLIT: La clave del diseño */
+.split-screen-layout {
+    max-width: 1000px;       /* Ancho máximo del contenido */
+    width: 100%;
+    
+    /* Flexbox para las columnas */
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+}
+
+.player-column {
+    flex: 1; /* Ambos ocupan el mismo ancho */
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    
+
+}
+
+/* CLASE NUEVA: Estado Bloqueado/Terminado */
+.player-column.locked {
+    opacity: 0.5;                /* Se vuelve semitransparente */
+    filter: grayscale(100%);     /* Se vuelve blanco y negro */
+    pointer-events: none;        /* IMPIDE hacer click o escribir (lo bloquea) */
+    transform: scale(0.98);      /* Se hace un pelín más pequeño */
+}
+
+.vs-divider {
+    align-self: center;
+    font-size: 3rem;
+    color: #cc0000;
+    text-shadow: 4px 4px 0px #000;
+    margin: 20px;
+}
+
+/* Área del botón final */
+.start-game-actions {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+    border-top: 2px dashed #444; /* Un separador visual */
+    padding-top: 20px;
+}
