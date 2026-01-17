@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TRAINER_SPRITES } from '../../utils/constants';
 import ActionButton from '../../components/ActionButton';
 import AvatarSelector from './AvatarSelector';
-import './RegisterScreen.css'; 
+import './RegisterScreen.css';
 
 function PlayerForm({ initialSprite, buttonLabel, onSubmit }) {
     // Estado local del formulario (antes estaba en RegisterScreen)
@@ -12,30 +12,30 @@ function PlayerForm({ initialSprite, buttonLabel, onSubmit }) {
     const handleSubmit = () => {
         // Validación interna del formulario
         if (!name.trim()) return alert("¡Por favor, escribe un nombre!");
-        
+
         // Enviamos los datos limpios al padre
         onSubmit({ name, sprite });
     };
 
     return (
         <div className="register-card">
-            <input 
+            <input
                 className="register-input"
-                type="text" 
+                type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Nombre"
                 autoFocus
             />
-            
-            <AvatarSelector 
-                selectedSprite={sprite} 
-                onSelect={setSprite} 
+
+            <AvatarSelector
+                selectedSprite={sprite}
+                onSelect={setSprite}
             />
 
-            <ActionButton 
-                label={buttonLabel} 
-                onClick={handleSubmit} 
+            <ActionButton
+                label={buttonLabel}
+                onClick={handleSubmit}
             />
         </div>
     );

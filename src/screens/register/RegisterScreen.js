@@ -21,8 +21,8 @@ function RegisterScreen({ onComplete }) {
     return (
         <div className="register-container" style={{backgroundImage: "url('/background_register.png')"}}>
             <PageLabel
-                title="REGISTRO DE RIVALES"
-                subtitle="Configurad vuestros perfiles"
+                title="REGISTRO DE JUGADORES"
+                subtitle="¿Y tú quién eres?"
             />
 
             <div className="split-screen-layout">

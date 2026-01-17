@@ -2,11 +2,14 @@
 
 .btn-action {
     /* ESTRUCTURA */
-    padding: 14px 24px; /* Un poco más alto para que parezca un botón físico */
-    border: none;       /* Quitamos el borde negro estándar */
-    border-radius: 50px; /* Forma de píldora (como Start/Select o botones A/B) */
+    padding: 14px 24px;
+    /* Un poco más alto para que parezca un botón físico */
+    border: none;
+    /* Quitamos el borde negro estándar */
+    border-radius: 50px;
+    /* Forma de píldora (como Start/Select o botones A/B) */
     margin: 10px;
-    
+
     /* TIPOGRAFÍA */
     font-family: 'Press Start 2P', cursive, sans-serif;
     font-size: 0.85rem;
@@ -15,55 +18,65 @@
     letter-spacing: 1px;
     cursor: pointer;
     position: relative;
-    
+
     /* EFECTO PLÁSTICO 3D (El truco Nintendo) */
     /* Sombra 1 (inset blanco): Brillo superior (luz) */
     /* Sombra 2 (inset negro): Sombra inferior (volumen) */
     /* Sombra 3 (externa): La sombra que proyecta el botón en la carcasa */
-    box-shadow: 
-        inset 0px 4px 0px rgba(255, 255, 255, 0.4), 
+    box-shadow:
+        inset 0px 4px 0px rgba(255, 255, 255, 0.4),
         inset 0px -4px 0px rgba(0, 0, 0, 0.2),
         0px 6px 0px rgba(0, 0, 0, 0.3);
-    
+
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
 /* EFECTO DE PULSADO */
 .btn-action:active {
-    transform: translateY(4px); /* El botón baja físicamente */
-    box-shadow: 
-        inset 0px 4px 0px rgba(0, 0, 0, 0.2), /* El brillo se invierte */
+    transform: translateY(4px);
+    /* El botón baja físicamente */
+    box-shadow:
+        inset 0px 4px 0px rgba(0, 0, 0, 0.2),
+        /* El brillo se invierte */
         inset 0px -4px 0px rgba(255, 255, 255, 0.1),
-        0px 2px 0px rgba(0, 0, 0, 0.3); /* La sombra externa se reduce */
+        0px 2px 0px rgba(0, 0, 0, 0.3);
+    /* La sombra externa se reduce */
 }
 
 .btn-action:disabled {
-    background-color: #9ea7b4; /* Gris plástico viejo */
+    background-color: #9ea7b4;
+    /* Gris plástico viejo */
     color: #6a737d;
     cursor: not-allowed;
     box-shadow: none;
-    transform: translateY(4px); /* Se queda hundido */
+    transform: translateY(4px);
+    /* Se queda hundido */
 }
 
 /* --- VARIANTES DE COLOR --- */
 
 /* PRIMARY: El Botón "A" (Rojo Gameboy Clásico) */
 .primary {
-    background-color: #ad1035; 
+    background-color: #c6616b;
     color: white;
-    text-shadow: 2px 2px 0px #494786; /* Texto con relieve */
+    text-shadow: 2px 2px 0px #a13d47;
+    /* Texto con relieve */
 }
+
 /* Un pequeño ajuste al hover para dar feedback */
 .primary:hover:not(:disabled) {
-    background-color: #ad1035;
+    background-color: #a13d47;
 }
 
 /* SECONDARY: El Botón "Start/Select" o Gameboy Screen (Verde/Gris) */
 .secondary {
-    background-color: #333333; /* Gris oscuro D-PAD */
+    background-color: #333333;
+    /* Gris oscuro D-PAD */
     color: #f0f0f0;
-    border: 2px solid #555; /* Un borde sutil para diferenciar */
+    border: 2px solid #555;
+    /* Un borde sutil para diferenciar */
 }
+
 .secondary:hover:not(:disabled) {
     background-color: #444444;
 }
