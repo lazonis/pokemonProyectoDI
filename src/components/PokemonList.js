@@ -33,7 +33,7 @@ function PokemonList({ onSelectPokemon }) {
                     return {
                         id: data.id,
                         name: data.name,
-                        image: data.sprites.other['official-artwork'].front_default,
+                        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`,
                         type: data.types[0].type.name,
                         hp: data.stats[0].base_stat,
                         maxHp: data.stats[0].base_stat,
@@ -162,6 +162,7 @@ function PokemonList({ onSelectPokemon }) {
                     {pokemonsVisibles.map((poke) => (
                         <div key={poke.id} onClick={() => onSelectPokemon(poke)}>
                             <PokemonCard
+                                id={poke.id}  
                                 name={poke.name}
                                 image={poke.image}
                                 type={poke.type}

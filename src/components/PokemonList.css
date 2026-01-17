@@ -1,136 +1,95 @@
-.list-wrapper {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto; /* Centrar en pantalla */
-}
-
-/* REJILLA RESPONSIVA (Magia CSS) */
-.grid-layout {
-    display: grid;
-    /* Crea columnas automáticas de mínimo 200px */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px 0;
-}
-
-/* ESTILOS DE BOTONES (Reutilizables) */
-.toolbar, .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    font-size: 12px;
-}
-
-/* Diseño base del botón */
-.btn {
-    font-family: 'Press Start 2P', cursive;
-    background-color: #f0f0f0;
-    border: 2px solid #333;
-    padding: 10px 15px;
-    cursor: pointer;
-    box-shadow: 4px 4px 0 #000; /* Sombra sólida retro */
-    transition: all 0.1s;
-    color: #333;
-    font-size: 10px;
-}
-
-/* Cuando pulsas el botón */
-.btn:active {
-    transform: translate(2px, 2px); /* Se mueve abajo-derecha */
-    box-shadow: 2px 2px 0 #000;
-}
-
-/* Botón activo (seleccionado) */
-.btn.active {
-    background-color: #3b4cca;
-    color: white;
-}
-
-/* Botón deshabilitado */
-.btn:disabled {
-    background-color: #ccc;
-    box-shadow: none;
-    color: #888;
-    cursor: not-allowed;
-}
-
 /* src/components/PokemonList.css */
 
-/* Contenedor de la barra de números */
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px; /* Espacio entre botones */
-    margin: 20px 0;
-    flex-wrap: wrap; /* Para que baje de línea en móvil */
+/* EL CONTENEDOR PRINCIPAL: Estilo Pantalla Retro */
+.list-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    /* Fondo verdoso típico de Game Boy original o Gris de Pocket */
+    background-color: #e0f8cf; 
+    border: 6px solid #333;
+    box-shadow: 10px 10px 0 #222;
+    font-family: 'Press Start 2P', monospace; /* Asegúrate de importar esta fuente en App.css */
+    color: #0f380f; /* Verde oscuro Game Boy */
 }
 
-/* Estilo base de los botones numéricos */
-.page-btn {
-    background-color: white;
-    color: black;
-    border: 2px solid #555;
-    border-radius: 8px;
-    width: 40px;
-    height: 40px;
-    font-family: 'Press Start 2P', monospace; /* Tu fuente retro */
+.list-wrapper h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    margin-bottom: 30px;
+    border-bottom: 4px solid #0f380f;
+    padding-bottom: 10px;
+}
+
+/* --- BARRA DE HERRAMIENTAS --- */
+.toolbar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background: #0f380f;
+    color: #e0f8cf;
+    border: 2px solid #0f380f;
+    padding: 10px 15px;
+    font-family: inherit;
     font-size: 10px;
     cursor: pointer;
-    transition: all 0.2s;
+    text-transform: uppercase;
+    /* Cero redondez */
+    border-radius: 0; 
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+}
+
+.btn:hover {
+    background: #306230;
+    transform: translateY(2px);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+}
+
+.btn.active {
+    background: #e0f8cf;
+    color: #0f380f;
+    border: 2px solid #0f380f;
+    font-weight: bold;
+}
+
+/* --- GRID Y PAGINACIÓN --- */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+}
+
+.pagination {
+    margin-top: 30px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    gap: 5px;
+}
+
+.page-btn {
+    background: #e0f8cf;
+    border: 2px solid #0f380f;
+    color: #0f380f;
+    width: 40px;
+    height: 40px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 0;
 }
 
 .page-btn:hover:not(:disabled) {
-    background-color: #555;
-    transform: translateY(-2px);
+    background: #0f380f;
+    color: #e0f8cf;
 }
 
-/* La página actual activa */
 .page-btn.active {
-    background-color: #3b4cca; /* Amarillo Pokémon */
-    color: white;
-    border-color: #656eb1;
-    font-weight: bold;
-    pointer-events: none; /* No clickable si ya estás ahí */
-}
-
-/* Las flechas laterales (< >) */
-.page-btn.arrow {
-    background-color: #444;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-/* Los puntos suspensivos (...) */
-.page-btn.dots {
-    background: none;
-    color: white;
-    width: auto;
-}
-.page-btn.dots:hover {
-    background: transparent;
-    transform: none;
-}
-
-.page-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.loading-msg {
-    margin-top: 50px;
-    font-size: 18px;
-    animation: parpadeo 1s infinite;
-}
-
-@keyframes parpadeo {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+    background: #0f380f;
+    color: #e0f8cf;
+    box-shadow: inset 3px 3px 0 rgba(0,0,0,0.5);
 }

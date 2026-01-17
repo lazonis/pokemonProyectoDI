@@ -1,155 +1,93 @@
-/* La tarjeta base */
-.poke-card {
-    /* Quitamos el width: 220px y ponemos 100% para que se adapte al hueco */
-    width: 100%;
-    box-sizing: border-box;
-    /* Asegura que el borde no aumente el tamaño */
+/* src/components/PokemonCard.css */
 
-    /* Quitamos el margin, porque la separación la dará el Grid (gap) */
-    margin: 0;
-    font-family: 'Press Start 2P', cursive;
-    border-radius: 15px;
-    padding: 15px;
-    background-color: #777;
-    box-shadow: 0 6px 0 #00000040;
-    transition: transform 0.2s;
-    border: 4px solid white;
-
-    /* Esto evita que si el contenido es muy grande, rompa la tarjeta */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Efecto al pasar el ratón */
-.poke-card:hover {
-    transform: translateY(-10px);
-    /* Sube un poco */
+.pokedex-entry {
+    /* Fondo que simula la pantalla verdosa/grisácea de la GameBoy */
+    background-color: #f0f0f0; 
+    border: 4px solid #000;
+    padding: 8px;
+    font-family: 'Press Start 2P', monospace; /* Fuente retro */
+    color: #000;
+    position: relative;
     cursor: pointer;
+    transition: transform 0.1s, background-color 0.1s;
+    
+    /* Sombra dura para dar volumen */
+    box-shadow: 6px 6px 0 rgba(0,0,0,0.3);
 }
 
-.img-container {
-    background-color: rgba(255, 255, 255, 0.4);
-    /* Círculo blanco semitransparente */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 10px auto;
-    /* Centrado */
+.pokedex-entry:hover {
+    transform: translate(-2px, -2px);
+    background-color: #fff; /* Se ilumina un poco al pasar el ratón */
+    box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
+/* --- CABECERA (No. 025) --- */
+.pokedex-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    border-bottom: 2px dashed #000; /* Línea divisoria punteada estilo retro */
+    padding-bottom: 4px;
+}
+
+.pokedex-number {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* --- IMAGEN (Sprite) --- */
+.sprite-container {
+    background-color: #fff;
+    border: 2px solid #000;
+    margin-bottom: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100px;
 }
 
-.poke-sprite {
-    width: 100%;
-    height: 100%;
+.pokedex-sprite {
+    width: 80px;
+    height: 80px;
     object-fit: contain;
-    /* La imagen se ajusta sin deformarse */
+    /* CRÍTICO: Mantiene los píxeles duros y nítidos */
+    image-rendering: pixelated; 
 }
 
-.poke-info {
-    text-align: center;
-}
-
-.poke-name {
-    margin: 10px 0;
-    font-size: 14px;
-    text-transform: capitalize;
-    /* Pone la primera letra en Mayúscula */
-
-}
-
-/* BARRA DE VIDA PERSONALIZADA */
-.hp-container {
-    margin-top: 15px;
+/* --- DATOS (Nombre y Tipo) --- */
+.pokedex-info {
     text-align: left;
+    margin-top: 5px;
 }
 
-.hp-label {
-    font-size: 10px;
-    margin-bottom: 5px;
-
+.pokedex-name {
+    font-size: 11px; /* Un pelín más pequeño para que quepan nombres largos */
+    text-transform: uppercase;
+    margin: 0 0 5px 0;
+    letter-spacing: 0px;
 }
 
-.hp-bar-bg {
-    background-color: #555;
-    height: 10px;
-    border-radius: 5px;
-    border: 2px solid #222;
-    overflow: hidden;
-    /* Para que el relleno no se salga de los bordes */
+.pokedex-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Más espacio entre el tipo y la vida */
+    font-size: 8px;
 }
 
-.hp-bar-fill {
-    background-color: #48c060;
-    /* Verde vida */
-    height: 100%;
-    transition: width 0.5s ease;
-    /* Se anima suavemente al bajar */
+/* Contenedor para la etiqueta Types para que se alinee a la izquierda */
+.type-container {
+    display: flex;
+    justify-content: flex-start;
 }
 
-/* --- COLORES DE FONDO POR TIPO --- */
+/* La etiqueta .type-badge ya tiene sus estilos en Types.css, 
+   así que aquí solo nos preocupamos de la vida */
 
-.poke-card.grass {
-    background: linear-gradient(135deg, #56ab2f, #a8e063);
-}
-
-.poke-card.fire {
-    background: linear-gradient(135deg, #f12711, #f5af19);
-}
-
-.poke-card.water {
-    background: linear-gradient(135deg, #2193b0, #6dd5ed);
-}
-
-.poke-card.bug {
-    background: linear-gradient(135deg, #96c93d, #00b09b);
-}
-
-.poke-card.normal {
-    background: linear-gradient(135deg, #bdc3c7, #2c3e50);
-}
-
-.poke-card.poison {
-    background: linear-gradient(135deg, #834d9b, #d04ed6);
-}
-
-.poke-card.electric {
-    background: linear-gradient(135deg, #fc4a1a, #f7b733);
+.pokedex-hp {
+    font-weight: bold;
+    font-family: 'Press Start 2P', monospace;
+    padding-top: 4px;
+    border-top: 2px dashed #bbb; /* Línea separadora sutil */
     color: #333;
-}
-
-.poke-card.ground {
-    background: linear-gradient(135deg, #948E99, #2E1437);
-}
-
-.poke-card.fairy {
-    background: linear-gradient(135deg, #FF9A9E, #FECFEF);
-    color: #444;
-}
-
-.poke-card.fighting {
-    background: linear-gradient(135deg, #cb2d3e, #ef473a);
-}
-
-.poke-card.psychic {
-    background: linear-gradient(135deg, #8E2DE2, #4A00E0);
-}
-
-.poke-card.rock {
-    background: linear-gradient(135deg, #434343, #000000);
-}
-
-.poke-card.ghost {
-    background: linear-gradient(135deg, #4b6cb7, #182848);
-}
-
-.poke-card.ice {
-    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
-    color: #444;
-}
-
-.poke-card.dragon {
-    background: linear-gradient(135deg, #1f4037, #99f2c8);
 }
