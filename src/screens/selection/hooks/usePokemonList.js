@@ -72,7 +72,7 @@ const getPaginationGroup = () => {
                         id: data.id, 
                         name: data.name,
                         image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/${data.id}.png`,
-                        sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/silver/transparent/${data.id}.png`,
+                        sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/${data.id}.png`,
                         sprites: data.sprites,
                         types: data.types,
                         stats: data.stats,

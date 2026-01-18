@@ -67,13 +67,11 @@ function SelectionScreen({ players, onBattleStart, onReset }) {
 
     return (
         <div className="team-builder-layout">
-        
-                    <ActionButton 
-                        label="⬅ SALIR" 
-                        onClick={onReset} 
-                        variant="secondary" /* O usa 'primary' si prefieres rojo */
-                    />
-                
+                <ActionButton 
+                    label="⬅ SALIR" 
+                    onClick={onReset} 
+                    variant="secondary" /* O usa 'primary' si prefieres rojo */
+                />
 
             {/* 2. LATERAL IZQUIERDO */}
             <TeamDisplay 
@@ -104,17 +102,11 @@ function SelectionScreen({ players, onBattleStart, onReset }) {
 
                 {/* BOTÓN BATALLA: SIEMPRE ABAJO */}
                 <div style={{ marginTop: 'auto', paddingTop: '10px', textAlign: 'center', minHeight: '50px' }}>
-                    {isReady ? (
                         <ActionButton 
                             label="¡A LA BATALLA!" 
                             variant="primary" 
                             onClick={() => onBattleStart({ p1: equipoP1, p2: equipoP2 })}
                         />
-                    ) : (
-                        <span style={{ color: '#ccc', fontStyle: 'italic', background: 'rgba(0,0,0,0.5)', padding: '5px 10px', borderRadius: '4px' }}>
-                            ¡Completad ambos equipos para luchar!
-                        </span>
-                    )}
                 </div>
             </div>
 
