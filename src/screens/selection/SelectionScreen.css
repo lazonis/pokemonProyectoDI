@@ -16,14 +16,8 @@
 .sidebar-team {
     /* Se colocan en la fila 2 automáticamente */
     grid-row: 2;
-    background: #333;
-    
-    border: 2px solid #555;
-    border-radius: 10px;
-    color: white;
     cursor: pointer;
-    height: 100%;
-    box-sizing: border-box;
+   
 }
 
 
@@ -36,17 +30,17 @@
     border-radius: 6px;
     margin-bottom: 15px;
     border-bottom: 3px solid #3e2694;
+    
 }
 
 
 .box-tab {
     background: #3c5ee7;
     border: none;
-
     padding: 8px 12px;
     color: white;
     font-weight: bold;
-    font-size: 0.8rem;
+    font-size: 0.7em;
     cursor: pointer;
 }
 
