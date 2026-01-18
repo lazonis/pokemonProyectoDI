@@ -10,7 +10,12 @@ export const CONFIG = {
     MAX_TEAM_SIZE: 6,
     API_LIMIT: 48, // Para paginación
     MAX_POKEMON_ID: 649, // Hasta Gen 5
+    get TOTAL_BOXES() {
+        return Math.ceil(this.MAX_POKEMON_ID / this.API_LIMIT);
+    }
 };
+
+
 
 export const TRAINER_SPRITES = [
     // GEN 2 (Johto - HGSS)

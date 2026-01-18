@@ -32,6 +32,12 @@ function App() {
         setPhase(GAME_PHASES.BATTLE);
     };
 
+    const handleReset = () => {
+        setPhase(GAME_PHASES.REGISTER);
+
+        
+    };
+
     return (
         <div className="app-layout" style={{backgroundImage: "url('background_register.png')"}}>
 
@@ -50,6 +56,7 @@ function App() {
                     <SelectionScreen
                         players={players}
                         onBattleStart={handleBattleStart}
+                        onReset={handleReset}
                     />
                 </div>
             )}

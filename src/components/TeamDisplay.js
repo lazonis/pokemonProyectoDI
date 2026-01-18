@@ -1,26 +1,32 @@
 import React from 'react';
-import { CONFIG } from '../utils/constants'; // Asegúrate de tener la ruta correcta
+import { CONFIG } from '../utils/constants'; 
 import './TeamDisplay.css';
 
 function TeamDisplay({
-    player,          //{name, avatar}
-    team = [],       //equipo de pokemons
-    isActive,        // Turno jugador
-    onSlotClick,     //Click al pokemon 
-    className = ''   //Estilo personalizado
+    player,          
+    team = [],       
+    isActive,        
+    onSlotClick,     
+    onPanelClick, // <--- Recibimos la función
+    className = ''   
 }) {
 
-    // Usamos Array.from para generar siempre los 6 huecos 
     const pokemonBoxes = [...team, ...Array(6 - team.length).fill(null)]
 
     return (
-        <div className={`team-display-container ${isActive ? 'active' : ''} ${className}`}>
+        // AÑADIDO: onClick y estilo de cursor
+        <div 
+            className={`team-display-container ${isActive ? 'active' : ''} ${className}`} 
+            onClick={onPanelClick}
+            style={{ cursor: !isActive ? 'pointer' : 'default' }}
+            title={!isActive ? "Haz click para cambiar el turno a este jugador" : ""}
+        >
 
-            {/* CABECERA (Avatar y Nombre) */}
             <div className="trainer-header">
-                <div className="trainer-sprite-frame">
-                    {player?.sprite ? (
-                        <img src={player.sprite} alt="Sprite" className="trainer-img" />
+                <div className="trainer-avatar-frame">
+                    {/* Corrección para que busque avatar o sprite */}
+                    {(player?.avatar || player?.sprite) ? (
+                        <img src={player.avatar || player.sprite} alt="Avatar" className="trainer-img" />
                     ) : (
                         <div className="no-avatar">?</div>
                     )}
@@ -31,14 +37,15 @@ function TeamDisplay({
                 </div>
             </div>
 
-            {/* GRID DE POKEMONS */}
             <div className="team-slots-grid">
                 {pokemonBoxes.map((poke, index) => (
                     <div
                         key={index}
                         className={`team-slot ${poke ? 'filled' : 'empty'}`}
-                        // Solo ejecutamos onSlotClick si hay pokemon y nos han pasado la función
-                        onClick={() => poke && onSlotClick && onSlotClick(index)}
+                        onClick={(e) => {
+                            e.stopPropagation(); // Evita cambiar de turno si borras un pokemon
+                            if (poke && onSlotClick) onSlotClick(index);
+                        }}
                         style={{ cursor: (poke && onSlotClick) ? 'pointer' : 'default' }}
                     >
                         {poke ? (
@@ -55,6 +62,5 @@ function TeamDisplay({
         </div>
     );
 }
-
 
 export default TeamDisplay;
