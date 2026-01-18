@@ -12,7 +12,7 @@ export const usePokemonList = () => {
 const getPaginationGroup = () => {
         const total = TOTAL_BOXES;
         const current = page;
-        const delta = 2; // Cuántos mostrar a izquierda y derecha
+        const delta = 1; // Cuántos mostrar a izquierda y derecha
         const range = [];
         
         // Rango de vecinos: Evitamos el 1 y el total para no duplicarlos
