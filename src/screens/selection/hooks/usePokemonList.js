@@ -1,29 +1,29 @@
 import { useState, useEffect } from 'react';
+import { CONFIG } from '../../../utils/constants';
+
 
 export const usePokemonList = () => {
     const [pokemons, setPokemons] = useState([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    const LIMIT = 48; 
-    const MAX_POKEMON_ID = 649;
-    const totalPages = Math.ceil(MAX_POKEMON_ID / LIMIT);
+    const { API_LIMIT, MAX_POKEMON_ID, TOTAL_BOXES} = CONFIG;
 
     // --- LÓGICA DE PAGINACIÓN PERSONALIZADA ---
     const getPaginationGroup = () => {
         let pages = [1];
         let rangeStart = Math.max(2, page - 1);
-        let rangeEnd = Math.min(totalPages - 1, page + 1);
+        let rangeEnd = Math.min(TOTAL_BOXES - 1, page + 1);
 
-        if (page < 4) rangeEnd = Math.min(totalPages - 1, 4);
-        if (page > totalPages - 3) rangeStart = Math.max(2, totalPages - 3);
+        if (page < 4) rangeEnd = Math.min(TOTAL_BOXES - 1, 4);
+        if (page > TOTAL_BOXES - 3) rangeStart = Math.max(2, TOTAL_BOXES - 3);
 
         if (rangeStart > 2) pages.push('...');
         for (let i = rangeStart; i <= rangeEnd; i++) {
             pages.push(i);
         }
-        if (rangeEnd < totalPages - 1) pages.push('...');
-        if (totalPages > 1) pages.push(totalPages);
+        if (rangeEnd < TOTAL_BOXES - 1) pages.push('...');
+        if (TOTAL_BOXES > 1) pages.push(TOTAL_BOXES);
         return pages;
     };
 
@@ -32,8 +32,8 @@ export const usePokemonList = () => {
         const cargarDatos = async () => {
             setLoading(true);
             try {
-                const offset = (page - 1) * LIMIT;
-                const url = `https://pokeapi.co/api/v2/pokemon?limit=${LIMIT}&offset=${offset}`;
+                const offset = (page - 1) * API_LIMIT;
+                const url = `https://pokeapi.co/api/v2/pokemon?limit=${API_LIMIT}&offset=${offset}`;
                 const respuesta = await fetch(url);
                 const datosLista = await respuesta.json();
 
@@ -77,7 +77,7 @@ export const usePokemonList = () => {
         loading,
         page,
         setPage,
-        totalPages,
+        totalPages: TOTAL_BOXES,
         getPaginationGroup
     };
 };

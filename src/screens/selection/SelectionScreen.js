@@ -94,13 +94,13 @@ function SelectionScreen({ players, onBattleStart }) {
     };
 
     return (
+
+
+                    
         <div className="team-builder-layout">
 
-            <PageLabel
-                className="titulo"
-                title="CENTRO POKÉMON" // o "SELECCIÓN DE EQUIPO"
-                subtitle="¡Elegid a vuestros 6 compañeros!"
-            />
+            
+
 
             {/* IZQUIERDA: JUGADOR 1 */}
             {renderSidebar(1, equipoP1, players?.p1?.name || "JUGADOR 1")}

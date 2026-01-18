@@ -7,7 +7,7 @@ import PlayerForm from './PlayerForm';
 import './RegisterScreen.css';
 
 function RegisterScreen({ onComplete }) {
-    // Estado local para guardar los datos cuando pulsan "HECHO"
+    // Estado local para guardar los datos cuando se pulsa "READY"
     const [p1Data, setP1Data] = useState(null);
     const [p2Data, setP2Data] = useState(null);
 
@@ -21,8 +21,8 @@ function RegisterScreen({ onComplete }) {
     return (
         <div className="register-container" style={{backgroundImage: "url('/background_register.png')"}}>
             <PageLabel
-                title="REGISTRO DE JUGADORES"
-                subtitle="¿Y tú quién eres?"
+                title="PLAYER RESGISTER"
+                subtitle="And who are you?"
             />
 
             <div className="split-screen-layout">
@@ -30,7 +30,7 @@ function RegisterScreen({ onComplete }) {
                 {/* --- COLUMNA JUGADOR 1 --- */}
                 {/* Si p1Data tiene datos, añadimos la clase 'locked' */}
                 <div className={`player-column ${p1Data ? 'locked' : ''}`}>
-                    <PageLabel title="JUGADOR 1" subtitle={p1Data ? "¡Listo!" : "¿Eres un chico o una chica?"} />
+                    <PageLabel title="PLAYER 1" subtitle={p1Data ? "" : "Are you a boy or a girl?"} />
 
                     <PlayerForm
                         initialSprite={TRAINER_SPRITES[0].url}
@@ -44,7 +44,7 @@ function RegisterScreen({ onComplete }) {
 
                 {/* --- COLUMNA JUGADOR 2 --- */}
                 <div className={`player-column ${p2Data ? 'locked' : ''}`}>
-                    <PageLabel title="JUGADOR 2" subtitle={p2Data ? "¡Listo!" : "¿Eres un chico o una chica?"} />
+                    <PageLabel title="PLAYER 2" subtitle={p2Data ? "" : "Are you a boy or a girl?"} />
 
                     <PlayerForm
                         initialSprite={TRAINER_SPRITES[1].url}
@@ -58,7 +58,7 @@ function RegisterScreen({ onComplete }) {
             {/* --- BOTÓN FINAL DE NAVEGACIÓN --- */}
             <div className="start-game-actions">
                 <ActionButton
-                    label="IR A LA SELECCIÓN DE POKÉMON ➡"
+                    label="GO CHOOSE YOUR TEAM ➡"
                     onClick={handleStartGame}
                     // Deshabilitado hasta que AMBOS tengan datos
                     disabled={!p1Data || !p2Data}

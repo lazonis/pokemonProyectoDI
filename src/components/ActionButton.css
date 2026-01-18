@@ -31,18 +31,6 @@
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
-/* EFECTO DE PULSADO */
-.btn-action:active {
-    transform: translateY(4px);
-    /* El botón baja físicamente */
-    box-shadow:
-        inset 0px 4px 0px rgba(0, 0, 0, 0.2),
-        /* El brillo se invierte */
-        inset 0px -4px 0px rgba(255, 255, 255, 0.1),
-        0px 2px 0px rgba(0, 0, 0, 0.3);
-    /* La sombra externa se reduce */
-}
-
 .btn-action:disabled {
     background-color: #9ea7b4;
     /* Gris plástico viejo */
