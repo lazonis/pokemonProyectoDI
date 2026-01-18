@@ -19,7 +19,7 @@ function RegisterScreen({ onComplete }) {
     };
 
     return (
-        <div className="register-container" style={{ backgroundImage: "url('/background_register.png')" }}>
+        <div className="register-container">
             <PageLabel
                 title="PLAYER RESGISTER"
                 subtitle="And who are you?"

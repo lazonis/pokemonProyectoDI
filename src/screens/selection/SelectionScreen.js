@@ -2,149 +2,143 @@ import React, { useState } from 'react';
 import './SelectionScreen.css';
 import { CONFIG } from '../../utils/constants';
 
-// Hooks y Componentes
+// --- HOOKS ---
 import { usePokemonList } from './hooks/usePokemonList';
+
+// --- COMPONENTES GLOBALES ---
 import PageLabel from '../../components/PageLabel';
+import ActionButton from '../../components/ActionButton';
+import TeamDisplay from '../../components/TeamDisplay'; // <--- TUS LATERALES
+
+// --- COMPONENTES LOCALES ---
 import Pagination from './Pagination';
 import PokemonBox from './PokemonBox';
 import PokemonDetail from './PokemonDetail';
-import ActionButton from '../../components/ActionButton';
 
 function SelectionScreen({ players, onBattleStart }) {
-    // ESTADOS LOCALES DE SELECCIÓN
+    // ESTADOS DEL JUEGO
     const [equipoP1, setEquipoP1] = useState([]);
     const [equipoP2, setEquipoP2] = useState([]);
-    const [jugadorActivo, setJugadorActivo] = useState(1);
-    const [pokemonVisto, setPokemonVisto] = useState(null);
+    const [jugadorActivo, setJugadorActivo] = useState(1); // 1 o 2
+    
+    // ESTADO DE INTERFAZ
+    const [pokemonVisto, setPokemonVisto] = useState(null); // Para el Modal
 
-    // USAMOS EL HOOK PERSONALIZADO
-    const {
-        pokemons, loading, page, setPage, totalPages, getPaginationGroup
+    // CARGA DE DATOS (Hook limpio)
+    const { 
+        pokemons, loading, page, setPage, totalPages, getPaginationGroup 
     } = usePokemonList();
 
-    // --- LÓGICA DE SELECCIÓN ---
-    const handleConfirmar = () => {
-        if (!pokemonVisto) return;
+    // --- LÓGICA: AÑADIR POKEMON ---
+    const handleConfirmar = (pokemon) => {
+        if (!pokemon) return;
+
+        // Función auxiliar para añadir y pasar turno
+        const agregarAlEquipo = (equipo, setEquipo, turnoSiguiente) => {
+            if (equipo.length < CONFIG.MAX_TEAM_SIZE) {
+                setEquipo([...equipo, pokemon]);
+                // Solo cambiamos de turno si el otro jugador aún tiene hueco
+                const elOtroEquipo = turnoSiguiente === 1 ? equipoP1 : equipoP2;
+                if (elOtroEquipo.length < CONFIG.MAX_TEAM_SIZE) {
+                    setJugadorActivo(turnoSiguiente);
+                }
+            }
+        };
 
         if (jugadorActivo === 1) {
-            if (equipoP1.length < CONFIG.MAX_TEAM_SIZE) {
-                setEquipoP1([...equipoP1, pokemonVisto]);
-                // Pasar turno a J2 si tiene hueco
-                if (equipoP2.length < 6) setJugadorActivo(2);
-            }
+            agregarAlEquipo(equipoP1, setEquipoP1, 2);
         } else {
-            if (equipoP2.length < 6) {
-                setEquipoP2([...equipoP2, pokemonVisto]);
-                // Pasar turno a J1 si tiene hueco
-                if (equipoP1.length < 6) setJugadorActivo(1);
-            }
+            agregarAlEquipo(equipoP2, setEquipoP2, 1);
         }
+        
         setPokemonVisto(null); // Cerrar modal
     };
 
-    const handleRemove = (jugador, index) => {
-        if (jugador === 1) {
+    // --- LÓGICA: QUITAR POKEMON ---
+    const handleRemove = (playerNum, index) => {
+        if (playerNum === 1) {
             const nuevo = [...equipoP1];
             nuevo.splice(index, 1);
             setEquipoP1(nuevo);
-            setJugadorActivo(1);
+            setJugadorActivo(1); // Recupera el turno quien borra
         } else {
             const nuevo = [...equipoP2];
             nuevo.splice(index, 1);
             setEquipoP2(nuevo);
-            setJugadorActivo(2);
+            setJugadorActivo(2); // Recupera el turno quien borra
         }
     };
 
-    // Helper visual: ¿Ya lo tiene alguien?
+    // Helper: ¿Este pokemon ya está cogido?
     const isOwned = (pokeId) => {
         return equipoP1.some(p => p.id === pokeId) || equipoP2.some(p => p.id === pokeId);
     };
 
-    const isReady = equipoP1.length === 6 && equipoP2.length === 6;
-
-    // --- RENDERIZADO DEL SIDEBAR (Reutilizable) ---
-    const renderSidebar = (idJugador, equipo, nombre) => {
-        const esMiTurno = jugadorActivo === idJugador && equipo.length < 6;
-        return (
-            <div
-                className={`sidebar-team ${esMiTurno ? 'active-turn' : ''}`}
-                onClick={() => equipo.length < 6 && setJugadorActivo(idJugador)}
-            >
-                <h3>{nombre} </h3>
-                <div className="team-slots-container">
-                    {equipo.map((poke, i) => (
-                        <div
-                            key={`${idJugador}-${poke.id}`}
-                            className="sidebar-slot filled"
-                            onClick={() => handleRemove(idJugador, i)}
-                            title="Click para quitar"
-                        >
-                            <img src={poke.image} alt={poke.name} />
-                            <span>{poke.name}</span>
-                        </div>
-                    ))}
-                    {/* Rellenar huecos vacíos */}
-                    {[...Array(6 - equipo.length)].map((_, i) => (
-                        <div key={`empty-${i}`} className="sidebar-slot empty">Vacío</div>
-                    ))}
-                </div>
-            </div>
-        );
-    };
+    // ¿Estamos listos para pelear?
+    const isReady = equipoP1.length === CONFIG.MAX_TEAM_SIZE && 
+                    equipoP2.length === CONFIG.MAX_TEAM_SIZE;
 
     return (
+        <div className="team-builder-layout" style={{backgroundImage: "url('pc_container_bg.png')",
+        backgroundSize: 'cover',      // Estira la imagen para cubrir todo el div
+    backgroundRepeat: 'no-repeat', // Evita el efecto mosaico
+    backgroundPosition: 'center'}}
+        >
 
+            {/* 2. LATERAL IZQUIERDO (JUGADOR 1) */}
+            <TeamDisplay 
+                className="sidebar-team" // Para que se comporte como celda del grid
+                player={players?.p1}
+                team={equipoP1}
+                isActive={jugadorActivo === 1}
+                onSlotClick={(idx) => handleRemove(1, idx)}
+            />
 
-                    
-        <div className="team-builder-layout">
-
-            
-
-
-            {/* IZQUIERDA: JUGADOR 1 */}
-            {renderSidebar(1, equipoP1, players?.p1?.name || "JUGADOR 1")}
-
-            {/* CENTRO: PC BOX */}
-            <div className="main-pc-container">
-
-                <Pagination
-                    page={page}
-                    totalPages={totalPages}
-                    setPage={setPage}
+            {/* 3. COLUMNA CENTRAL (PC BOX) */}
+            <div className="main-pc-container" style={{backgroundImage: "url('selection_layout.png')"}} >
+                <Pagination 
+                    page={page} 
+                    totalPages={totalPages} 
+                    setPage={setPage} 
                     getPaginationGroup={getPaginationGroup}
                 />
 
-                <PokemonBox
-                    pokemons={pokemons}
-                    loading={loading}
-                    isOwned={isOwned}
-                    onSelect={setPokemonVisto}
+                <PokemonBox 
+                    pokemons={pokemons} 
+                    loading={loading} 
+                    isOwned={isOwned} 
+                    onSelect={setPokemonVisto} // Abre el modal
                 />
 
-                {/* BOTÓN FINAL */}
+                {/* Botón de Acción (Solo aparece si están listos) */}
                 {isReady && (
                     <div style={{ textAlign: 'center', marginTop: 10 }}>
-                        <ActionButton
-                            label="¡A LA BATALLA!"
-                            variant="primary"
+                        <ActionButton 
+                            label="¡A LA BATALLA!" 
+                            variant="primary" 
                             onClick={() => onBattleStart({ p1: equipoP1, p2: equipoP2 })}
                         />
                     </div>
                 )}
             </div>
 
-            {/* DERECHA: JUGADOR 2 */}
-            {renderSidebar(2, equipoP2, players?.p2?.name || "JUGADOR 2")}
+            {/* 4. LATERAL DERECHO (JUGADOR 2) */}
+            <TeamDisplay 
+                className="sidebar-team"
+                player={players?.p2}
+                team={equipoP2}
+                isActive={jugadorActivo === 2}
+                onSlotClick={(idx) => handleRemove(2, idx)}
+            />
 
-            {/* VENTANA FLOTANTE (MODAL GAMEBOY) */}
-
-            <PokemonDetail
+            {/* 5. MODAL FLOTANTE (GAMEBOY) */}
+            <PokemonDetail 
                 pokemon={pokemonVisto}
                 isTurnP1={jugadorActivo === 1}
-                onClose={() => setPokemonVisto(null)} // <--- Asegúrate que se llame onClose
+                onClose={() => setPokemonVisto(null)}
                 onConfirm={handleConfirmar}
             />
+
         </div>
     );
 }

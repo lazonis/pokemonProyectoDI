@@ -1,199 +1,116 @@
-/* src/screens/selection/SelectionScreen.css */
-
-/* =========================================
-   1. LAYOUT PRINCIPAL (GRID)
-   ========================================= */
 .team-builder-layout {
-    display: flex;
-    
-    
+    display: grid;
+    /* 3 COLUMNAS: Sidebar Izq | Centro Flexible | Sidebar Der */
+    grid-template-columns: 240px 1fr 240px;
     gap: 20px;
     padding: 20px;
+    margin: 20px;
     height: 90vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #222;
+    font-family: 'Press Start 2P', cursive;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    color: white;
+    background-color: #82b2df;
+
 }
 
-/* =========================================
-   2. SIDEBARS (PANELES JUGADORES)
-   ========================================= */
 .sidebar-team {
+    /* Se colocan en la fila 2 automáticamente */
+    grid-row: 2;
     background: #333;
+    
     border: 2px solid #555;
     border-radius: 10px;
-    padding: 15px;
     color: white;
     cursor: pointer;
-    
-    opacity: 0.6;
-    
-    /* Aseguramos que ocupe altura disponible */
-    height: 100%; 
-    box-sizing: border-box;
-}
-
-.sidebar-team.active-turn {
-    border: 3px solid #ff3333;
-    box-shadow: 0 0 15px rgba(255, 51, 51, 0.4);
-    opacity: 1;
-    background: #2a2a2a;
-    transform: scale(1.01);
-}
-
-.sidebar-team h3 {
-    text-align: center;
-    border-bottom: 1px solid #777;
-    padding-bottom: 10px;
-    margin: 0 0 15px 0;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-}
-
-.team-slots-container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.sidebar-slot {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    padding: 0 10px;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-}
-
-.sidebar-slot.filled {
-    background: #444;
-    border: 1px solid #666;
-}
-.sidebar-slot.filled:hover {
-    background: #552222; 
-    border-color: #ff5555;
-    cursor: no-drop;
-}
-
-.sidebar-slot.empty {
-    justify-content: center;
-    color: #777;
-    background: #222;
-    border: 1px dashed #555;
-    font-style: italic;
-}
-
-.sidebar-slot img {
-    width: 35px;
-    height: 35px;
-    margin-right: 10px;
-    image-rendering: pixelated;
-}
-
-/* =========================================
-   3. CAJA CENTRAL (PC)
-   ========================================= */
-.main-pc-container {
-    background-color: #d32f2f;
-    border: 8px solid #8e0000;
-    border-radius: 15px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-    
     height: 100%;
     box-sizing: border-box;
 }
 
-.loading {
-    color: white;
-    text-align: center;
-    margin-top: 50px;
-    font-weight: bold;
-}
 
-/* =========================================
-   4. PAGINACIÓN
-   ========================================= */
 .pc-pagination-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #a93226;
+    background: #595daa;
     padding: 8px;
     border-radius: 6px;
     margin-bottom: 15px;
-    border-bottom: 3px solid #7c261e;
+    border-bottom: 3px solid #3e2694;
 }
 
-.box-selector {
-    display: flex;
-    gap: 5px;
-    overflow-x: auto;
-    padding: 0 5px;
-}
 
 .box-tab {
-    background: #e74c3c;
+    background: #3c5ee7;
     border: none;
-    border-radius: 4px 4px 0 0;
+
     padding: 8px 12px;
-    color: #ffdcdc;
+    color: white;
     font-weight: bold;
     font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.2s;
-    border-bottom: 3px solid transparent;
 }
-.box-tab:hover { background: #ec7063; color: white; }
+
+.box-tab:hover {
+    background: #6373ec;
+    color: white;
+}
+
 .box-tab.active {
     background: white;
-    color: #c0392b;
-    border-bottom: 3px solid #c0392b;
+    color: #2b30c0;
+    border-bottom: 3px solid #5c4f91;
     transform: translateY(-2px);
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
-.box-tab.dots { background: transparent; color: white; cursor: default; }
+
+.box-tab.dots {
+    background: transparent;
+    color: white;
+    cursor: default;
+}
 
 .nav-arrow {
-    background: #ed5e2e;
+    background: #29257c;
     border: none;
     border-radius: 50%;
     width: 32px;
     height: 32px;
-    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 2px 0 #f77c18;
-    color: #e3cece;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    box-shadow: 0 2px 0 #837abb;
+    color: white;
 }
-.nav-arrow:active { transform: translateY(2px); box-shadow: none; }
-.nav-arrow:disabled { background: #777; box-shadow: none; cursor: not-allowed; color: #555; }
+
+
+.main-pc-container {
+    grid-row: 2;
+    /* Fila 2 */
+    border-radius: 15px;
+    padding: 15px;
+
+
+    height: 100%;
+    overflow: hidden;
+    /* Vital para que el scroll funcione dentro */
+    box-sizing: border-box;
+}
+
 
 /* =========================================
-   5. GRID POKEMON
+   5. GRID POKEMON (PC BOX)
    ========================================= */
 .pc-grid-compact {
-    flex-grow: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    /* Esto crea columnas automáticas de mínimo 90px */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px;
     overflow-y: auto;
+    /* Scroll vertical */
     padding: 10px;
     background: rgba(0, 0, 0, 0.15);
     border-radius: 8px;
 }
 
-.pc-grid-compact::-webkit-scrollbar { width: 8px; }
-.pc-grid-compact::-webkit-scrollbar-thumb { background: #8e0000; border-radius: 4px; }
-
+/* Estilos de la tarjeta pequeña */
 .pokemon-slot-compact {
     background: #fdfdfd;
     border: 2px solid #555;
@@ -204,39 +121,37 @@
     align-items: center;
     justify-content: center;
     padding: 5px;
-    height: 85px;
+    height: 90px;
     transition: transform 0.1s;
 }
+
 .pokemon-slot-compact:hover {
-    border-color: #ff3333;
+    border-color: black;
     transform: scale(1.05);
     z-index: 10;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
 .pokemon-slot-compact.selected {
-    opacity: 0.5;
     filter: grayscale(1);
-    background: #ddd;
+    opacity: 0.5;
     cursor: not-allowed;
-    border-color: #999;
 }
 
 .sprite-compact {
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     image-rendering: pixelated;
     object-fit: contain;
 }
+
 .name-compact {
-    font-size: 0.7rem;
+    font-size: 0.55rem;
     font-weight: bold;
     color: #333;
     text-transform: capitalize;
     text-align: center;
     width: 100%;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 /* =========================================
@@ -244,75 +159,170 @@
    ========================================= */
 /* ... (Puedes mantener el CSS de la Gameboy que ya tenías o copiar el anterior) ... */
 .detail-modal-overlay {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.85);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 2000; backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
 }
+
 .gameboy-body {
-    background-color: #c4cfa1; width: 320px;
-    border-radius: 10px 10px 40px 10px; padding: 20px;
-    box-shadow: inset 4px 4px 10px rgba(255,255,255,0.4), inset -4px -4px 10px rgba(0,0,0,0.2), 0 15px 30px rgba(0,0,0,0.6);
+    background-color: #c4cfa1;
+    width: 320px;
+    border-radius: 10px 10px 40px 10px;
+    padding: 20px;
+    box-shadow: inset 4px 4px 10px rgba(255, 255, 255, 0.4), inset -4px -4px 10px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(0, 0, 0, 0.6);
     border: 3px solid #9aa67b;
-    display: flex; flex-direction: column; gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     font-family: 'Courier New', Courier, monospace;
 }
+
 .gameboy-top-ridge {
-    display: flex; justify-content: space-between; color: #7b8563;
-    font-size: 0.7rem; font-weight: bold; padding: 0 5px;
-    border-bottom: 2px solid #aeb98d; margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    color: #7b8563;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 0 5px;
+    border-bottom: 2px solid #aeb98d;
+    margin-bottom: 5px;
 }
+
 .gameboy-screen-bezel {
-    background-color: #555; padding: 15px 20px 30px 20px;
+    background-color: #555;
+    padding: 15px 20px 30px 20px;
     border-radius: 10px 10px 30px 10px;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
 }
+
 .gameboy-screen-content {
-    background-color: #e0f0c0; border: 3px solid #444; border-radius: 4px;
-    padding: 15px; box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
-    position: relative; display: flex; flex-direction: column; align-items: center;
-    gap: 10px; color: #2b331f;
+    background-color: #e0f0c0;
+    border: 3px solid #444;
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #2b331f;
 }
+
 .gb-close-btn {
-    position: absolute; top: 5px; right: 5px; background: none; border: none;
-    font-size: 1.5rem; line-height: 1; color: #2b331f; cursor: pointer; font-weight: bold;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #2b331f;
+    cursor: pointer;
+    font-weight: bold;
 }
+
 .gb-title {
-    margin: 0; font-size: 1rem; text-align: center;
-    border-bottom: 2px dashed #2b331f; width: 100%; padding-bottom: 5px; text-transform: uppercase;
+    margin: 0;
+    font-size: 1rem;
+    text-align: center;
+    border-bottom: 2px dashed #2b331f;
+    width: 100%;
+    padding-bottom: 5px;
+    text-transform: uppercase;
 }
+
 .gb-image-container {
-    background: rgba(43,51,31,0.05); border-radius: 50%; padding: 10px; border: 2px dotted #2b331f;
+    background: rgba(43, 51, 31, 0.05);
+    border-radius: 50%;
+    padding: 10px;
+    border: 2px dotted #2b331f;
 }
-.gb-sprite { width: 100px; height: 10;  }
-.gb-info-section { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+
+.gb-sprite {
+    width: 100px;
+    height: 10;
+}
+
+.gb-info-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .gb-type-tag {
-    background: #2b331f; color: #e0f0c0; text-align: center; padding: 4px;
-    font-weight: bold; border-radius: 2px; font-size: 0.8rem;
+    background: #2b331f;
+    color: #e0f0c0;
+    text-align: center;
+    padding: 4px;
+    font-weight: bold;
+    border-radius: 2px;
+    font-size: 0.8rem;
 }
-.gb-stats-container { display: flex; flex-direction: column; gap: 5px; }
+
+.gb-stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 .stat-row {
-    display: flex; align-items: center; justify-content: space-between;
-    font-size: 0.75rem; font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: bold;
 }
+
 .stat-bar-track {
-    flex-grow: 1; height: 8px; background: rgba(43,51,31,0.2);
-    margin: 0 8px; border: 1px solid #2b331f; border-radius: 2px;
+    flex-grow: 1;
+    height: 8px;
+    background: rgba(43, 51, 31, 0.2);
+    margin: 0 8px;
+    border: 1px solid #2b331f;
+    border-radius: 2px;
 }
-.stat-bar-fill { height: 100%; background: #2b331f; }
+
+.stat-bar-fill {
+    height: 100%;
+    background: #2b331f;
+}
+
 .gameboy-controls-area {
-    display: flex; justify-content: flex-end; align-items: center; padding-right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 10px;
 }
+
 .gb-action-btn-a {
-    width: 60px; height: 60px;
+    width: 60px;
+    height: 60px;
     background: linear-gradient(145deg, #a83279, #85205d);
-    border-radius: 50%; border: 4px solid #6e1a4d; color: #e0f0c0;
-    font-family: monospace; font-weight: bold; font-size: 1.2rem;
-    cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-    display: flex; justify-content: center; align-items: center;
+    border-radius: 50%;
+    border: 4px solid #6e1a4d;
+    color: #e0f0c0;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .gb-action-btn-a:active {
     transform: translate(2px, 2px);
-    box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     background: linear-gradient(145deg, #85205d, #a83279);
 }

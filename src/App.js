@@ -33,7 +33,7 @@ function App() {
     };
 
     return (
-        <div className="app-layout">
+        <div className="app-layout" style={{backgroundImage: "url('background_register.png')"}}>
 
             {/* FASE 1: REGISTRO */}
             {phase === GAME_PHASES.REGISTER && (
@@ -42,11 +42,11 @@ function App() {
 
             {/* FASE 2: SELECCIÓN DE EQUIPO */}
             {phase === GAME_PHASES.SELECTION && (
-                <div>
-                    <h1 style={{ textAlign: 'center', color: 'white', margin: '20px 0', textShadow: '2px 2px 4px #000' }}>
-                        CHOOSE YOUR TEAM
-                    </h1>
-
+                <div style={{marginTop: 40}}>
+                    <PageLabel
+                    title={"--- CHOOSE YOUR TEAM ---"}
+                    subtitle={"First Generation Pokedex "}
+                    />
                     <SelectionScreen
                         players={players}
                         onBattleStart={handleBattleStart}

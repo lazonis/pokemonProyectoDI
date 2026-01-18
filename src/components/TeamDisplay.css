@@ -1,0 +1,115 @@
+/* src/components/TeamDisplay.css */
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.team-display-container {
+    background: #3f445c;
+    border: 2px solid #455698;
+    border-radius: 12px;
+    padding: 15px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 30px rgba(41, 16, 113, 0.4);
+    /* Aseguramos que ocupe el 100% de la altura disponible en el grid */
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Estado Activo (Cuando es el turno del jugador) */
+.team-display-container.active {
+    border-color: #455698; /* Rojo intenso */
+    box-shadow: 0 0 30px rgba(41, 16, 113, 0.4);
+    background: #505a8a;
+    transform: scale(1.02); /* Pequeño efecto "pop" */
+}
+
+/* --- CABECERA DEL ENTRENADOR --- */
+.trainer-header {
+    border-bottom: 1px solid #eee9e9;
+    padding-bottom: 12px;
+}
+
+.trainer-img {
+    width: 60%;
+    padding: 1.5vw;
+}
+
+.trainer-name {
+    margin: 0;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: #f0f0f0;
+}
+
+.team-count {
+    font-size: 0.8rem;
+    color: white;
+    margin-top: 4px;
+}
+
+/* --- GRID DE SLOTS (La lista de Pokémon) --- */
+.team-slots-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1; /* Ocupa el espacio restante */
+}
+
+/* Estilo base de un slot (hueco) */
+.team-slot {
+    height: 48px;
+    background: #222;
+    border: 1px dashed #555;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+/* Slot LLENO (Con Pokémon) */
+.team-slot.filled {
+    background: #4f4682;
+    border: 1px solid #2d2849;
+    border-style: solid; /* Cambia de dashed a solid */
+    color: white;
+}
+
+/* Efecto hover solo si está lleno y se puede clicar (cursor pointer) */
+.team-slot.filled[style*="pointer"]:hover {
+    background: #8d85ba; /* Fondo rojizo oscuro */
+    border-color: #2c1b8f;
+}
+
+/* Slot VACÍO */
+.team-slot.empty {
+    justify-content: center;
+    color: #555;
+}
+
+/* --- ELEMENTOS DENTRO DEL SLOT --- */
+.slot-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    image-rendering: pixelated; /* Mantiene los píxeles nítidos */
+}
+
+.slot-name {
+    text-transform: capitalize;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.empty-label {
+    font-style: italic;
+    font-size: 1.2rem;
+    font-weight: bold;
+    opacity: 0.5;
+}
