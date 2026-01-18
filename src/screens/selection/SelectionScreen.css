@@ -3,9 +3,9 @@
     /* 3 COLUMNAS: Sidebar Izq | Centro Flexible | Sidebar Der */
     grid-template-columns: 240px 1fr 240px;
     gap: 20px;
-    padding: 20px;
-    margin: 20px;
-    height: 90vh;
+    padding: 15px;
+    margin: 0;
+    height: 115vh;
     font-family: 'Press Start 2P', cursive;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
