@@ -19,6 +19,7 @@ function PlayerForm({ initialSprite, buttonLabel, onSubmit }) {
 
     return (
         <div className="register-card">
+            {/**Formulario Input del nombre **/}
             <input
                 className="register-input"
                 type="text"
@@ -27,12 +28,12 @@ function PlayerForm({ initialSprite, buttonLabel, onSubmit }) {
                 placeholder="Name"
                 autoFocus
             />
-
+            {/**Llamamos al componente que carga nuestro array de entrenadores y el avatar elegido**/}
             <AvatarSelector
                 selectedSprite={sprite}
                 onSelect={setSprite}
             />
-
+            {/**Llamamos al componente botón**/}
             <ActionButton
                 label={buttonLabel}
                 onClick={handleSubmit}

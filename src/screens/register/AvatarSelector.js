@@ -1,11 +1,14 @@
+//SRP
 import React from 'react';
-// IMPORTANTE: Subimos 2 niveles para llegar a utils
 import { TRAINER_SPRITES } from '../../utils/constants'; 
 import './AvatarSelector.css';
 
+//Pasamos por props "selectedSprite" para que React reconozca el entrenador seleccionado
+    //onSelect para pasar la función que se ejecutará al hacer click
 function AvatarSelector({ selectedSprite, onSelect }) {
     return (
         <div className="avatar-grid">
+        {/*Usamos nuestro array de urls para mapear cada entrenador por separado */}
             {TRAINER_SPRITES.map((trainer) => (
                 <div 
                     key={trainer.id}

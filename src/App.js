@@ -9,6 +9,7 @@ import PageLabel from './components/PageLabel';
 // import BattleScreen from './screens/battle/BattleScreen'; // (Próximamente)
 
 function App() {
+    // Fases / Etapas de la aplicación
     const [phase, setPhase] = useState(GAME_PHASES.REGISTER);
 
     // Datos de los jugadores (Nombres y Avatares)
@@ -17,14 +18,14 @@ function App() {
     // Datos de los equipos (Los 6 Pokémon de cada uno)
     const [teams, setTeams] = useState(null);
 
-    // 1. Fin del Registro -> Vamos a Selección
+    // 1. Fin del Registro -> Pantalla Selección
     const handleRegisterComplete = (playerData) => {
         console.log("Registro completado:", playerData);
         setPlayers(playerData);
         setPhase(GAME_PHASES.SELECTION);
     };
 
-    // 2. Fin de Selección -> Vamos a Batalla
+    // 2. Fin de Selección -> Pantalla Batalla
     const handleBattleStart = (teamData) => {
         console.log("Equipos listos para el combate:", teamData);
         setTeams(teamData);
@@ -42,9 +43,8 @@ function App() {
             {/* FASE 2: SELECCIÓN DE EQUIPO */}
             {phase === GAME_PHASES.SELECTION && (
                 <div>
-
                     <h1 style={{ textAlign: 'center', color: 'white', margin: '20px 0', textShadow: '2px 2px 4px #000' }}>
-                        ORGANIZADOR DE PC POKÉMON
+                        CHOOSE YOUR TEAM
                     </h1>
 
                     <SelectionScreen
@@ -57,8 +57,8 @@ function App() {
             {/* FASE 3: BATALLA (Placeholder por ahora) */}
             {phase === GAME_PHASES.BATTLE && (
                 <div style={{ textAlign: 'center', marginTop: 50, color: 'white' }}>
-                    <h1> ¡ZONA DE BATALLA!</h1>
-                    <p>Próximamente...</p>
+                    <h1>BATTLE TIME</h1>
+                    <p>ToDo: Implementate BattleScreen and GameLogic</p>
                     {/* Aquí irá <BattleScreen players={players} teams={teams} /> */}
                 </div>
             )}
