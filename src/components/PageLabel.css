@@ -1,8 +1,42 @@
+.retro-image-label {
+
+
+    /* AHORA: Aumenta este valor. Prueba con 40px, 50px, etc. */
+    border: 20px solid transparent;
+    border-image-slice: 80 fill;
+
+    /* Estira las líneas rectas entre las esquinas */
+    border-image-repeat: no-repeat;
+
+    width: 100%;
+    max-width: 700px;
+    /* El ancho máximo que pedías */
+
+    /* Centrado horizontal en la página */
+    margin: 20px auto;
+
+    /* Altura mínima para que no quede muy aplastado si hay poco texto */
+  
+
+    /* Asegura que el padding y border no aumenten el ancho total */
+   
+    /* Alineación del contenido (el texto) dentro del marco */
+    display: flex;
+    justify-content: center;
+
+
+}
+
+
 .page-label-container {
     text-align: center;
+
     margin-bottom: 2rem;
+    margin-top: 2rem;
+
     color: black;
 }
+
 .page-label-text {
     font-size: 1.5rem;
     text-shadow: 3px 3px #ffefff;
@@ -10,6 +44,7 @@
     margin: 0;
     font-family: 'Press Start 2P', cursive;
 }
+
 .page-label-subtitle {
     color: black;
     font-size: 0.8rem;
