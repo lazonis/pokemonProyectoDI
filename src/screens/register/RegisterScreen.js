@@ -11,6 +11,8 @@ function RegisterScreen({ onComplete }) {
     const [p1Data, setP1Data] = useState(null);
     const [p2Data, setP2Data] = useState(null);
 
+    //Manejador personalizado que comprueba si los datos de los jugadores se han establecido
+    //Si es así, permite pasar a la siguiente fase -> onComplete
     const handleStartGame = () => {
         // Si ambos existen -> RegisterScreen onComplete
         if (p1Data && p2Data) {
@@ -19,12 +21,15 @@ function RegisterScreen({ onComplete }) {
     };
 
     return (
+        //TÍTULO PRESENTACIÓN DE LA PÁGINA
         <div className="register-container">
             <PageLabel
                 title="PLAYER RESGISTER"
                 subtitle="And who are you?"
             />
+
             <div className="split-screen-layout">
+
                 {/* --- COLUMNA JUGADOR 1 --- */}
                 {/* Si p1Data tiene datos, añadimos la clase 'locked' */}
                 <div className={`player-column ${p1Data ? 'locked' : ''}`}>
@@ -38,25 +43,27 @@ function RegisterScreen({ onComplete }) {
                         onSubmit={(data) => setP1Data({ ...data, id: 1 })}
                     />
                 </div>
+
                 {/* DIVISOR VS */}
                 <div className="vs-divider">VS</div>
 
                 {/* --- COLUMNA JUGADOR 2 --- */}
                 <div className={`player-column ${p2Data ? 'locked' : ''}`}>
-                    <PageLabel 
-                        title="PLAYER 2" 
-                        subtitle={p2Data ? "" : "Are you a boy or a girl?"} 
+                    <PageLabel
+                        title="PLAYER 2"
+                        subtitle={p2Data ? "" : "Are you a boy or a girl?"}
                     />
-
                     <PlayerForm
                         initialSprite={TRAINER_SPRITES[1].url}
                         buttonLabel="READY"
                         onSubmit={(data) => setP2Data({ ...data, id: 2 })}
                     />
                 </div>
+
             </div>
 
-            {/* --- BOTÓN FINAL DE NAVEGACIÓN --- */}
+
+            {/* --- BOTÓN FINAL DE CAMBIO DE PÁGINA --- */}
             <div className="start-game-actions">
                 <ActionButton
                     label="GO CHOOSE YOUR TEAM ➡"
@@ -66,6 +73,7 @@ function RegisterScreen({ onComplete }) {
                     variant={(!p1Data || !p2Data) ? "secondary" : "primary"}
                 />
             </div>
+            
         </div>
     );
 }

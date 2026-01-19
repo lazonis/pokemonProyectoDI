@@ -1,22 +1,25 @@
-// src/utils/constants.js
+//CONSTANTES GLOBALES DEL PROYECTO
 
+//FASES DEL JUEGO (Pantallas)
 export const GAME_PHASES = {
     REGISTER: 'REGISTER',
     SELECTION: 'SELECTION',
     BATTLE: 'BATTLE'
 };
 
+//CONFIGURACIÓN FIJA 
 export const CONFIG = {
     MAX_TEAM_SIZE: 6,
     API_LIMIT: 48, // Para paginación
     MAX_POKEMON_ID: 649, // Hasta Gen 5
+
+    //División manual para que muestre el número de boxes establecido
     get TOTAL_BOXES() {
         return Math.ceil(this.MAX_POKEMON_ID / this.API_LIMIT);
     }
 };
 
-
-
+//Al no tener una API de propio, importamos de forma manual los urls de los avatares que queremos
 export const TRAINER_SPRITES = [
     // GEN 2 (Johto - HGSS)
     { id: 'ethan', name: 'Ethan', url: 'https://play.pokemonshowdown.com/sprites/trainers/ethan.png' },

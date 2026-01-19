@@ -1,14 +1,15 @@
 * {
     font-family: 'Press Start 2P', cursive;
-
 }
 
 .register-input {
     font-size: 10px;
-    width: 20vw;
+    width: 15vw;
     height: 1.5vw;
     margin-left: 2.5vw;
     padding: 1%;
+    border: 8px outset;
+    
 }
 
 .register-container {

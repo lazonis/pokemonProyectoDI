@@ -2,6 +2,8 @@ import React from 'react';
 import { CONFIG } from '../utils/constants';
 import './TeamDisplay.css';
 
+/*TODO - COMENTAR Y EXPLICAR CÓDIGO PARA DOCUMENTACIÓN*/ 
+
 function TeamDisplay({
     player,
     team = [],
@@ -52,7 +54,6 @@ function TeamDisplay({
                         onClick={(e) => {
                             e.stopPropagation();
                         }} // Evita cambiar de turno si borras un pokemon
-
                         style={{ cursor: (poke && onSlotClick) ? 'pointer' : 'default' }}
                     >
 
