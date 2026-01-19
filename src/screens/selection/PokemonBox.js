@@ -1,10 +1,13 @@
 import React from 'react';
 
+// Carga estilos de la págin padre -> SelectionScreen.css
+/*ToDo: Comentar el código + funcionalidades/lógica aplicada aquí*/
 function PokemonBox({ pokemons, loading, onSelect, isOwned }) {
     return (
         <div className="pc-grid-compact">
             {loading ? (
-                <p className="loading">Cargando datos del PC...</p>
+                <p className="loading">Loading PC data....</p>
+            /*Operador ternario*/ 
             ) : (
                 pokemons.map((poke) => (
                     <div 

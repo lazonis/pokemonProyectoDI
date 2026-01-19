@@ -6,7 +6,7 @@ import { usePokemonList } from './hooks/usePokemonList';
 
 import PageLabel from '../../components/PageLabel';
 import ActionButton from '../../components/ActionButton';
-import TeamDisplay from '../../components/TeamDisplay'; 
+import TeamDisplay from '../../components/TeamDisplay';
 
 import Pagination from './Pagination';
 import PokemonBox from './PokemonBox';
@@ -14,21 +14,31 @@ import PokemonDetail from './PokemonDetail';
 
 // AÑADIDO: onReset en las props
 function SelectionScreen({ players, onBattleStart, onReset }) {
+
+    //ESTADOS NECESARIOS -> EquipoJ1/EquipoJ2 -> Set del turno Actual
     const [equipoP1, setEquipoP1] = useState([]);
     const [equipoP2, setEquipoP2] = useState([]);
-    const [jugadorActivo, setJugadorActivo] = useState(1); 
-    const [pokemonVisto, setPokemonVisto] = useState(null); 
+    const [jugadorActivo, setJugadorActivo] = useState(1);
+    //Pokemon elegido para mostrar el Detalle
+    const [pokemonVisto, setPokemonVisto] = useState(null);
 
-    const { 
-        pokemons, loading, page, setPage, totalPages, getPaginationGroup 
+    //Estado que recibe los datos después de llamar a la API
+    const {
+        pokemons, loading, page, setPage, totalPages, getPaginationGroup
     } = usePokemonList();
 
+    //Manejador personal que permite confirmar que añadimos pokemons a nuestro equipo
+    //Y gestiona al mismo tiempo la alternancia de turnos entre jugadores
     const handleConfirmar = (pokemon) => {
+        //(Guard Clause)
         if (!pokemon) return;
-
+        
+        //Función que gestiona el acoplamiento de un pokemon a determinado equipo
         const agregarAlEquipo = (equipo, setEquipo, turnoSiguiente) => {
             if (equipo.length < CONFIG.MAX_TEAM_SIZE) {
-                setEquipo([...equipo, pokemon]);
+                setEquipo([...equipo, pokemon]); //Añdimos el nuevo pokemon seleccionado al final del arry del equipo
+
+                //
                 const elOtroEquipo = turnoSiguiente === 1 ? equipoP1 : equipoP2;
                 if (elOtroEquipo.length < CONFIG.MAX_TEAM_SIZE) {
                     setJugadorActivo(turnoSiguiente);
@@ -41,8 +51,10 @@ function SelectionScreen({ players, onBattleStart, onReset }) {
         } else {
             agregarAlEquipo(equipoP2, setEquipoP2, 1);
         }
-        setPokemonVisto(null); 
+        setPokemonVisto(null);
     };
+
+
 
     const handleRemove = (playerNum, index) => {
         if (playerNum === 1) {
@@ -62,72 +74,78 @@ function SelectionScreen({ players, onBattleStart, onReset }) {
         return equipoP1.some(p => p.id === pokeId) || equipoP2.some(p => p.id === pokeId);
     };
 
-    const isReady = equipoP1.length === CONFIG.MAX_TEAM_SIZE && 
-                    equipoP2.length === CONFIG.MAX_TEAM_SIZE;
+    const isReady = equipoP1.length === CONFIG.MAX_TEAM_SIZE &&
+        equipoP2.length === CONFIG.MAX_TEAM_SIZE;
 
     return (
-        <div className="team-builder-layout">
-                <ActionButton 
-                    label="⬅ SALIR" 
-                    onClick={onReset} 
+        <div>
+            <PageLabel
+                title={"--- CHOOSE YOUR TEAM ---"}
+                subtitle={"First Generation Pokedex "}
+            />
+            <div className="team-builder-layout">
+                <ActionButton
+                    label="⬅ SALIR"
+                    onClick={onReset}
                     variant="secondary" /* O usa 'primary' si prefieres rojo */
                 />
 
-            {/* 2. LATERAL IZQUIERDO */}
-            <TeamDisplay 
-                className="sidebar-team"
-                player={players?.p1}
-                team={equipoP1}
-                isActive={jugadorActivo === 1}
-                onSlotClick={(idx) => handleRemove(1, idx)}
-                // NUEVO: Click para cambiar turno
-                onPanelClick={() => setJugadorActivo(1)}
-            />
-
-            {/* 3. CENTRO (PC) */}
-            <div className="main-pc-container" style={{backgroundImage: "url('selection_layout.png')", display: 'flex', flexDirection: 'column'}}>
-                <Pagination 
-                    page={page} 
-                    totalPages={totalPages} 
-                    setPage={setPage} 
-                    getPaginationGroup={getPaginationGroup}
+                {/* 2. LATERAL IZQUIERDO */}
+                <TeamDisplay
+                    className="sidebar-team"
+                    player={players?.p1}
+                    team={equipoP1}
+                    isActive={jugadorActivo === 1}
+                    onSlotClick={(idx) => handleRemove(1, idx)}
+                    // NUEVO: Click para cambiar turno
+                    onPanelClick={() => setJugadorActivo(1)}
                 />
 
-                <PokemonBox 
-                    pokemons={pokemons} 
-                    loading={loading} 
-                    isOwned={isOwned} 
-                    onSelect={setPokemonVisto} 
-                />
+                {/* 3. CENTRO (PC) */}
+                <div className="main-pc-container" style={{ backgroundImage: "url('selection_layout.png')", display: 'flex', flexDirection: 'column' }}>
+                    <Pagination
+                        page={page}
+                        totalPages={totalPages}
+                        setPage={setPage}
+                        getPaginationGroup={getPaginationGroup}
+                    />
 
-                {/* BOTÓN BATALLA: SIEMPRE ABAJO */}
-                <div style={{ marginTop: 'auto', paddingTop: '10px', textAlign: 'center', minHeight: '50px' }}>
-                        <ActionButton 
-                            label="¡A LA BATALLA!" 
-                            variant="primary" 
+                    <PokemonBox
+                        pokemons={pokemons}
+                        loading={loading}
+                        isOwned={isOwned}
+                        onSelect={setPokemonVisto}
+                    />
+
+                    {/* BOTÓN BATALLA: SIEMPRE ABAJO */}
+                    <div style={{ marginTop: 'auto', paddingTop: '10px', textAlign: 'center', minHeight: '50px' }}>
+                        <ActionButton
+                            label="¡A LA BATALLA!"
+                            variant="primary"
                             onClick={() => onBattleStart({ p1: equipoP1, p2: equipoP2 })}
                         />
+                    </div>
                 </div>
+
+                {/* 4. LATERAL DERECHO */}
+                <TeamDisplay
+                    className="sidebar-team"
+                    player={players?.p2}
+                    team={equipoP2}
+                    isActive={jugadorActivo === 2}
+                    onSlotClick={(idx) => handleRemove(2, idx)}
+                    // NUEVO: Click para cambiar turno
+                    onPanelClick={() => setJugadorActivo(2)}
+                />
+
+                {/* MODAL */}
+                <PokemonDetail
+                    pokemon={pokemonVisto}
+                    isTurnP1={jugadorActivo === 1}
+                    onClose={() => setPokemonVisto(null)}
+                    onConfirm={handleConfirmar}
+                />
             </div>
-
-            {/* 4. LATERAL DERECHO */}
-            <TeamDisplay 
-                className="sidebar-team"
-                player={players?.p2}
-                team={equipoP2}
-                isActive={jugadorActivo === 2}
-                onSlotClick={(idx) => handleRemove(2, idx)}
-                // NUEVO: Click para cambiar turno
-                onPanelClick={() => setJugadorActivo(2)}
-            />
-
-            {/* MODAL */}
-            <PokemonDetail 
-                pokemon={pokemonVisto}
-                isTurnP1={jugadorActivo === 1}
-                onClose={() => setPokemonVisto(null)}
-                onConfirm={handleConfirmar}
-            />
         </div>
     );
 }

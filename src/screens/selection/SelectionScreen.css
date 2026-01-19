@@ -1,3 +1,7 @@
+*{
+    font-family: 'Press Start 2P', cursive;
+}
+
 .team-builder-layout {
     display: grid;
     /* 3 COLUMNAS: Sidebar Izq | Centro Flexible | Sidebar Der */
@@ -91,7 +95,7 @@
 
 
 /* =========================================
-   5. GRID POKEMON (PC BOX)
+    5. GRID POKEMON (PC BOX)
    ========================================= */
 .pc-grid-compact {
     display: grid;
@@ -177,7 +181,6 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    font-family: 'Courier New', Courier, monospace;
 }
 
 .gameboy-top-ridge {
@@ -306,7 +309,6 @@
     border-radius: 50%;
     border: 4px solid #6e1a4d;
     color: #e0f0c0;
-    font-family: monospace;
     font-weight: bold;
     font-size: 1.2rem;
     cursor: pointer;

@@ -1,5 +1,5 @@
 import React from 'react';
-
+// Carga estilos de la págin padre -> SelectionScreen.css
 //Componente reutilizable de barra de paginación
 
 function Pagination({ page, totalPages, setPage, getPaginationGroup }) {

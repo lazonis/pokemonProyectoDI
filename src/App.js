@@ -49,10 +49,6 @@ function App() {
             {/* FASE 2: SELECCIÓN DE EQUIPO */}
             {phase === GAME_PHASES.SELECTION && (
                 <div style={{marginTop: 20}}>
-                    <PageLabel
-                    title={"--- CHOOSE YOUR TEAM ---"}
-                    subtitle={"First Generation Pokedex "}
-                    />
                     <SelectionScreen
                         players={players}
                         onBattleStart={handleBattleStart}

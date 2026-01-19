@@ -4,6 +4,7 @@ import ActionButton from '../../components/ActionButton';
 import AvatarSelector from './AvatarSelector';
 import './RegisterScreen.css';
 
+//COMPONENTE QUE CONTROLA LOS DATOS NECESARIOS PARA COMPLETAR EL FORMULARIO
 function PlayerForm({ initialSprite, buttonLabel, onSubmit }) {
     // Estado local del formulario (antes estaba en RegisterScreen)
     const [name, setName] = useState('');

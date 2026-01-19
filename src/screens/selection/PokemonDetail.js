@@ -1,7 +1,7 @@
 import React from 'react';
-// Este componente asume que SelectionScreen.css ya está cargado en el padre
+// Carga estilos de la págin padre -> SelectionScreen.css
 
-function PokemonDetail({ pokemon, onClose, onConfirm, isTurnP1 }) {
+function PokemonDetail({ pokemon, onClose, onConfirm}) {
     if (!pokemon) return null;
 
     // Evita que el click dentro de la Gameboy cierre el modal
