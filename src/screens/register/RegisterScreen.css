@@ -1,7 +1,9 @@
+/*ESTILO GLOBAL DE LA PÁGINA*/
 * {
     font-family: 'Press Start 2P', cursive;
 }
 
+/*Barra de Input*/
 .register-input {
     font-size: 10px;
     width: 15vw;
@@ -9,70 +11,48 @@
     margin-left: 2.5vw;
     padding: 1%;
     border: 8px outset;
-    
 }
 
+/*Contenedor con formulario y Avatar Selector*/
 .register-container {
+    /*Medidas del formulario*/
     width: 100%;
-    /* Ancho total */
-    min-height: 100vh;
-    /* Altura mínima: el 100% de la ventana visible */
-
-    /* Configuración del Fondo */
-    background-size: cover;
-    /* Escala la imagen para cubrir todo sin deformarse */
-    background-position: center;
-    background-repeat: no-repeat;
-    /* Opcional: background-attachment: fixed; (Para efecto parallax) */
-
-    /* Centrado Vertical del contenido (Opcional) */
+    height: 85%;
+    /* Esto centra verticalmente todo el bloque */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* Esto centra verticalmente todo el bloque */
-    padding: 20px;
-    box-sizing: border-box;
-    /* Para que el padding no sume al ancho */
 }
 
-/* CONTENEDOR SPLIT: La clave del diseño */
+/* CONTENEDOR SPLIT: 
+    La clave del diseño -> 
+        Aquí dentro van los dos formularios y "VS" */
 .split-screen-layout {
-    max-width: 1000px;
     /* Ancho máximo del contenido */
-    width: 100%;
-
+    max-width: 1000px;
     /* Flexbox para las columnas */
     display: flex;
-    gap: 40px;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-
+    gap: 2.5vw;
 }
 
+/*COLUMNA DE FORMULARIO PLAYER*/
 .player-column {
-    flex: 1;
+    flex: 2;
     /* Ambos ocupan el mismo ancho */
-    min-width: 300px;
     display: flex;
     flex-direction: column;
-
-
 }
 
 /* CLASE NUEVA: Estado Bloqueado/Terminado */
 .player-column.locked {
-    opacity: 0.2;
     /* Se vuelve semitransparente */
-    filter: grayscale(90%);
-    /* Se vuelve blanco y negro */
-    pointer-events: none;
+    opacity: 0.4;
     /* IMPIDE hacer click o escribir (lo bloquea) */
-    transform: scale(0.98);
-    /* Se hace un pelín más pequeño */
+    pointer-events: none;
 }
 
+/*ESTILO DIVISOR "VS"*/
 .vs-divider {
     align-self: center;
     font-size: 3rem;
@@ -83,8 +63,7 @@
 
 /* Área del botón final */
 .start-game-actions {
-    margin-top: 20px;
-    width: 100%;
+    margin-top: 10px;
     text-align: center;
     padding-top: 20px;
 }
