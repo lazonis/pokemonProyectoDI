@@ -36,9 +36,9 @@ function SelectionScreen({ players, onBattleStart, onReset }) {
         //Función que gestiona el acoplamiento de un pokemon a determinado equipo
         const agregarAlEquipo = (equipo, setEquipo, turnoSiguiente) => {
             if (equipo.length < CONFIG.MAX_TEAM_SIZE) {
-                setEquipo([...equipo, pokemon]); //Añdimos el nuevo pokemon seleccionado al final del arry del equipo
+                setEquipo([...equipo, pokemon]); //Añdimos el nuevo pokemon seleccionado al final del array del equipo
 
-                //
+                //Gestionamos -> cuando un equipo esté lleno, no se alterna de turno
                 const elOtroEquipo = turnoSiguiente === 1 ? equipoP1 : equipoP2;
                 if (elOtroEquipo.length < CONFIG.MAX_TEAM_SIZE) {
                     setJugadorActivo(turnoSiguiente);
@@ -54,8 +54,7 @@ function SelectionScreen({ players, onBattleStart, onReset }) {
         setPokemonVisto(null);
     };
 
-
-
+    //Manejador personal 
     const handleRemove = (playerNum, index) => {
         if (playerNum === 1) {
             const nuevo = [...equipoP1];

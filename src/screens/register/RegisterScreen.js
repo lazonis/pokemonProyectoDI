@@ -33,10 +33,12 @@ function RegisterScreen({ onComplete }) {
                 {/* --- COLUMNA JUGADOR 1 --- */}
                 {/* Si p1Data tiene datos, añadimos la clase 'locked' */}
                 <div className={`player-column ${p1Data ? 'locked' : ''}`}>
-                    <PageLabel
-                        title="PLAYER 1"
-                        subtitle={p1Data ? "" : "Are you a boy or a girl?"}
-                    />
+                    
+                    <h2 style={{textAlign: "center", textShadow: "3px 3px #ffefff"}} >
+                        PLAYER 1 
+                        <p style={{fontSize: "0.7rem"}}>Are you a boy or a girl?</p>
+                    </h2>
+
                     <PlayerForm
                         initialSprite={TRAINER_SPRITES[0].url}
                         buttonLabel="READY"
@@ -49,10 +51,10 @@ function RegisterScreen({ onComplete }) {
 
                 {/* --- COLUMNA JUGADOR 2 --- */}
                 <div className={`player-column ${p2Data ? 'locked' : ''}`}>
-                    <PageLabel
-                        title="PLAYER 2"
-                        subtitle={p2Data ? "" : "Are you a boy or a girl?"}
-                    />
+                    <h2 style={{textAlign: "center", textShadow: "3px 3px #ffefff"}} >
+                        PLAYER 2
+                        <p style={{fontSize: "0.7rem"}}>Are you a boy or a girl?</p>
+                    </h2>
                     <PlayerForm
                         initialSprite={TRAINER_SPRITES[1].url}
                         buttonLabel="READY"

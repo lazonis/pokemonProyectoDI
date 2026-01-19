@@ -1,6 +1,8 @@
 import React from 'react';
 // Carga estilos de la págin padre -> SelectionScreen.css
 
+
+/*ToDo: Comentar el código + funcionalidades/lógica aplicada aquí*/
 function PokemonDetail({ pokemon, onClose, onConfirm}) {
     if (!pokemon) return null;
 
