@@ -4,6 +4,7 @@
     border-image-slice: 60 fill;
     /* Ancho máximo*/
     width: 100%;
+    
     max-width: 700px;
     /* Centrado horizontal en la página */
     margin: 20px auto;

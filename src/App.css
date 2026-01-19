@@ -6,7 +6,7 @@ body {
 }
 
 .app-layout {
-    height: 140vh;
+    height: 180vh;
     display: flex;
     flex-direction: column;
 }
