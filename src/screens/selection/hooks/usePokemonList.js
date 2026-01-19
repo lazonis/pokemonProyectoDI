@@ -9,44 +9,35 @@ export const usePokemonList = () => {
     const { API_LIMIT, MAX_POKEMON_ID, TOTAL_BOXES } = CONFIG;
 
     // --- LÓGICA DE PAGINACIÓN ACTUALIZADA ---
-const getPaginationGroup = () => {
+    const getPaginationGroup = () => {
+        //Variables necesarias ->
         const total = TOTAL_BOXES;
         const current = page;
         const delta = 1; // Cuántos mostrar a izquierda y derecha
         const range = [];
-        
-        // Rango de vecinos: Evitamos el 1 y el total para no duplicarlos
-        // Ejemplo: Si estoy en la 5, quiero del 3 al 7.
-        // Math.max(2, ...) asegura que no bajemos del 1.
-        // Math.min(total - 1, ...) asegura que no subamos del total.
+        //ALGORITMO DE CÁLCULO -> CUANTO DRCH / IZQ
         const left = Math.max(2, current - delta);
         const right = Math.min(total - 1, current + delta);
-
         // 1. SIEMPRE añadimos la Caja 1
         range.push(1);
-
         // 2. Puntos suspensivos IZQUIERDA
         // Si entre el 1 y mi rango izquierdo hay hueco (ej: 1 ... 4)
         if (left > 2) {
             range.push('...');
         }
-
         // 3. Añadimos el rango central (Vecinos + Actual)
         for (let i = left; i <= right; i++) {
             range.push(i);
         }
-
         // 4. Puntos suspensivos DERECHA
         // Si entre mi rango derecho y el final hay hueco (ej: 8 ... 14)
         if (right < total - 1) {
             range.push('...');
         }
-
         // 5. SIEMPRE añadimos la Última Caja (si hay más de una)
         if (total > 1) {
             range.push(total);
         }
-
         return range;
     };
 

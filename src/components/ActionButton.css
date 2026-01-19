@@ -1,24 +1,18 @@
-/* src/components/ActionButton.css */
-
+/*ESTILO GENERAL PARA TODOS LOS ACTION-BUTTONS QUE DECLAREMOSe*/
 .btn-action {
-    /* ESTRUCTURA */
+    /*Damos espacio tanto arriba, abajo, y en los laterales */
     padding: 14px 24px;
-    /* Un poco más alto para que parezca un botón físico */
+    /*Quitamos el borde*/
     border: none;
-    /* Quitamos el borde negro estándar */
-    border-radius: 50px;
     /* Forma de píldora (como Start/Select o botones A/B) */
+    border-radius: 50px;
     margin: 10px;
-
     /* TIPOGRAFÍA */
     font-family: 'Press Start 2P', cursive, sans-serif;
     font-size: 0.85rem;
-    text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 1px;
     cursor: pointer;
-    position: relative;
-
     /* EFECTO PLÁSTICO 3D (El truco Nintendo) */
     /* Sombra 1 (inset blanco): Brillo superior (luz) */
     /* Sombra 2 (inset negro): Sombra inferior (volumen) */
@@ -27,22 +21,24 @@
         inset 0px 4px 0px rgba(255, 255, 255, 0.4),
         inset 0px -4px 0px rgba(0, 0, 0, 0.2),
         0px 6px 0px rgba(0, 0, 0, 0.3);
-
-    transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .btn-action:disabled {
     background-color: #9ea7b4;
+    border: none;
     /* Gris plástico viejo */
     color: #6a737d;
     cursor: not-allowed;
-    box-shadow: none;
     transform: translateY(4px);
     /* Se queda hundido */
+    /* Reutilizo la escala de sombras*/
+    box-shadow:
+        inset 0px 4px 0px rgba(255, 255, 255, 0.4),
+        inset 0px -4px 0px rgba(0, 0, 0, 0.2),
+        0px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
-/* --- VARIANTES DE COLOR --- */
-
+/* --- COLORES --- */
 /* PRIMARY: El Botón "A" (Rojo Gameboy Clásico) */
 .primary {
     background-color: #c6616b;
