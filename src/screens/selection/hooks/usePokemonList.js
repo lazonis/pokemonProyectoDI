@@ -67,6 +67,7 @@ export const usePokemonList = () => {
                         sprites: data.sprites,
                         types: data.types,
                         stats: data.stats,
+                        rawMoves: data.moves,
                         hp: data.stats[0].base_stat, 
                         maxHp: data.stats[0].base_stat,
                         attack: data.stats[1].base_stat, 

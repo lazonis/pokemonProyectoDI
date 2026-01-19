@@ -1,0 +1,75 @@
+/* Layout General: 3 Columnas */
+.battle-layout-classic {
+    display: flex;
+    justify-content: space-between;
+    height: 90vh;
+    padding: 10px;
+    gap: 15px;
+    background-color: #2c3e50; /* Fondo oscuro elegante */
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Paneles Laterales (TeamDisplay) */
+.side-panel {
+    width: 280px; /* Ancho fijo para las listas */
+    flex-shrink: 0;
+    overflow-y: auto;
+    /* Un pequeño estilo para que parezca separado */
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+}
+
+/* Escenario Central */
+.center-stage {
+    flex-grow: 1; /* Ocupa todo el espacio sobrante */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ajustes Visuales de la Arena (Sobrescribiendo o añadiendo a BattleArena.css) */
+.visual-stage {
+    background: linear-gradient(to bottom, #74b9ff 50%, #55efc4 50%); /* Cielo / Tierra más suave */
+    border: 6px solid #dfe6e9;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    height: 400px; /* Altura fija visual */
+    position: relative;
+    margin-bottom: 15px;
+}
+
+/* Etiquetas de nombre flotantes */
+.info-tag {
+    background: #000;
+    color: #fff;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+/* Indicador de turno en la botonera */
+.turn-indicator {
+    text-align: center;
+    color: #ffcc00;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 0 #000;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0.7; }
+}
+
+/* Mensaje final */
+.end-msg {
+    color: #ffd700;
+    font-size: 2rem;
+    font-weight: 900;
+    text-align: center;
+    text-shadow: 2px 2px 0 #000;
+}

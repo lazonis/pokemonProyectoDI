@@ -1,0 +1,65 @@
+.arena-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    
+}
+
+/* ESCENARIO VISUAL */
+.visual-stage {
+    position: relative;
+    height: 500px;
+    
+    background: linear-gradient(to bottom, #87CEEB 60%, #4CAF50 60%); /* Cielo y Pasto */
+    border: none;
+    border-radius: 8px;
+    
+}
+
+.combatant {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.combatant.rival {
+    top: 20px;
+    right: 40px;
+}
+
+.combatant.player {
+    bottom: 0px;
+    left: 40px;
+}
+
+.sprite {
+    width: 140px;
+    height: 140px;
+    image-rendering: pixelated;
+    z-index: 5;
+}
+.rival-sprite { margin-top: -20px; }
+.player-sprite { margin-bottom: 10px; }
+
+/* PANEL DE CONTROL INFERIOR */
+.control-panel {
+    display: flex;
+    gap: 10px;
+    height: 250px;
+    background: #333;
+    padding: 10px;
+    border-radius: 8px;
+    
+}
+
+.panel-left { flex: 1; }
+.panel-right { width: 300px; display: flex; align-items: center; justify-content: center; }
+
+.end-msg {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}

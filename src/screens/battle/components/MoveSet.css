@@ -1,0 +1,60 @@
+.moves-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columnas */
+    grid-template-rows: 1fr 1fr;    /* 2 filas */
+    gap: 8px;
+    padding: 5px;
+    width: 300px; /* Ancho fijo para cuadrar con la UI */
+}
+
+.move-btn {
+    background: #f8f9fa;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    transition: all 0.1s;
+    position: relative;
+    overflow: hidden;
+}
+
+.move-btn:hover:not(:disabled) {
+    background: #e9ecef;
+    border-color: #3f51b5; /* Azul al pasar el ratón */
+    transform: translateY(-2px);
+}
+
+.move-btn:active:not(:disabled) {
+    transform: translateY(0);
+    background: #dee2e6;
+}
+
+.move-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(100%);
+}
+
+.move-name {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: #333;
+}
+
+.move-pp {
+    font-size: 0.65rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* (Opcional) Borde izquierdo de color según el tipo */
+.move-btn.type-fire { border-left: 5px solid #f44336; }
+.move-btn.type-water { border-left: 5px solid #2196f3; }
+.move-btn.type-grass { border-left: 5px solid #4caf50; }
+.move-btn.type-electric { border-left: 5px solid #ffeb3b; }
+.move-btn.type-normal { border-left: 5px solid #9e9e9e; }

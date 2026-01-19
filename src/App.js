@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import './App.css';
 import { GAME_PHASES } from './utils/constants';
 
+
 // --- IMPORTS DE PANTALLAS ---
 import RegisterScreen from './screens/register/RegisterScreen';
 import SelectionScreen from './screens/selection/SelectionScreen';
 import PageLabel from './components/PageLabel';
-// import BattleScreen from './screens/battle/BattleScreen'; // (Próximamente)
+import BattleScreen from './screens/battle/BattleScreen'; // (Próximamente)
 
 function App() {
     // Fases / Etapas de la aplicación
@@ -59,9 +60,15 @@ function App() {
 
             {/* FASE 3: BATALLA (Placeholder por ahora) */}
             {phase === GAME_PHASES.BATTLE && (
-                <div style={{ textAlign: 'center', marginTop: 50, color: 'white' }}>
-                    <h1>BATTLE TIME</h1>
-                    <p>ToDo: Implementate BattleScreen and GameLogic</p>
+                <div >
+                    <PageLabel 
+                    title={"BATTLE TIME"}
+                    subtitle={"Implementation needed"}
+                    />
+                    <BattleScreen
+                    players={players}
+                    teams={teams}
+                    />
                     {/* Aquí irá <BattleScreen players={players} teams={teams} /> */}
                 </div>
             )}
