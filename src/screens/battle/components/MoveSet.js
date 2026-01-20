@@ -9,11 +9,13 @@ import './MoveSet.css';
  */
 const MoveSet = ({ moves, onAttack, disabled }) => {
     return (
+        //Contenedor total de movimientos
         <div className="moves-grid">
+        {/**MAPEAMOS LOS MOVIMIENTOS DESCARGADOS EN UN MOV POR BOTÓN**/}
             {moves.map((move, index) => (
                 <button
                     key={index}
-                    className={`move-btn type-${move.type}`} // Clase dinámica por tipo
+                    className={`move-btn`} // Clase dinámica por tipo
                     onClick={() => onAttack(move)}
                     disabled={disabled}
                 >

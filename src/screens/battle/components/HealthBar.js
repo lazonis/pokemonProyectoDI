@@ -9,6 +9,7 @@ import './HealthBar.css';
  * @param {number} level - Nivel (opcional, decorativo)
  */
 const HealthBar = ({ current, max, label, level = 50 }) => {
+    
     // 1. Calculamos el porcentaje (asegurando que esté entre 0 y 100)
     const percentage = Math.max(0, Math.min(100, (current / max) * 100));
 
@@ -18,6 +19,7 @@ const HealthBar = ({ current, max, label, level = 50 }) => {
     if (percentage < 20) barColor = '#f44336'; // Rojo (Peligro)
 
     return (
+        //Contenedor de vida completo
         <div className="health-box">
             {/* Cabecera: Nombre y Nivel */}
             <div className="health-header">

@@ -7,7 +7,7 @@ const BattleLog = ({ logs }) => {
     // Auto-scroll al fondo cada vez que llega un mensaje
     useEffect(() => {
         logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [logs]);
+    }, []);
 
     return (
         <div className="log-container">
