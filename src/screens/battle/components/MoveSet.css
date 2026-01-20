@@ -7,6 +7,7 @@
     width: 300px; /* Ancho fijo para cuadrar con la UI */
 }
 
+/*BOTONES DE MOVIMIENTOS*/
 .move-btn {
     background: #f8f9fa;
     border: 2px solid #ccc;
@@ -20,11 +21,11 @@
     overflow: hidden;
 }
 
+/*HOVER BOTONES*/
 .move-btn:hover:not(:disabled) {
     background: #e9ecef;
     border-color: #535e96; /* Azul al pasar el ratón */
 }
-
 
 
 .move-btn:disabled {
@@ -33,6 +34,7 @@
     filter: grayscale(100%);
 }
 
+/*DATOS MOVIMIENTOS (NOMBRE + PP)*/
 .move-name {
     font-weight: bold;
     text-transform: uppercase;

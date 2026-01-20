@@ -2,19 +2,22 @@
     background: #222;
     border: 4px solid #555;
     border-radius: 6px;
-    height: 140px; /* Altura fija */
+    height: 160px; /* Altura fija */
     padding: 10px;
     overflow-y: auto; /* Scroll vertical */
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: white;
+    text-transform: capitalize;
 }
+
 .log-entry {
     margin-bottom: 4px;
     border-bottom: 1px solid #333;
-    padding-bottom: 2px;
+    padding-bottom: 5px;
 }
+
+/*
 .log-entry:last-child {
-    color: #ffff00; /* Último mensaje resaltado */
+    color: #ffff00; /* Último mensaje resaltado
     font-weight: bold;
-}
+} */
