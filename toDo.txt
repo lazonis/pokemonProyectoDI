@@ -1,0 +1,6 @@
+
+SelectionScreen:
+-> Add remove button for selected pokemons
+-> Modify Pokemon Detail (make it bigger)
+-> Change screen dimensions / resolution (too much bigger at 100%)
+-> 
