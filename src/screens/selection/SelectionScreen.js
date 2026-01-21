@@ -84,10 +84,16 @@ function SelectionScreen({ players, onBattleStart, onReset }) {
             />
             <div className="team-builder-layout">
                 <ActionButton
-                    label="⬅ SALIR"
+                    label="⬅ GO BACK REGISTER"
                     onClick={onReset}
                     variant="secondary" /* O usa 'primary' si prefieres rojo */
                 />
+
+                <ActionButton
+                            label="START BATTLE!"
+                            variant="primary"
+                            onClick={() => onBattleStart({ p1: equipoP1, p2: equipoP2 })}
+                        />
 
                 {/* 2. LATERAL IZQUIERDO */}
                 <TeamDisplay
@@ -115,15 +121,6 @@ function SelectionScreen({ players, onBattleStart, onReset }) {
                         isOwned={isOwned}
                         onSelect={setPokemonVisto}
                     />
-
-                    {/* BOTÓN BATALLA: SIEMPRE ABAJO */}
-                    <div style={{ marginTop: 'auto', paddingTop: '10px', textAlign: 'center', minHeight: '50px' }}>
-                        <ActionButton
-                            label="¡A LA BATALLA!"
-                            variant="primary"
-                            onClick={() => onBattleStart({ p1: equipoP1, p2: equipoP2 })}
-                        />
-                    </div>
                 </div>
 
                 {/* 4. LATERAL DERECHO */}

@@ -18,10 +18,10 @@
 }
 
 .combatant {
-    position: absolute;
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
+    margin: 40px 0;
 }
 
 .combatant.rival {
@@ -35,10 +35,10 @@
 }
 
 .sprite {
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
     image-rendering: pixelated;
-    z-index: 5;
+    
 }
 .rival-sprite { margin-top: -20px; }
 .player-sprite { margin-bottom: 10px; }

@@ -1,0 +1,103 @@
+/* 1. CONTENEDOR MAESTRO */
+.combatant-container {
+     display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 40px 0;
+}
+
+/* =========================================
+   2. CONFIGURACIÓN DEL RIVAL (Arriba)
+   ========================================= */
+.combatant-container.is-rival {
+    top: 0%;    
+    right: 15%;  
+    
+    /* RIVAL: Flujo normal (Izquierda -> Derecha)
+       HTML: [HUD] [Sprite] 
+       Visual: [HUD] [Sprite] 
+    */
+    flex-direction: row; 
+}
+
+/* =========================================
+   3. CONFIGURACIÓN DEL JUGADOR (Abajo)
+   ========================================= */
+.combatant-container.is-player {
+    bottom: 5%; 
+    left: 15%;   
+    
+    /* JUGADOR: Flujo INVERTIDO (Derecha -> Izquierda)
+       HTML: [HUD] [Sprite] 
+       Visual: [Sprite] [HUD]  <-- ¡El truco!
+    */
+    flex-direction: row-reverse; 
+}
+
+
+/* =========================================
+   4. ELEMENTOS INTERNOS
+   ========================================= */
+
+/* Espaciado entre la Barra y el Pokémon */
+.combatant-hud {
+    z-index: 12;
+    /* Un pequeño margen para que no se peguen */
+    margin: 30px;
+    
+   
+    width: fit-content;
+}
+
+/* Ajustes específicos de márgenes para que quede perfecto */
+.is-rival .combatant-hud {
+    /* El rival tiene el texto a la izquierda, margen a la derecha */
+    margin-right: -40px; /* Truco visual para acercarlo más al sprite si queda lejos */
+    z-index: 20; /* Que la barra tape un poco el ala si es necesario */
+    
+}
+
+.is-player .combatant-hud {
+    /* El jugador tiene el texto a la derecha, margen a la izquierda */
+    margin-left: -50px;
+    z-index: 20;
+}
+
+
+/* SPRITE */
+.sprite-wrapper {
+    position: relative;
+    width: 300px; /* Tamaño base del pokemon */
+    max-width: 30vw; /* Responsivo */
+    
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.combatant-sprite {
+    width: 35vh;
+    height: auto;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+    
+    /* Animación de flotar suave (Opcional pero queda genial) */
+    animation: float 3s ease-in-out infinite;
+}
+
+.shadow-oval {
+    width: 60%;
+    height: 10px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 5px;
+    left: 20%;
+    z-index: -1;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
