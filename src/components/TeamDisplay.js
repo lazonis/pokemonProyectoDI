@@ -7,31 +7,26 @@ import './TeamDisplay.css';
 function TeamDisplay({
     player,
     team = [],
-    isActive,
-    onSlotClick,
-    onPanelClick, // <--- Recibimos la función que permite cambiar de turno de jugador
+    isActive,      // Si es el turno de este jugador (Panel iluminado)
+    activeIndex,   // <--- NUEVO: Índice del Pokémon luchando actualmente (solo para Battle)
+    onSlotClick,   // Función al hacer click en un slot (Borrar o Cambiar)
+    onPanelClick,  // Función para cambiar el turno manual en Selección
     className = ''
 }) {
 
-    const pokemonBoxes = [...team, ...Array(6 - team.length).fill(null)]
+    // Rellenamos hasta llegar a 6 huecos
+    const pokemonBoxes = [...team, ...Array(CONFIG.MAX_TEAM_SIZE - team.length).fill(null)];
 
     return (
-        // AÑADIDO: onClick y estilo de cursor
-        //Contenedor rectangular que contiene toda la información del equipo
         <div
             className={`team-display-container ${isActive ? 'active' : ''} ${className}`}
             onClick={onPanelClick}
-            style={{ cursor: !isActive ? 'pointer' : 'default' }}
-            title={!isActive ? "Do click to change player's turn" : ""}
+            style={{ cursor: onPanelClick && !isActive ? 'pointer' : 'default' }}
+            title={!isActive && onPanelClick ? "Click to set active player" : ""}
         >
-            {/**Header del jugador**/}
-            {/**
-            - Avatar
-            - Nombre
-            - Total pokemons**/}
+            {/** --- HEADER DEL ENTRENADOR --- **/}
             <div className="trainer-header">
                 <div className="trainer-avatar-frame">
-                    {/* Corrección para que busque avatar o sprite */}
                     {(player?.sprite) ? (
                         <img src={player.sprite} alt="Avatar" className="trainer-img" />
                     ) : (
@@ -39,36 +34,66 @@ function TeamDisplay({
                     )}
                 </div>
                 <div className="trainer-info">
-                    <h3 className="trainer-name">{player?.name || "Entrenador"}</h3>
+                    <h3 className="trainer-name">{player?.name || "Trainer"}</h3>
                     <div className="team-count">Pokémons: {team.length} / {CONFIG.MAX_TEAM_SIZE}</div>
                 </div>
             </div>
 
-            {/**Cuerpo del jugador**/}
+            {/** --- GRID DE SLOTS --- **/}
             <div className="team-slots-grid">
-                {/**Mapeamos la posición y pokemons elegidos**/}
-                {pokemonBoxes.map((poke, index) => (
-                    <div
-                        key={index}
-                        className={`team-slot ${poke ? 'filled' : 'empty'}`}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                        }} // Evita cambiar de turno si borras un pokemon
-                        style={{ cursor: (poke && onSlotClick) ? 'pointer' : 'default' }}
-                    >
+                {pokemonBoxes.map((poke, index) => {
+                    
+                    // ¿Es este el pokemon que está luchando ahora mismo?
+                    const isBattling = index === activeIndex;
 
-                        {poke ? (
-                            <>
-                                <img src={poke.image} alt={poke.name} className="slot-icon" />
-                                <span className="slot-name">{poke.name}</span>
-                            </>
-                        ) : (
-                            <span className="empty-label">-</span>
-                        )}
-                    </div>
-                ))}
+                    return (
+                        <div
+                            key={index}
+                            // Añadimos clase 'battling-slot' si coincide el índice
+                            className={`team-slot ${poke ? 'filled' : 'empty'} ${isBattling ? 'battling-slot' : ''}`}
+                            
+                            // CORRECCIÓN IMPORTANTE AQUÍ:
+                            onClick={(e) => {
+                                e.stopPropagation(); // Evita seleccionar el panel entero
+                                if (poke && onSlotClick) {
+                                    onSlotClick(index); // ¡Ejecutamos la acción!
+                                }
+                            }}
+                            
+                            style={{ 
+                                cursor: (poke && onSlotClick) ? 'pointer' : 'default',
+                                // Opcional: Borde diferente si es el activo
+                                borderColor: isBattling ? '#ffcc00' : undefined 
+                            }}
+                        >
+                            {poke ? (
+                                <>
+                                    <img src={poke.image} alt={poke.name} className="slot-icon" />
+                                    <span className="slot-name">{poke.name}</span>
+                                    
+                                    {/* Indicador visual de "EN COMBATE" (Opcional) */}
+                                    {isBattling && <div className="battle-badge">FIGHT</div>}
+                                    
+                                    {/* Barra de vida mini (Opcional para ver salud en el banquillo) */}
+                                    {poke.currentHp !== undefined && (
+                                        <div className="mini-hp-bar">
+                                            <div 
+                                                className="mini-hp-fill" 
+                                                style={{
+                                                    width: `${(poke.currentHp / poke.maxHp) * 100}%`,
+                                                    background: poke.currentHp < (poke.maxHp * 0.2) ? '#ff4d4d' : '#4caf50'
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <span className="empty-label">-</span>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
-            {/*Final del contenedor total*/}
         </div>
     );
 }

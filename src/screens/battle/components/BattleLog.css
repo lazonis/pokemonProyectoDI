@@ -2,16 +2,17 @@
     background: #222;
     border: 4px solid #555;
     border-radius: 6px;
-    height: 90%; /* Altura fija */
+    height: 80%; /* Altura fija */
     padding: 10px;
     overflow-y: auto; /* Scroll vertical */
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: white;
     text-transform: capitalize;
+    
 }
 
 .log-entry {
-    margin-bottom: 4px;
+    margin-bottom: 5px;
     border-bottom: 1px solid #333;
     padding-bottom: 5px;
 }

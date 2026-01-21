@@ -1,70 +1,24 @@
-.arena-wrapper {
+/* BattleArena.css */
+.arena-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     height: 100%;
-    
+    gap: 15px;
+    margin: 10px;    
 }
 
-/* ESCENARIO VISUAL */
+/* El escenario ocupa el espacio sobrante (flex 1) */
 .visual-stage {
-    position: relative;
-    height: 500px;
-    
-    background: linear-gradient(to bottom, #87CEEB 60%, #4CAF50 60%); /* Cielo y Pasto */
-    border: none;
-    border-radius: 8px;
-    
+    flex: 1; 
+    position: relative; /* VITAL para que los Combatant absolute funcionen */
+    background: linear-gradient(to bottom, #87CEEB 60%, #4CAF50 60%);
+    border-radius: 12px;
+    border: 4px solid #333;
+    overflow: hidden; /* Que los sprites no se salgan */
 }
 
-.combatant {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 40px 0;
-}
-
-.combatant.rival {
-    top: 20px;
-    right: 40px;
-}
-
-.combatant.player {
-    bottom: 0px;
-    left: 40px;
-}
-
-.sprite {
-    width: 150px;
-    height: 150px;
-    image-rendering: pixelated;
-    animation: float 3s ease-in-out infinite;
-}
-.rival-sprite { margin-top: -20px; }
-.player-sprite { margin-bottom: 10px; }
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-}
-
-/* PANEL DE CONTROL INFERIOR */
-.control-panel {
-    display: flex;
-    gap: 10px;
-    height: 250px;
-    background: #333;
-    padding: 10px;
-    border-radius: 8px;
-    
-}
-
-.panel-left { flex: 1; }
-.panel-right { width: 300px; display: flex; align-items: center; justify-content: center; }
-
-.end-msg {
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    font-family: 'Courier New', monospace;
+/* El panel de control tiene altura fija o ajustada al contenido */
+.control-area {
+    height: 30%; /* Ocupa el 30% inferior */
+    min-height: 150px;
 }

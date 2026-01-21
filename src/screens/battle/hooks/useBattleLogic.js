@@ -4,31 +4,29 @@ import { calculateDamage, checkFainted, fetchRandomMoves } from '../../../utils/
 export const useBattleLogic = (playerTeamProp, rivalTeamProp) => {
     const [loading, setLoading] = useState(true);
     
-    const [playerTeam, setPlayerTeam] = useState([]); // Equipo J1
-    const [rivalTeam, setRivalTeam] = useState([]);   // Equipo J2
+    const [playerTeam, setPlayerTeam] = useState([]);
+    const [rivalTeam, setRivalTeam] = useState([]);
 
     const [p1ActiveIx, setP1ActiveIx] = useState(0);
     const [p2ActiveIx, setP2ActiveIx] = useState(0);
 
-    const [turn, setTurn] = useState(null); // 'p1' | 'p2' | 'end'
+    // turn puede ser: 'p1', 'p2', 'end', 'p1_forced_switch', 'p2_forced_switch'
+    const [turn, setTurn] = useState(null); 
     const [battleLogs, setBattleLogs] = useState([]); 
     const [winner, setWinner] = useState(null);
 
     const addLog = (msg) => setBattleLogs(prev => [...prev, msg]);
 
-    // --- 1. INICIALIZACIÓN Y VELOCIDAD ---
+    // --- 1. INICIALIZACIÓN ---
     useEffect(() => {
         const initBattle = async () => {
             if (!playerTeamProp || !rivalTeamProp) return;
             setLoading(true);
 
-            // Helper para cargar datos
+            // Helper carga datos
             const loadTeam = async (team) => Promise.all(team.map(async (p) => {
                 const realMoves = await fetchRandomMoves(p.rawMoves);
-                
-                // Encontramos la stat de velocidad (speed)
                 const speedStat = p.stats.find(s => s.stat.name === 'speed')?.base_stat || 50;
-
                 return {
                     ...p,
                     moves: realMoves,
@@ -47,30 +45,65 @@ export const useBattleLogic = (playerTeamProp, rivalTeamProp) => {
             setRivalTeam(p2Loaded);
             setLoading(false);
 
-            // --- LÓGICA DE VELOCIDAD ---
-            const p1Speed = p1Loaded[0].speed;
-            const p2Speed = p2Loaded[0].speed;
-
-            if (p1Speed >= p2Speed) {
+            // Velocidad inicial
+            if (p1Loaded[0].speed >= p2Loaded[0].speed) {
                 setTurn('p1');
-                addLog(`¡${p1Loaded[0].name} es más rápido! Turno del J1.`);
+                addLog(`¡${p1Loaded[0].name} es más rápido!`);
             } else {
                 setTurn('p2');
-                addLog(`¡${p2Loaded[0].name} es más rápido! Turno del J2.`);
+                addLog(`¡${p2Loaded[0].name} es más rápido!`);
             }
         };
-
         initBattle();
     }, [playerTeamProp, rivalTeamProp]);
 
-    // --- 2. MANEJO DE ATAQUE (Genérico) ---
-    // attackerId: 'p1' o 'p2'
+    // --- 2. CAMBIO DE POKEMON ---
+    const handleSwitch = (playerKey, newIndex) => {
+        // Validaciones básicas
+        if (winner) return;
+
+        let currentTeam, setTeam, activeIndex, setActiveIndex, playerName, rivalName;
+        
+        if (playerKey === 'p1') {
+            currentTeam = playerTeam; setTeam = setPlayerTeam;
+            activeIndex = p1ActiveIx; setActiveIndex = setP1ActiveIx;
+            playerName = "J1"; rivalName = "p2";
+        } else {
+            currentTeam = rivalTeam; setTeam = setRivalTeam;
+            activeIndex = p2ActiveIx; setActiveIndex = setP2ActiveIx;
+            playerName = "J2"; rivalName = "p1";
+        }
+
+        // No puedes cambiar al mismo, ni a uno debilitado
+        if (newIndex === activeIndex) return;
+        if (currentTeam[newIndex].currentHp <= 0) {
+            addLog("¡Ese Pokémon está debilitado!");
+            return;
+        }
+
+        // EJECUTAR EL CAMBIO
+        setActiveIndex(newIndex);
+        addLog(`${playerName} cambió a ${currentTeam[newIndex].name}.`);
+
+        // LÓGICA DE TURNO TRAS CAMBIO
+        // Caso A: Cambio Forzoso (porque murió el anterior)
+        if (turn === `${playerKey}_forced_switch`) {
+            // Te toca atacar a ti ahora
+            setTurn(playerKey); 
+        } 
+        // Caso B: Cambio Manual (Estratégico)
+        else if (turn === playerKey) {
+            // Gastas tu turno, le toca al rival
+            setTurn(rivalName);
+        }
+    };
+
+    // --- 3. ATAQUE ---
     const handleAttack = (move, attackerId) => {
         if (loading || winner || turn !== attackerId) return;
 
         let attacker, defender, setDefenderTeam, defenderTeam, defenderIx;
 
-        // Configurar quién pega a quién
         if (attackerId === 'p1') {
             attacker = playerTeam[p1ActiveIx];
             defender = rivalTeam[p2ActiveIx];
@@ -85,12 +118,12 @@ export const useBattleLogic = (playerTeamProp, rivalTeamProp) => {
             defenderIx = p1ActiveIx;
         }
 
-        // Cálculos
+        // Calcular daño
         const { damage, effectiveness } = calculateDamage(attacker, defender, move);
-
-        // Aplicar Daño
-        const newDefenderTeam = [...defenderTeam];
         const newHp = Math.max(0, defender.currentHp - damage);
+        
+        // Actualizar equipo defensor
+        const newDefenderTeam = [...defenderTeam];
         newDefenderTeam[defenderIx] = { ...defender, currentHp: newHp };
         setDefenderTeam(newDefenderTeam);
 
@@ -101,13 +134,24 @@ export const useBattleLogic = (playerTeamProp, rivalTeamProp) => {
         if (effectiveness === 'weak') msg += " (Resistido)";
         addLog(msg);
 
-        // Verificar Derrota
-        if (checkFainted(newHp)) {
+        // --- VERIFICAR DERROTA O CAMBIO ---
+        if (newHp === 0) {
             addLog(`¡${defender.name} se debilitó!`);
-            setWinner(attackerId); // Gana quien atacó
-            setTurn('end');
+            
+            // ¿Quedan vivos en el equipo defensor?
+            const hasLivingMembers = newDefenderTeam.some(p => p.currentHp > 0);
+
+            if (!hasLivingMembers) {
+                setWinner(attackerId);
+                setTurn('end');
+            } else {
+                // Forzar cambio al defensor
+                const loserId = attackerId === 'p1' ? 'p2' : 'p1';
+                setTurn(`${loserId}_forced_switch`);
+                addLog(`¡${loserId === 'p1' ? 'J1' : 'J2'}, elige otro Pokémon!`);
+            }
         } else {
-            // CAMBIO DE TURNO
+            // Turno normal
             setTurn(attackerId === 'p1' ? 'p2' : 'p1');
         }
     };
@@ -116,9 +160,12 @@ export const useBattleLogic = (playerTeamProp, rivalTeamProp) => {
         loading,
         p1Pokemon: playerTeam[p1ActiveIx],
         p2Pokemon: rivalTeam[p2ActiveIx],
+        p1ActiveIx, // Exportamos índices para saber quién está seleccionado visualmente
+        p2ActiveIx,
         turn,
         battleLogs,
         winner,
-        handleAttack
+        handleAttack,
+        handleSwitch // Exportamos la nueva función
     };
 };

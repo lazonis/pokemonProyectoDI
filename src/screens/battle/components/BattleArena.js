@@ -1,101 +1,46 @@
+// BattleArena.js
 import React from 'react';
-import HealthBar from './HealthBar';
-import BattleLog from './BattleLog';
-import MoveSet from './MoveSet';
+import Combatant from './Combatant';     // <--- IMPORTAMOS TU COMPONENTE
+import ControlPanel from './ControlPanel'; // <--- IMPORTAMOS TU COMPONENTE
 import './BattleArena.css';
 
-const BattleArena = ({ 
-    p1Pokemon, 
-    p2Pokemon, 
-    battleLogs, 
-    onAttack, 
-    turn, 
-    winner,
-    p1Name,
-    p2Name
-}) => {
+const BattleArena = ({ p1Pokemon, p2Pokemon, battleLogs, onAttack, turn, winner, p1Name, p2Name }) => {
     
-    // Sprites: J1 de Espalda (Gen 5 Back), J2 de Frente (Gen 5 Front)
-    const getBackSprite = (id) => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/back/${id}.png`;
-    const getFrontSprite = (id) => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/${id}.png`;
-
-    // LÓGICA DE CONTROLES DINÁMICOS
-    // Decidimos qué movimientos mostrar según de quién sea el turno
-    let currentMoves = [];
-    let isButtonsDisabled = !!winner; // Si hay ganador, desactivar todo
-
-    if (turn === 'p1') {
-        currentMoves = p1Pokemon.moves;
-    } else if (turn === 'p2') {
-        currentMoves = p2Pokemon.moves;
-    }
+    // Lógica para saber qué botones mostrar en el ControlPanel
+    let currentMoves = turn === 'p1' ? p1Pokemon.moves : p2Pokemon.moves;
+    let activeName = turn === 'p1' ? p1Name : p2Name;
 
     return (
-        <div className="arena-wrapper">
+        <div className="arena-container">
             
-            {/* 1. ESCENARIO VISUAL */}
+            {/* 1. ZONA VISUAL (STAGE) */}
             <div className="visual-stage">
-                
-                {/* RIVAL (J2) - Arriba Derecha */}
-                <div className="combatant rival">
-                    <div className="info-tag">{p2Name}</div>
-                    <HealthBar 
-                        current={p2Pokemon.currentHp} 
-                        max={p2Pokemon.maxHp} 
-                        label={p2Pokemon.name} 
-                    />
-                    <img 
-                        src={getFrontSprite(p2Pokemon.id)} 
-                        alt="Rival" 
-                        className="sprite rival-sprite" 
-                    />
-                </div>
+                {/* RIVAL (Arriba) */}
+                <Combatant 
+                    pokemon={p2Pokemon} 
+                    trainerName={p2Name} 
+                    isPlayer={false} 
+                />
 
-                {/* JUGADOR (J1) - Abajo Izquierda */}
-                <div className="combatant player">
-                    <img 
-                        src={getBackSprite(p1Pokemon.id)} 
-                        alt="Player" 
-                        className="sprite player-sprite" 
-                    />
-                    <HealthBar 
-                        current={p1Pokemon.currentHp} 
-                        max={p1Pokemon.maxHp} 
-                        label={p1Pokemon.name} 
-                    />
-                     <div className="info-tag">{p1Name}</div>
-                </div>
+                {/* JUGADOR (Abajo) */}
+                <Combatant 
+                    pokemon={p1Pokemon} 
+                    trainerName={p1Name} 
+                    isPlayer={true} 
+                />
             </div>
 
-            {/* 2. PANEL DE CONTROL UNIFICADO */}
-            <div className="control-panel">
-                {/* LOG DE BATALLA */}
-                <div className="panel-left">
-                    <BattleLog logs={battleLogs} />
-                </div>
-                
-                {/* BOTONERA CAMBIANTE */}
-                <div className="panel-right">
-                    {winner ? (
-                        <div className="end-msg">
-                            ¡{winner === 'p1' ? p1Name : p2Name} GANA!
-                        </div>
-                    ) : (
-                        <div className="active-controls">
-                            <div className="turn-indicator">
-                                {turn === 'p1' ? `${p1Name}` : `${p2Name}`}
-                            </div>
-                            <MoveSet 
-                                moves={currentMoves} 
-                                onAttack={onAttack} 
-                                disabled={isButtonsDisabled} 
-                            />
-                        </div>
-                    )}
-                </div>
+            {/* 2. ZONA DE CONTROL */}
+            <div className="control-area">
+                <ControlPanel 
+                    logs={battleLogs}
+                    moves={currentMoves}
+                    onAttack={onAttack}
+                    activePlayerName={activeName}
+                    winner={winner}
+                />
             </div>
         </div>
     );
 };
-
 export default BattleArena;
