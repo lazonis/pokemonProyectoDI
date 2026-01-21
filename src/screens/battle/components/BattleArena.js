@@ -83,7 +83,7 @@ const BattleArena = ({
                     ) : (
                         <div className="active-controls">
                             <div className="turn-indicator">
-                                {turn === 'p1' ? `TURNO DE ${p1Name}` : `TURNO DE ${p2Name}`}
+                                {turn === 'p1' ? `${p1Name}` : `${p2Name}`}
                             </div>
                             <MoveSet 
                                 moves={currentMoves} 
