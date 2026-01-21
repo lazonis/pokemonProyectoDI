@@ -6,7 +6,7 @@ import ActionButton from '../../components/ActionButton'; // Reutilizamos tu bot
 import './BattleScreen.css';
 
 // Recibimos 'onBack' de App.js
-const BattleScreen = ({ players, teams, onBack }) => {
+const BattleScreen = ({ players, teams, onBack, onReset }) => {
     const {
         loading,
         p1Pokemon, p2Pokemon,
@@ -65,9 +65,14 @@ const BattleScreen = ({ players, teams, onBack }) => {
                 />
                 
                 <ActionButton 
-                    label="GO BACK TO SELECTION" 
+                    label="⬅ GO BACK SELECTION" 
                     onClick={onBack} 
                     variant="secondary"
+                />
+                <ActionButton
+                    label="⬅ GO BACK REGISTER"
+                    onClick={onReset}
+                    variant="secondary" /* O usa 'primary' si prefieres rojo */
                 />
             
             </div>

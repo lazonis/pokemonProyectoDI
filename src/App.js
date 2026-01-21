@@ -66,6 +66,7 @@ function App() {
                             players={players}
                             teams={teams}
                             onBack={handleBackToSelection}
+                            onReset={handleReset}
                         />
                     </div>
                 )}
