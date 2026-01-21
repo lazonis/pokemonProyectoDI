@@ -1,6 +1,16 @@
 
 SelectionScreen:
--> Add remove button for selected pokemons
--> Modify Pokemon Detail (make it bigger)
+-> Add remove button for selected pokemons (check) -> need's UI ("X" icon)
+-> Modify Pokemon Detail (make it bigger) (check)
+-> Add Control Exception: press start battle button -> if not pokemon selected, cant do it 
+
+
+General:
 -> Change screen dimensions / resolution (too much bigger at 100%)
--> Add navegation paths
+-> Add navegation paths (check more or less)
+
+
+BattleScreen:
+-> Reubicate BattleScreen buttons
+-> Reubicate TeamDisplay view (right is closer to )
+-> Fix battleScreen bug, each move you use makes the page bigger???

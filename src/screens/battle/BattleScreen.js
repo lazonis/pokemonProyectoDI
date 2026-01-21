@@ -70,7 +70,7 @@ const BattleScreen = ({ players, teams, onBack, onReset }) => {
                     variant="secondary"
                 />
                 <ActionButton
-                    label="⬅ GO BACK REGISTER"
+                    label="⬅ RESET GAME"
                     onClick={onReset}
                     variant="secondary" /* O usa 'primary' si prefieres rojo */
                 />

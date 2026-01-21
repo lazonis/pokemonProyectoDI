@@ -18,5 +18,5 @@
     flex: 1;         /* Ocupa todo el espacio sobrante */
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    
 }
