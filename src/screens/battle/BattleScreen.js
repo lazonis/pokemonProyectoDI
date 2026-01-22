@@ -57,7 +57,7 @@ const BattleScreen = ({ players, teams, onBack, onReset }) => {
                     p1Pokemon={p1Pokemon}
                     p2Pokemon={p2Pokemon}
                     battleLogs={battleLogs}
-                    onAttack={(move) => handleAttack(move, turn)}
+                    onAttack={handleAttack}
                     turn={turn} // Pasamos el turno tal cual ('p1', 'p2_forced_switch', etc)
                     winner={winner}
                     p1Name={players?.p1?.name || "J1"}

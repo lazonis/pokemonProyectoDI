@@ -2,14 +2,14 @@
 .arena-container {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    gap: 15px;
-    margin: 10px;    
+    height: 100%; /* Toma el 100% de la columna central */
+    justify-content: space-between;
 }
 
 /* El escenario ocupa el espacio sobrante (flex 1) */
 .visual-stage {
-    flex: 1; 
+    flex: 0 0 60%; /* 0 crecimiento, 0 encogimiento, base 60% estricta */
+    height: 60% !important; 
     position: relative; /* VITAL para que los Combatant absolute funcionen */
     background: linear-gradient(to bottom, #87CEEB 60%, #4CAF50 60%);
     border-radius: 12px;
@@ -19,6 +19,8 @@
 
 /* El panel de control tiene altura fija o ajustada al contenido */
 .control-area {
-    height: 30%; /* Ocupa el 30% inferior */
-    min-height: 150px;
+    flex: 0 0 40%; /* El resto del espacio */
+    height: 40%;
+    display: flex; 
+    overflow: hidden; /* Evita que el log de ataques empuje hacia afuera */
 }

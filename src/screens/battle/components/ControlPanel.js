@@ -5,11 +5,13 @@ import './ControlPanel.css'; // CSS para organizar Log vs Botones
 
 const ControlPanel = ({ 
     logs, 
-    moves, 
+    p1Moves,
+    p2Moves,
     onAttack, 
     turn, 
-    activePlayerName, 
-    winner 
+    winner,
+    p1Name,
+    p2Name
 }) => {
     
     // Lógica visual: ¿Qué mostramos a la derecha?
@@ -24,14 +26,23 @@ const ControlPanel = ({
         }
 
         return (
-            
-            <div className="active-moves-box">
-                <div className="turn-badge">{activePlayerName}</div>
-                <MoveSet 
-                    moves={moves} 
-                    onAttack={onAttack} 
-                    disabled={!!winner} 
-                />
+            <div className="moves-container">
+                <div className="player-moves">
+                    <div className="turn-badge">{p1Name}</div>
+                    <MoveSet 
+                        moves={p1Moves} 
+                        onAttack={(move) => onAttack(move, 'p1')} 
+                        disabled={turn !== 'p1'} 
+                    />
+                </div>
+                <div className="player-moves">
+                    <div className="turn-badge">{p2Name}</div>
+                    <MoveSet 
+                        moves={p2Moves} 
+                        onAttack={(move) => onAttack(move, 'p2')} 
+                        disabled={turn !== 'p2'} 
+                    />
+                </div>
             </div>
         );
     };

@@ -1,16 +1,18 @@
 /* BattleScreen.css */
 .battle-screen-layout {
     display: flex;
-    justify-content: space-between;
-    align-items: stretch; /* Estira las columnas */
-    height: 100%;       /* Ocupa el contenedor padre (game-viewport) */
-    padding: 20px;
-    gap: 20px;
+    justify-content: space-between; /* Empuja las columnas a los extremos */
+    align-items: stretch; /* Obliga a todas las columnas a medir lo mismo */
+    height: 100vh; /* Altura fija para que no crezca */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 20px; /* Margen simétrico en todos los lados */
+    box-sizing: border-box;
+    overflow: hidden; /* Evita desbordes */
 }
 
 .side-column {
-  width: 300px; /* Ancho fijo para las listas */
-    height: 80%;
+    flex: 0 0 250px; /* No crece ni se encoge, siempre mide 250px */
+    height: 100%; /* Altura completa para alinear con el centro */
     border-radius: 12px;
 }
 

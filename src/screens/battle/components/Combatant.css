@@ -5,15 +5,17 @@
     position: absolute; /* BattleArena (visual-stage) es relative */
     display: flex;
     align-items: flex-end; /* Alineados al suelo */
+    justify-content: center; /* Centra horizontalmente el contenido */
     gap: 30px;
-    transition: all 0.5s ease;
+    /* transition: all 0.5s ease; */ /* Removida para evitar animaciones no deseadas */
 }
 
 /* === VARIACIÓN RIVAL === */
 /* Posición en el escenario */
 .pos-rival {
-    top: 1%;
-    right: 10%;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%); /* Centra horizontalmente */
     /* Orden visual: [HUD] [SPRITE] */
     flex-direction: row; 
 }
@@ -21,8 +23,9 @@
 /* === VARIACIÓN JUGADOR === */
 /* Posición en el escenario */
 .pos-player {
-    bottom: 1%;
-    left: 10%;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%); /* Centra horizontalmente */
     /* Orden visual: [SPRITE] [HUD] (Invertido) */
     flex-direction: row-reverse; 
 }

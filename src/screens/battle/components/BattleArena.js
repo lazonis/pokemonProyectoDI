@@ -6,10 +6,6 @@ import './BattleArena.css';
 
 const BattleArena = ({ p1Pokemon, p2Pokemon, battleLogs, onAttack, turn, winner, p1Name, p2Name }) => {
     
-    // Lógica para saber qué botones mostrar en el ControlPanel
-    let currentMoves = turn === 'p1' ? p1Pokemon.moves : p2Pokemon.moves;
-    let activeName = turn === 'p1' ? p1Name : p2Name;
-
     return (
         <div className="arena-container">
             
@@ -34,10 +30,13 @@ const BattleArena = ({ p1Pokemon, p2Pokemon, battleLogs, onAttack, turn, winner,
             <div className="control-area">
                 <ControlPanel 
                     logs={battleLogs}
-                    moves={currentMoves}
+                    p1Moves={p1Pokemon.moves}
+                    p2Moves={p2Pokemon.moves}
                     onAttack={onAttack}
-                    activePlayerName={activeName}
+                    turn={turn}
                     winner={winner}
+                    p1Name={p1Name}
+                    p2Name={p2Name}
                 />
             </div>
         </div>
