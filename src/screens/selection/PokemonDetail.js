@@ -1,38 +1,54 @@
 import React from 'react';
-// Carga estilos de la págin padre -> SelectionScreen.css
+import './PokemonDetail.css'; // Importing the dedicated styles
 
-
-/*ToDo: Comentar el código + funcionalidades/lógica aplicada aquí*/
-function PokemonDetail({ pokemon, onClose, onConfirm}) {
+/**
+ * PokemonDetail Component
+ * * Displays a detailed view of a selected Pokemon inside a "Gameboy" style modal.
+ * Shows stats (HP, Attack, Defense), type, and an image sprite.
+ * * @param {Object} props
+ * @param {Object} props.pokemon - The Pokemon data object containing stats, sprites, and types.
+ * @param {Function} props.onClose - Function to trigger when closing the modal.
+ * @param {Function} props.onConfirm - Function to trigger when selecting/confirming the Pokemon.
+ */
+function PokemonDetail({ pokemon, onClose, onConfirm }) {
+    // If no pokemon data is provided, do not render anything.
     if (!pokemon) return null;
 
-    // Evita que el click dentro de la Gameboy cierre el modal
+    /**
+     * Prevents the click event from bubbling up to the overlay.
+     * This ensures clicking the Gameboy body doesn't accidentally close the modal.
+     * @param {Event} e - The click event
+     */
     const handleCardClick = (e) => {
         e.stopPropagation();
     };
 
-    // Helper para formatear los tipos (funciona si es array o string)
+    // Helper to format types. Handles both array (standard API) or string formats.
+    // Example output: "FIRE / FLYING"
     const typeStr = pokemon.types
         ? pokemon.types.map(t => t.type.name).join(' / ').toUpperCase()
         : (pokemon.type || '???').toUpperCase();
 
+    // Calculate stat percentage for the progress bars (Max stat assumed as 150 for visual scaling)
+    const getStatWidth = (statValue) => `${Math.min(100, (statValue / 150) * 100)}%`;
+
     return (
-        // El Overlay (fondo oscuro) cierra al hacer click fuera
+        // The Overlay (dark background) closes the modal when clicked
         <div className="detail-modal-overlay" onClick={onClose}>
 
-            {/* La Carcasa de la Gameboy */}
+            {/* The Gameboy Container */}
             <div className="gameboy-body" onClick={handleCardClick}>
-                {/* El bisel oscuro de la pantalla */}
+                
+                {/* Screen Bezel (Dark border around screen) */}
                 <div className="gameboy-screen-bezel">
 
-                    {/* La pantalla iluminada (Contenido real) */}
+                    {/* Lit Screen (Actual Content) */}
                     <div className="gameboy-screen-content">
 
-                        {/* Botón de cerrar */}
-                        <button className="gb-close-btn" onClick={onClose} title="Cerrar">×</button>
+                        {/* Close Button (Top Right) */}
+                        <button className="gb-close-btn" onClick={onClose} title="Close">×</button>
 
                         <h2 className="gb-title">
-                            {/* Feedback visual de turno */}
                             {pokemon.name}
                         </h2>
 
@@ -45,40 +61,40 @@ function PokemonDetail({ pokemon, onClose, onConfirm}) {
                         </div>
 
                         <div className="gb-info-section">
-                            <div className="gb-type-tag">TIPO: {typeStr}</div>
+                            <div className="gb-type-tag">TYPE: {typeStr}</div>
 
                             <div className="gb-stats-container">
-                                {/* HP */}
+                                {/* HP Stat Bar */}
                                 <div className="stat-row">
                                     <span>HP:</span>
                                     <div className="stat-bar-track">
                                         <div
                                             className="stat-bar-fill"
-                                            style={{ width: `${Math.min(100, (pokemon.hp / 150) * 100)}%` }}
+                                            style={{ width: getStatWidth(pokemon.hp) }}
                                         ></div>
                                     </div>
                                     <span className="stat-val">{pokemon.hp}</span>
                                 </div>
 
-                                {/* ATK */}
+                                {/* Attack Stat Bar */}
                                 <div className="stat-row">
                                     <span>ATK:</span>
                                     <div className="stat-bar-track">
                                         <div
                                             className="stat-bar-fill"
-                                            style={{ width: `${Math.min(100, (pokemon.attack / 150) * 100)}%` }}
+                                            style={{ width: getStatWidth(pokemon.attack) }}
                                         ></div>
                                     </div>
                                     <span className="stat-val">{pokemon.attack}</span>
                                 </div>
 
-                                {/* DEF */}
+                                {/* Defense Stat Bar */}
                                 <div className="stat-row">
                                     <span>DEF:</span>
                                     <div className="stat-bar-track">
                                         <div
                                             className="stat-bar-fill"
-                                            style={{ width: `${Math.min(100, (pokemon.defense / 150) * 100)}%` }}
+                                            style={{ width: getStatWidth(pokemon.defense) }}
                                         ></div>
                                     </div>
                                     <span className="stat-val">{pokemon.defense}</span>
@@ -86,10 +102,10 @@ function PokemonDetail({ pokemon, onClose, onConfirm}) {
                             </div>
                         </div>
 
-                    </div> {/* Fin screen-content */}
-                </div> {/* Fin screen-bezel */}
+                    </div> {/* End screen-content */}
+                </div> {/* End screen-bezel */}
 
-                {/* Área de botones inferior */}
+                {/* Bottom Control Area (A Button) */}
                 <div className="gameboy-controls-area">
                     <button className="gb-action-btn-a" onClick={() => onConfirm(pokemon)}>
                         A
