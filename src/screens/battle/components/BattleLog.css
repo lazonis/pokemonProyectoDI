@@ -2,7 +2,7 @@
     background: #222;
     border: 4px solid #555;
     border-radius: 6px;
-    height: 100%; /* Toma todo el espacio disponible */
+    height: 80%; /* Toma todo el espacio disponible */
     padding: 10px;
     overflow-y: auto; /* Si hay mucho texto, sale scroll, no crece el div */
     font-size: 0.75rem;
