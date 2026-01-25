@@ -37,6 +37,13 @@ const BattleScreen = ({ players, teams, onBack, onReset }) => {
 
             {/* --- COLUMNA IZQUIERDA: EQUIPO J1 --- */}
             <div className={`side-column ${canP1Interact ? 'active-side' : 'inactive-side'}`}>
+             
+                <ActionButton 
+                    label="⬅ GO BACK SELECTION" 
+                    onClick={onBack} 
+                    variant="secondary"
+                />
+                
                 <TeamDisplay 
                     player={players?.p1} 
                     team={teams.p1} 
@@ -63,22 +70,17 @@ const BattleScreen = ({ players, teams, onBack, onReset }) => {
                     p1Name={players?.p1?.name || "J1"}
                     p2Name={players?.p2?.name || "J2"}
                 />
-                
-                <ActionButton 
-                    label="⬅ GO BACK SELECTION" 
-                    onClick={onBack} 
-                    variant="secondary"
-                />
-                <ActionButton
-                    label="⬅ RESET GAME"
-                    onClick={onReset}
-                    variant="secondary" /* O usa 'primary' si prefieres rojo */
-                />
+               
             
             </div>
 
             {/* --- COLUMNA DERECHA: EQUIPO J2 --- */}
             <div className={`side-column ${canP2Interact ? 'active-side' : 'inactive-side'}`}>
+            <ActionButton
+                    label="⬅ RESET GAME"
+                    onClick={onReset}
+                    variant="secondary" /* O usa 'primary' si prefieres rojo */
+                />
                 <TeamDisplay 
                     player={players?.p2} 
                     team={teams.p2} 

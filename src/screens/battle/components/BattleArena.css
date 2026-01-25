@@ -4,6 +4,7 @@
     flex-direction: column;
     height: 100%; /* Toma el 100% de la columna central */
     justify-content: space-between;
+    gap: 10px;
 }
 
 /* El escenario ocupa el espacio sobrante (flex 1) */
@@ -19,8 +20,8 @@
 
 /* El panel de control tiene altura fija o ajustada al contenido */
 .control-area {
-    flex: 0 0 40%; /* El resto del espacio */
+    flex: 1; /* El resto del espacio */
     height: 40%;
     display: flex; 
-    overflow: hidden; /* Evita que el log de ataques empuje hacia afuera */
+    
 }

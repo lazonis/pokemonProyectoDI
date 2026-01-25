@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body {
-  font-family: 'Press Start 2P', cursive;
-  /*Fuente global*/
-  overflow-x: hidden;
-  /* Evita scroll horizontal innecesario */
-
+  margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; /* Ocupa toda la ventana */
+   
+    font-family: 'Press Start 2P', cursive;
+    background-color: #111; /* Fondo negro de seguridad */
 }
 
 #root {
-    min-height: 100vh;
+    width: 100%;
+    height: 100%;
 }
 
 

@@ -8,6 +8,8 @@
     padding: 20px; /* Margen simétrico en todos los lados */
     box-sizing: border-box;
     overflow: hidden; /* Evita desbordes */
+    padding: 20px;
+    gap: 20px;
 }
 
 .side-column {
