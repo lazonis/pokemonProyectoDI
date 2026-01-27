@@ -1,19 +1,25 @@
-//CONSTANTES GLOBALES DEL PROYECTO
+// constants.js - Archivo de constantes en JavaScript
+// En React/proyectos JS, las constantes se definen con 'const' para valores que no cambian.
+// Se agrupan en objetos para organizar mejor el código.
+// Se exportan con 'export' para usarlas en otros archivos con 'import'.
 
-//FASES DEL JUEGO (Pantallas)
+// Objeto con las fases del juego: REGISTER, SELECTION, BATTLE
+// En React, usamos objetos para constantes en lugar de strings sueltos (mejor mantenibilidad)
 export const GAME_PHASES = {
-    REGISTER: 'REGISTER',
-    SELECTION: 'SELECTION',
-    BATTLE: 'BATTLE'
+    REGISTER: 'REGISTER', // Fase inicial: registro de nombres y avatares de jugadores
+    SELECTION: 'SELECTION', // Fase intermedia: selección de equipos de Pokémon
+    BATTLE: 'BATTLE' // Fase final: combate entre equipos
 };
 
-//CONFIGURACIÓN FIJA 
+// Objeto CONFIG con configuración del juego
+// En JavaScript, podemos tener getters en objetos para calcular valores dinámicamente
 export const CONFIG = {
-    MAX_TEAM_SIZE: 6,
-    API_LIMIT: 48, // Para paginación
-    MAX_POKEMON_ID: 649, // Hasta Gen 5
+    MAX_TEAM_SIZE: 6, // Número máximo de Pokémon por equipo
+    API_LIMIT: 48, // Límite de resultados por página en la API
+    MAX_POKEMON_ID: 649, // ID máximo de Pokémon (hasta Gen 5)
 
-    //División manual para que muestre el número de boxes establecido
+    // Getter: función que se ejecuta cuando se accede a la propiedad
+    // Calcula el total de cajas basado en otros valores
     get TOTAL_BOXES() {
         return Math.ceil(this.MAX_POKEMON_ID / this.API_LIMIT);
     }
