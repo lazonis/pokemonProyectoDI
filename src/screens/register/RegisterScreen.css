@@ -18,7 +18,7 @@
     /*Medidas del formulario*/
     width: 100%;
     height: 85%;
-    /* Esto centra verticalmente todo el bloque */
+    /* Centrado vertical */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,11 +44,11 @@
     flex-direction: column;
 }
 
-/* CLASE NUEVA: Estado Bloqueado/Terminado */
+/* Estado Bloqueado/Terminado */
 .player-column.locked {
     /* Se vuelve semitransparente */
     opacity: 0.4;
-    /* IMPIDE hacer click o escribir (lo bloquea) */
+    /* Bloquea el elemento */
     pointer-events: none;
 }
 

@@ -6,12 +6,12 @@ import './RegisterScreen.css';
 
 //COMPONENTE QUE CONTROLA LOS DATOS NECESARIOS PARA COMPLETAR EL FORMULARIO
 function PlayerForm({ initialSprite, buttonLabel, onSubmit }) {
-    // Estado local del formulario (antes estaba en RegisterScreen)
+    // Estado local del formulario 
     const [name, setName] = useState('');
     const [sprite, setSprite] = useState(initialSprite || TRAINER_SPRITES[0].url);
 
     const handleSubmit = () => {
-        // Validación interna del formulario
+        // Validación interna del formulario -> Si o si necesita un nombre
         if (!name.trim()) return alert("¡Por favor, escribe un nombre!");
 
         // Enviamos los datos limpios al padre

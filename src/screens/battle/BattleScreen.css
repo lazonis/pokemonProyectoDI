@@ -8,7 +8,7 @@
     padding: 20px; /* Margen simétrico en todos los lados */
     box-sizing: border-box;
     overflow: hidden; /* Evita desbordes */
-    padding: 20px;
+    padding: 40px;
     gap: 20px;
 }
 
@@ -16,6 +16,7 @@
     flex: 0 0 250px; /* No crece ni se encoge, siempre mide 250px */
     height: 100%; /* Altura completa para alinear con el centro */
     border-radius: 12px;
+    
 }
 
 .center-column {

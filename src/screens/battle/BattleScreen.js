@@ -30,37 +30,37 @@ const BattleScreen = ({ players, teams, onBack, onReset }) => {
 
     return (
         <div className="battle-screen-layout">
-            
+
             {/* --- BOTÓN ATRÁS FLOTANTE (Absoluto o en Grid) --- */}
             {/* Lo pongo aquí para que aparezca arriba a la izquierda visualmente */}
-            
+
 
             {/* --- COLUMNA IZQUIERDA: EQUIPO J1 --- */}
             <div className={`side-column ${canP1Interact ? 'active-side' : 'inactive-side'}`}>
-             
-                <ActionButton 
-                    label="⬅ GO BACK SELECTION" 
-                    onClick={onBack} 
+
+                <ActionButton
+                    label="⬅ GO BACK SELECTION"
+                    onClick={onBack}
                     variant="secondary"
                 />
-                
-                <TeamDisplay 
-                    player={players?.p1} 
-                    team={teams.p1} 
-                    isActive={canP1Interact} 
+
+                <TeamDisplay
+                    player={players?.p1}
+                    team={teams.p1}
+                    isActive={canP1Interact}
                     // Pasamos el índice activo para que se marque visualmente distinto
-                    activeIndex={p1ActiveIx} 
+                    activeIndex={p1ActiveIx}
                     // Al hacer click, intentamos cambiar de pokemon
                     onSlotClick={(index) => {
                         if (canP1Interact) handleSwitch('p1', index);
                     }}
-                    onPanelClick={() => {}} 
+                    onPanelClick={() => { }}
                 />
             </div>
 
             {/* --- COLUMNA CENTRAL --- */}
             <div className="center-column">
-                <BattleArena 
+                <BattleArena
                     p1Pokemon={p1Pokemon}
                     p2Pokemon={p2Pokemon}
                     battleLogs={battleLogs}
@@ -70,26 +70,28 @@ const BattleScreen = ({ players, teams, onBack, onReset }) => {
                     p1Name={players?.p1?.name || "J1"}
                     p2Name={players?.p2?.name || "J2"}
                 />
-               
-            
+
+
             </div>
 
             {/* --- COLUMNA DERECHA: EQUIPO J2 --- */}
             <div className={`side-column ${canP2Interact ? 'active-side' : 'inactive-side'}`}>
-            <ActionButton
+
+                <ActionButton
                     label="⬅ RESET GAME"
                     onClick={onReset}
                     variant="secondary" /* O usa 'primary' si prefieres rojo */
                 />
-                <TeamDisplay 
-                    player={players?.p2} 
-                    team={teams.p2} 
+                <br />
+                <TeamDisplay
+                    player={players?.p2}
+                    team={teams.p2}
                     isActive={canP2Interact}
                     activeIndex={p2ActiveIx}
                     onSlotClick={(index) => {
                         if (canP2Interact) handleSwitch('p2', index);
                     }}
-                    onPanelClick={() => {}} 
+                    onPanelClick={() => { }}
                 />
             </div>
         </div>

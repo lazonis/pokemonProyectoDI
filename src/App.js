@@ -15,22 +15,22 @@ import PageLabel from './components/PageLabel'; // Componente para etiquetas de 
 import BattleScreen from './screens/battle/BattleScreen'; // Pantalla de batalla
 
 function App() { // Componente funcional principal
-    // useState: Hook que crea estado local. Devuelve [valor, función para actualizar]
+    // useState: Hook que crea estado local. Devuelve [valor, función para actualizar valor]
     // Estado inicial: fase REGISTER, players y teams null
     const [phase, setPhase] = useState(GAME_PHASES.REGISTER);
     const [players, setPlayers] = useState(null);
     const [teams, setTeams] = useState(null);
 
-    // Función manejadora de eventos: se pasa como prop a componentes hijos
-    // Cuando RegisterScreen llama onComplete, actualiza el estado
+    // Función propia definida para controlar eventos: se pasa como prop a componentes hijos abajo en el return
+    // Cuando RegisterScreen llama onComplete, actualiza el estado -> Fase selección
     const handleRegisterComplete = (playerData) => {
-        setPlayers(playerData); // Actualiza estado de players
-        setPhase(GAME_PHASES.SELECTION); // Cambia fase (provoca re-render)
+        setPlayers(playerData); // Actualiza estado y datos de jugadores
+        setPhase(GAME_PHASES.SELECTION); // Renderiza la siguiente pantalla
     };
 
     // Similar: maneja el inicio de batalla
     const handleBattleStart = (teamData) => {
-        setTeams(teamData);
+        setTeams(teamData); //Pokemons de cada jugador
         setPhase(GAME_PHASES.BATTLE);
     };
 
@@ -39,7 +39,7 @@ function App() { // Componente funcional principal
         setPhase(GAME_PHASES.SELECTION);
     };
 
-    // Función para resetear: borra todo el estado
+    // Función para resetear: volvemos a pantalla de inicio
     const handleReset = () => {
         setPlayers(null);
         setTeams(null);
@@ -47,17 +47,17 @@ function App() { // Componente funcional principal
     };
 
     // El return contiene JSX: sintaxis para escribir HTML en JavaScript
-    // React renderiza esto en el DOM. El renderizado condicional usa operadores lógicos
+    // Renderiza estos JSX a través del DOM (objetos en la memoria del navegador)
     return (
         <div className="app-layout" style={{ backgroundImage: "url('background_register.png')" }}>
             {/* Contenedor principal */}
             <div className="game-viewport">
-                {/* Renderizado condicional: solo muestra la pantalla correspondiente a la fase actual */}
-                {/* En React, cuando el estado cambia, el componente se re-renderiza automáticamente */}
+
+                {/*FASE DE REGISTRO -> COMPONENTE PANTALLA*/}
                 {phase === GAME_PHASES.REGISTER && (
                     <RegisterScreen onComplete={handleRegisterComplete} />
                 )}
-
+                {/*FASE DE SELECCIÓN -> COMPONENTE PANTALLA*/}
                 {phase === GAME_PHASES.SELECTION && (
                     <SelectionScreen
                         players={players} // Props: pasan datos del padre al hijo
@@ -65,9 +65,9 @@ function App() { // Componente funcional principal
                         onReset={handleReset}
                     />
                 )}
-
+                {/*FASE DE BATALLA  -> COMPONENTE PANTALLA*/}
                 {phase === GAME_PHASES.BATTLE && (
-                    <div style={{ width: '100%', height: '100%' }}>
+                    <div>
                         <PageLabel
                             title={"--- CHOOSE YOUR TEAM ---"}
                             subtitle={"First Generation Pokedex "}
