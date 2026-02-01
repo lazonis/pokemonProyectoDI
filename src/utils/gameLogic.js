@@ -1,6 +1,5 @@
-// gameLogic.js - Archivo con funciones utilitarias en JavaScript
-// En React, separamos la lógica de negocio en archivos separados para mantener los componentes limpios.
-// Estas funciones son 'puras' (no dependen de estado de React) y pueden ser testeadas fácilmente.
+//ToDo fuera de plazo ->estructurar y comentar para explicar en clase
+
 
 // ==========================================
 // 1. TABLA DE TIPOS (TYPE CHART)

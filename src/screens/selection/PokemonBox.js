@@ -1,7 +1,8 @@
 import React from 'react';
 
-// Carga estilos de la págin padre -> SelectionScreen.css
-/*ToDo: Comentar el código + funcionalidades/lógica aplicada aquí*/
+// Carga estilos de la págin padre -> SelectionScreen.css/
+//Componente que recibe la lista de pokemons y los mapea y los muestra
+//se conecta con todos los métodos controlados en selectionScreen (isOwned, onSelect)
 function PokemonBox({ pokemons, loading, onSelect, isOwned }) {
     return (
         <div className="pc-grid-compact">

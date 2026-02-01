@@ -2,7 +2,7 @@ import React from 'react';
 // Carga estilos de la págin padre -> SelectionScreen.css
 
 
-/*ToDo: Comentar el código + funcionalidades/lógica aplicada aquí*/
+
 function PokemonDetail({ pokemon, onClose, onConfirm}) {
     if (!pokemon) return null;
 
@@ -12,6 +12,8 @@ function PokemonDetail({ pokemon, onClose, onConfirm}) {
     };
 
     // Helper para formatear los tipos (funciona si es array o string)
+    // conexión con la api + format de como devuelve los datos de tipo
+    // chatgepeteada funcional
     const typeStr = pokemon.types
         ? pokemon.types.map(t => t.type.name).join(' / ').toUpperCase()
         : (pokemon.type || '???').toUpperCase();

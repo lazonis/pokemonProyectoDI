@@ -1,7 +1,5 @@
 // constants.js - Archivo de constantes en JavaScript
 // En React/proyectos JS, las constantes se definen con 'const' para valores que no cambian.
-// Se agrupan en objetos para organizar mejor el código.
-// Se exportan con 'export' para usarlas en otros archivos con 'import'.
 
 // Objeto con las fases del juego: REGISTER, SELECTION, BATTLE
 // En React, usamos objetos para constantes en lugar de strings sueltos (mejor mantenibilidad)
